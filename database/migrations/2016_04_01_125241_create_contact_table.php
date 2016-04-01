@@ -12,7 +12,33 @@ class CreateContactTable extends Migration
      */
     public function up()
     {
-        // ici ajouter les champs nécessaires pour la base de donnée, à réfléchir
+
+        /*
+        Ici ajouter les champs nécessaires pour la base de donnée, à réfléchir
+
+        proposition (en anglais):
+
+
+        name : nom de l'organisme
+        description : description (texte long)
+        address : adresse, rue et numéro
+        postal_code : code postal
+        locality : commune
+        country : pays (défault belgium)
+        phone : téléphone
+        phone2 : téléphone 2 ou fax
+        website : site web
+        email : email
+        public : true / false
+        latitude
+        longitude
+        uuid
+
+
+        */
+
+
+
     }
 
     /**
