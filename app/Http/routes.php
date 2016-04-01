@@ -14,3 +14,38 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+// Routes pour la partie publique (Lilian)
+/*
+Exemples :
+
+search/1080-Boulevard+L%E9opold+II+44
+(ou avec post)
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+// Routes pour la partie admin (Soungui)
+/*
+Exemples :
+
+admin/contact/add
+admin/contact/search
+admin/contact/import
+admin/contact/export
+
+etc...
+
+
+
+*/
