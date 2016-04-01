@@ -49,3 +49,6 @@ etc...
 
 
 */
+
+Route::get('/admin');
+
