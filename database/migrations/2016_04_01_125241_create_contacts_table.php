@@ -33,8 +33,6 @@ class CreateContactTable extends Migration
         latitude
         longitude
         uuid
-
-
         */
 
 
