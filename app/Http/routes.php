@@ -53,12 +53,3 @@ etc...
 
 
 */
-
-<<<<<<< HEAD
-/*Route::get('/admin');*/
-=======
-
-
-
->>>>>>> parent of be85896... Revert "revert sans quick admin"
-
