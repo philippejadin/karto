@@ -9,9 +9,8 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "^5.2",
         "intervention/image": "^2.3",
-        "yajra/laravel-datatables-oracle": "~6.0",
-        "barryvdh/laravel-debugbar": "^2.2",
-        "laraveldaily/quickadmin": "^1.1"
+        "barryvdh/laravel-debugbar": "^2.2"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
