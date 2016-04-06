@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::auth();
+
+Route::resource('contacts', 'ContactController');
+
 
 // Routes pour la partie publique (Lilian)
 /*
@@ -50,5 +54,7 @@ etc...
 
 */
 
-Route::get('/admin');
+
+
+
 
