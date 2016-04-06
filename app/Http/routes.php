@@ -50,5 +50,5 @@ etc...
 
 */
 
-Route::get('/admin');
+/*Route::get('/admin');*/
 
