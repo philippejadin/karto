@@ -24,14 +24,7 @@ Route::auth();
 Route::group(['middleware' => ['web']], function () {
 
 
-// Routes pour la partie publique (Lilian)
-    /*
-    Exemples :
-
-    search/1080-Boulevard+L%E9opold+II+44
-    (ou avec post)
-
-    */
+    /********************** PUBLIC *****************************/
 
 
     Route::get('/', function () {
@@ -40,15 +33,16 @@ Route::group(['middleware' => ['web']], function () {
 
 
 
-    // Routes pour la partie admin (Soungui)
-    /*
-    admin/contact/add
-    admin/contact/search
-    admin/contact/import
-    admin/contact/export
-    */
 
+    /********************** ADMIN *****************************/
+
+    // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
+
+
+    // recherche dans les contacts
+    Route::get('admin/search', 'SearchController@search');
+    
 
 
 });

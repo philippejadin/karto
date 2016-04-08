@@ -16,7 +16,11 @@
 <body>
 
 
+@include('admin.searchform')
+
 @include('common.errors')
+
+
 
 @yield('contenu')
 </body>

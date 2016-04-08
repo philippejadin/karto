@@ -9,10 +9,7 @@
             <div class="alert alert-success alert-dismissible">{!! session('ok') !!}</div>
         @endif
 
-            {{ Form::open(array ('url'=>'/'))}}
-          {{ Form::text('keyword',null, array ('placeholder'=>'rechercher...'))}}
-            {{ Form::submit('search')}}
-            {!! Form::close() !!}
+
 
 
 
@@ -66,6 +63,6 @@
         </div>
         {!! link_to_route('admin.contact.create', 'Ajouter un organisme', [], ['class' => 'btn btn-info pull-right']) !!}
 
-        {!! $contacts->render() !!}}
+        {!! $contacts->render() !!}
     </div>
 @stop
