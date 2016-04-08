@@ -1,8 +1,9 @@
-@extends('admin.template')
+@extends('layouts.app')
+
+@section('content')
 
 
-@section('contenu')
-    <div class="col-sm-offset-0 col-sm-12">
+    <div class="container">
         <br>
         <div class="panel panel-primary">
             <div class="panel-heading">Création d'un organisme</div>

@@ -13,3 +13,7 @@
 </div>
 @endif
 
+
+@if(session()->has('ok'))
+    <div class="alert alert-success alert-dismissible">{!! session('ok') !!}</div>
+@endif

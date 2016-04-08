@@ -68,9 +68,32 @@
                         </li>
                     @endif
                 </ul>
+
+
+                <div class="col-sm-3 col-md-3 pull-right">
+
+
+                    {{ Form::open(['action'=>'SearchController@search', 'method'=>'GET', 'class'=>'navbar-form',  'role'=>'search'] ) }}
+                        <div class="input-group">
+
+                            {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    {!! Form::close() !!}
+
+
+
+                </div>
+
             </div>
         </div>
     </nav>
+
+
+
+    @include('common.errors')
 
     @yield('content')
 

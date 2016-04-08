@@ -1,13 +1,11 @@
-@extends('admin.template')
+@extends('layouts.app')
 
-@section('contenu')
+@section('content')
 
-    <br>
 
-    <div class="col-sm-offset-0 col-sm-12">
-        @if(session()->has('ok'))
-            <div class="alert alert-success alert-dismissible">{!! session('ok') !!}</div>
-        @endif
+
+    <div class="container">
+
 
 
 
