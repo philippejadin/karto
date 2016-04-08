@@ -40,6 +40,8 @@ class ContactController extends Controller
     {
         $contact = new Contact($request->all());
 
+        
+
         if ( ! $contact->save()) {
             return redirect()->back()
             ->withErrors($contact->getErrors())
