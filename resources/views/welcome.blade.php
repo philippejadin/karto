@@ -9,6 +9,8 @@
 
                 <div class="panel-body">
                     Your Application's Landing Page.
+
+                    <a href="/admin/contact">Accèder à la gestion de contacts</a>
                 </div>
             </div>
         </div>

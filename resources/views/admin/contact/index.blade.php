@@ -35,8 +35,11 @@
                         <td class="text-primary"><strong>{!! $contact->categorie !!}</strong></td>
                         <td class="text-primary"><strong>{!! $contact->phone !!}</strong></td>
 
-                        <td>{!! link_to_route('admin.contact.show', 'Voir', [$contact->id], ['class' => 'btn btn-success btn-block']) !!}</td>
-                        <td>{!! link_to_route('admin.contact.edit', 'Modifier', [$contact->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
+                        <td><a href="{{ route('admin.contact.show',  [$contact->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                        <td><a href="{{ route('admin.contact.edit', [$contact->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a>
+                        <td><a href="{{ route('admin.contact.destroy', [$contact->id]) }}" class="btn btn-danger"><i class="fa fa-trash" ></i></a>
+
+
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['admin.contact.destroy', $contact->id]]) !!}
                             {!! Form::submit('Supprimer', ['class' => 'btn btn-danger btn-block', 'onclick' => 'return confirm(\'Vraiment supprimer cet oraganisme?\')']) !!}
