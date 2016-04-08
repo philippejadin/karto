@@ -11,26 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::auth();
-
-
-
-
 
 Route::group(['middleware' => ['web']], function () {
 
-
     /********************** PUBLIC *****************************/
-
 
     Route::get('/', function () {
         return view('welcome');
     });
-
 
 
 
@@ -42,12 +31,5 @@ Route::group(['middleware' => ['web']], function () {
 
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
-    
-
 
 });
-
-
-
-
-

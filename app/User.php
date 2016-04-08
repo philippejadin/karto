@@ -47,8 +47,4 @@ class User extends Model implements AuthenticatableContract,
         User::observe(new UserActionsObserver);
     }
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
 }

@@ -9,12 +9,15 @@ class Contact extends Model
 {
   use ValidatingTrait;
 
-  /*
+/*
   protected $rules = [
       'name'  => 'required',
-      'address' => 'required'
+      'address' => 'required',
+      'postal_code' => 'required',
+      'email' => 'email'
   ];
   */
+
 
   protected $dates = ['deleted_at'];
   protected $table    = 'contacts';
@@ -37,5 +40,5 @@ class Contact extends Model
   ];
 
 
-  
+
 }
