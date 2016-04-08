@@ -17,39 +17,43 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::resource('contacts', 'ContactController');
+
+
+
+
+Route::group(['middleware' => ['web']], function () {
 
 
 // Routes pour la partie publique (Lilian)
-/*
-Exemples :
+    /*
+    Exemples :
 
-search/1080-Boulevard+L%E9opold+II+44
-(ou avec post)
+    search/1080-Boulevard+L%E9opold+II+44
+    (ou avec post)
 
-*/
-
-
+    */
 
 
-
-
-
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
 
 
+    // Routes pour la partie admin (Soungui)
+    /*
+    admin/contact/add
+    admin/contact/search
+    admin/contact/import
+    admin/contact/export
+    */
 
-// Routes pour la partie admin (Soungui)
-/*
-Exemples :
-
-admin/contact/add
-admin/contact/search
-admin/contact/import
-admin/contact/export
-
-etc...
+    Route::resource('admin/contact', 'ContactController');
 
 
+});
 
-*/
+
+
+
+

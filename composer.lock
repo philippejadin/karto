@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bd828bfcec7db9966ff211258b73f03d",
-    "content-hash": "95240e610e2592572aa4af935638efc0",
+    "hash": "260ab0074777af53d13ae095ab44b379",
+    "content-hash": "d5b273fc424010e17400f2d3ac058afd",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -2115,6 +2115,61 @@
                 "environment"
             ],
             "time": "2015-12-29 15:10:30"
+        },
+        {
+            "name": "watson/validating",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dwightwatson/validating.git",
+                "reference": "64dc3d211372576d468e2bfaf3c7b7ace66ee970"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dwightwatson/validating/zipball/64dc3d211372576d468e2bfaf3c7b7ace66ee970",
+                "reference": "64dc3d211372576d468e2bfaf3c7b7ace66ee970",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "~5.0",
+                "illuminate/database": "~5.0 || >=5.1.27",
+                "illuminate/events": "~5.0",
+                "illuminate/support": "~5.0",
+                "illuminate/validation": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Watson\\Validating\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dwight Watson",
+                    "email": "dwight@studiousapp.com"
+                }
+            ],
+            "description": "Eloquent model validating trait.",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "validation"
+            ],
+            "time": "2016-04-07 14:59:06"
         }
     ],
     "packages-dev": [

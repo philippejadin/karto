@@ -3,11 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Watson\Validating\ValidatingTrait;
 
 class Contact extends Model
 {
-  protected $dates = ['deleted_at'];
+  use ValidatingTrait;
 
+  /*
+  protected $rules = [
+      'name'  => 'required',
+      'address' => 'required'
+  ];
+  */
+
+  protected $dates = ['deleted_at'];
   protected $table    = 'contacts';
 
   protected $fillable = [
