@@ -10,7 +10,8 @@
         "laravelcollective/html": "^5.2",
         "intervention/image": "^2.3",
         "barryvdh/laravel-debugbar": "^2.2",
-        "watson/validating": "^2.2"
+        "watson/validating": "^2.2",
+        "toin0u/geocoder-laravel": "@stable"
 
     },
     "require-dev": {
