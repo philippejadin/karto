@@ -9,7 +9,7 @@ use Toin0u\Geocoder\Facade\Geocoder;
 class Contact extends Model
 {
   use ValidatingTrait;
-  
+
 
 /*
   protected $rules = [
@@ -43,15 +43,17 @@ class Contact extends Model
   ];
 
 
+  /*
+  * Geocode le contact
+  */
   public function geocode()
   {
     $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country);
 
     $this->latitude = $geocode['latitude'];
     $this->longitude = $geocode['longitude'];
-    $this->save();
   }
-  
+
 
 
 

@@ -44,6 +44,7 @@ class GeocodeContacts extends Command
         foreach ($contacts as $contact)
         {
             $contact->geocode();
+            $contact->save();
         }
 
     }
