@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Watson\Validating\ValidatingTrait;
+use Toin0u\Geocoder\Facade\Geocoder;
 
 class Contact extends Model
 {
   use ValidatingTrait;
+  
 
 /*
   protected $rules = [
@@ -26,7 +28,7 @@ class Contact extends Model
   protected $fillable = [
     'name',
     'description',
-    'adress',
+    'address',
     'postal_code',
     'locality',
     'country',
@@ -39,6 +41,17 @@ class Contact extends Model
     'longitude',
     'uuid'
   ];
+
+
+  public function geocode()
+  {
+    $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country);
+
+    $this->latitude = $geocode['latitude'];
+    $this->longitude = $geocode['longitude'];
+    $this->save();
+  }
+  
 
 
 

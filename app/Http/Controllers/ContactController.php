@@ -40,7 +40,7 @@ class ContactController extends Controller
     {
         $contact = new Contact($request->all());
 
-        
+        $contact->geocode();
 
         if ( ! $contact->save()) {
             return redirect()->back()
@@ -86,6 +86,7 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
         $contact->fill($request->all());
+        $contact->geocode();
 
         if ( ! $contact->save()) {
             return redirect()->back()
