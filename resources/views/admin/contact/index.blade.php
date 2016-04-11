@@ -18,6 +18,8 @@
                     <th>Commune</th>
                     <th>Catégorie</th>
                     <th>Téléphone</th>
+                    <th>longitude</th>
+                    <th>latitude</th>
 
 
                 </tr>
@@ -34,6 +36,8 @@
                         <td class="text-primary"><strong>{!! $contact->locality !!}</strong></td>
                         <td class="text-primary"><strong>{!! $contact->categorie !!}</strong></td>
                         <td class="text-primary"><strong>{!! $contact->phone !!}</strong></td>
+                        <td class="text-primary"><strong>{!! $contact->longitude !!}</strong></td>
+                        <td class="text-primary"><strong>{!! $contact->latitude !!}</strong></td>
 
                         <td><a href="{{ route('admin.contact.show',  [$contact->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                         <td><a href="{{ route('admin.contact.edit', [$contact->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a>
