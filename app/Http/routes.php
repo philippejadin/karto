@@ -57,4 +57,8 @@ Route::group(['middleware' => ['web']], function () {
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
 
+
+    // gestion des contacts CRUD
+    Route::resource('admin/tag', 'TagController');
+
 });
