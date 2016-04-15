@@ -8,8 +8,12 @@
             <div class="panel-heading">Fiche d'un tag</div>
             <div class="panel-body">
                 <p>Nom : {{ $tag->name }}</p>
-                <p>Présentation : {{ $tag->description}}</p>
-                <p>Adresse : {{ $tag->color}}</p>
+                <p>Description : {{ $tag->description}}</p>
+                <p class="text-primary">
+                    <div style="background-color:{{ $tag->color }}; width:30px; height: 30px">&nbsp;
+                    </div>
+                </p>
+
 
 
             </div>

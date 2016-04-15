@@ -17,7 +17,7 @@
                         {!! $errors->first('description', '<small class="help-block">:message</small>') !!}
                     </div>
                     <div class="form-group {!! $errors->has('color') ? 'has-error' : '' !!}">
-                        {!! Form::text('color', null, ['class' => 'form-control', 'placeholder' => 'Couleur']) !!}
+                        {!! Form::text('color', null, ['id' => 'color', 'class' => 'form-control', 'placeholder' => 'Couleur']) !!}
                         {!! $errors->first('color', '<small class="help-block">:message</small>') !!}
                     </div>
 
@@ -30,4 +30,15 @@
             <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
         </a>
     </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.js'></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css' />
+
+    <script>
+        $("#color").spectrum({
+            preferredFormat: "hex"
+        });
+
+    </script>
+
 @stop

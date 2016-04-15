@@ -27,7 +27,9 @@ class ContactController extends Controller
     */
     public function create()
     {
-        return view('admin.contact.create');
+        $contact = new Contact();
+        return view('admin.contact.create')
+            ->with('contact', $contact);
     }
 
     /**
@@ -36,20 +38,27 @@ class ContactController extends Controller
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-    public function store(Request $request)
+    public function store(Request $request,  Contact $contact)
     {
-        $contact = new Contact($request->all());
+        //$contact = new Contact($request->all());
+        $contact->fill($request->all());
+        $contact->save();
+
+        if ($request->has('tags') ) {
+            $contact->tags()->sync($request->get('tags'));
+        }
 
         $contact->geocode();
 
         if ( ! $contact->save()) {
             return redirect()->back()
-            ->withErrors($contact->getErrors())
-            ->withInput();
+                ->withErrors($contact->getErrors())
+                ->withInput();
         }
 
         return redirect()->route('admin.contact.index')
-        ->withSuccess("Your post was saved successfully.");
+        ->withSuccess("Your post was saved successfully.")
+            ->with('message', 'Message Body');
 
 
     }
@@ -86,6 +95,7 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
         $contact->fill($request->all());
+        $contact->tags()->sync($request->get('tags'));
         $contact->geocode();
 
         if ( ! $contact->save()) {
@@ -107,7 +117,9 @@ class ContactController extends Controller
     */
     public function destroy($id)
     {
-
+        $contact = Contact::findOrFail($id);
+        $contact->delete();
+        return redirect()->back();
     }
 
 

@@ -11,7 +11,7 @@ class Contact extends Model
   use ValidatingTrait;
 
 
-/*
+  /*
   protected $rules = [
       'name'  => 'required',
       'address' => 'required',
@@ -53,6 +53,13 @@ class Contact extends Model
     $this->latitude = $geocode['latitude'];
     $this->longitude = $geocode['longitude'];
   }
+
+  public function tags(){
+    
+    return $this->belongsToMany('App\Tag');
+
+  }
+
 
 
 

@@ -20,6 +20,18 @@
                 <p>Email : {{ $contact->email }}</p>
                 <p>Identifiant_externe : {{ $contact->Identifiant_externe }}</p>
 
+                @unless ($contact->tags->isEmpty())
+                   <h4> <p>
+                        @foreach($contact->tags as $tag)
+                               <font color="white"  >
+                               <span  style="background-color:{{ $tag->color }}">{{ $tag->name }}</span>
+
+                               </font>
+                        @endforeach
+                    </p></h4>
+                @endunless
+
+
             </div>
         </div>
         <a href="javascript:history.back()" class="btn btn-primary">

@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
     <div class="container">
         <br>
         <div class="panel panel-primary">
@@ -54,6 +58,18 @@
                         {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
                         {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
                     </div>
+
+
+                    <div class="form-group">
+                        {!! Form::label('tags[]', 'Tag') !!}
+                        {!! Form::select('tags[]', App\Tag::pluck('name','id'),$contact->tags->pluck('id')->all(),['class' =>'form-control input-lg','multiple'=>true,'id' => 'prettify']) !!}
+                    </div>
+
+
+
+                    <script type="text/javascript">
+                        $('#prettify').select2();
+                    </script>
 
 
                     {!! Form::submit('Envoyer', ['class' => 'btn btn-primary pull-right']) !!}

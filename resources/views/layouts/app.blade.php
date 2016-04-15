@@ -7,6 +7,9 @@
 
     <title>Laravel</title>
 
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
@@ -50,8 +53,8 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="/admin/contact">Contact</a></li>
-                    <li><a href="/admin/tag">Tag</a></li>
+                    <li><a href="{{url('admin/contact')}}">Contact</a></li>
+                    <li><a href="{{url('admin/tag')}}">Tag</a></li>
 
                 </ul>
 

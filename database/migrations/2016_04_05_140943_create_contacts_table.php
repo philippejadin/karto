@@ -13,7 +13,6 @@ class CreateContactsTable extends Migration {
      */
     public function up()
     {
-        Model::unguard();
         Schema::create('contacts',function(Blueprint $table){
             $table->increments("id");
             $table->string("name")->nullable();

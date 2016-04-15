@@ -12,6 +12,11 @@ class Tag extends Model
         'name',
         'description',
         'color',
-
     ];
+
+    public function contacts(){
+        
+        return $this->belongsToMany('App\Contact');
+
+    }
 }
