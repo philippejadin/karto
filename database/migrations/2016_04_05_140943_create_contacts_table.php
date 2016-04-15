@@ -26,8 +26,8 @@ class CreateContactsTable extends Migration {
             $table->string("website")->nullable();
             $table->string("email")->nullable();
             $table->tinyInteger("public")->default(0)->nullable();
-            $table->string("latitude")->nullable();
-            $table->string("longitude")->nullable();
+            $table->float('latitude', 10, 7)->nullable();
+            $table->float('longitude', 10, 7)->nullable();
             $table->string("uuid")->nullable();
             $table->timestamps();
             $table->softDeletes();

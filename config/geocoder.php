@@ -16,6 +16,7 @@ return [
         'Geocoder\Provider\OpenStreetMapProvider'  => null,
         'Geocoder\Provider\GoogleMapsProvider' => ['fr-FR', 'Île-de-France', true],
         'Geocoder\Provider\FreeGeoIpProvider'  => null,
+        
     ],
     'adapter'  => 'Geocoder\HttpAdapter\CurlHttpAdapter',
 ];

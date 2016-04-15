@@ -17,23 +17,35 @@ class monAdresseController extends Controller
         //récupérer l'adresse rentrée par l'utilisateur
    	    $keyword = $request->get('keyword');
 
+
     	//la géocoder
-    	$results = Geocoder::geocode($keyword); 
+        try 
+        {
+            $results = Geocoder::geocode($keyword); 
+        } 
+        catch (\Exception $e) 
+        {
+            // No exception will be thrown here
+            dd($e->getMessage());
+        }
 
-        //afficher l'array de l'objet $results
-        /*var_dump($results);*/
+        //dd($results);
         
- 
+        $distance = 0.01506 * 10; // 10 km
+
     	//faire une recherche de proximité
-        $prox = DB::where('longitude', '>', $results['longitude'] + ['0.1506'])
-                        ->orWhere('longitude', '<', $results['longitude'] - ['0.1506'])
-                        ->orWhere('latitude', '>', $results['latitude'] + ['0.1506'])
-                        ->orWhere('latitude', '<', $results['latitude'] - ['0.1506'])
-                        ->get();
+        $contacts = \App\Contact::where('longitude', '<', $results['longitude'] + $distance)
+                        ->where('longitude', '>', $results['longitude'] - $distance)
+                        ->where('latitude', '<', $results['latitude'] + $distance)
+                        ->where('latitude', '>', $results['latitude'] - $distance)
+                        ->paginate(50);
 
 
+       // dd($contacts);
     	//l'afficher
-    	return view('adresse.monAdresse',$prox);
+    	return view('adresse.monAdresse')
+        ->with('contacts', $contacts)
+        ->with('results', $results);
     }
 
 

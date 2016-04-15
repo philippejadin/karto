@@ -95,7 +95,9 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
         $contact->fill($request->all());
+         if ($request->has('tags') ) {
         $contact->tags()->sync($request->get('tags'));
+    }
         $contact->geocode();
 
         if ( ! $contact->save()) {
