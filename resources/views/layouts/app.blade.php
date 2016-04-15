@@ -19,23 +19,23 @@
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <!-- leaflet - map -->
-     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
     <style>
-        body {
-            font-family: 'Lato';
-        }
+    body {
+        font-family: 'Lato';
+    }
 
-        .fa-btn {
-            margin-right: 6px;
-        }
-        #mapid { 
-            height: 180px; 
-        }
+    .fa-btn {
+        margin-right: 6px;
+    }
+    #mapid {
+        height: 180px;
+    }
     </style>
 </head>
 <body id="app-layout">
@@ -89,13 +89,13 @@
 
 
                     {{ Form::open(['action'=>'SearchController@search', 'method'=>'GET', 'class'=>'navbar-form',  'role'=>'search'] ) }}
-                        <div class="input-group">
+                    <div class="input-group">
 
-                            {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
+                        {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </div>
+                    </div>
                     {!! Form::close() !!}
 
 
@@ -108,7 +108,9 @@
 
 
 
-    @include('common.errors')
+    <div class="container">
+        @include('common.errors')
+    </div>
     @yield('content')
 
     <!-- JavaScripts -->

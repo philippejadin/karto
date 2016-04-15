@@ -30,7 +30,7 @@ class ContactController extends Controller
     {
         $contact = new Contact();
         return view('admin.contact.create')
-            ->with('contact', $contact);
+        ->with('contact', $contact);
     }
 
     /**
@@ -50,13 +50,14 @@ class ContactController extends Controller
 
         if (! $contact->geocode())
         {
-            flash()->error('Adresse pas géocodée');
+            flash()->info('Adresse pas géocodée');
         }
 
         if ( ! $contact->save()) {
+            flash()->error('Contact non valide');
             return redirect()->back()
-                ->withErrors($contact->getErrors())
-                ->withInput();
+            ->withErrors($contact->getErrors())
+            ->withInput();
         }
 
         flash()->success('Contact bien ajouté');
@@ -102,27 +103,19 @@ class ContactController extends Controller
 
         if (! $contact->geocode())
         {
-            flash()->error('Adresse pas géocodée');
+            flash()->info('Adresse pas géocodée');
         }
 
 
-
         if ( ! $contact->save()) {
+            flash()->error('Contact non valide');
             return redirect()->back()
             ->withErrors($contact->getErrors())
             ->withInput();
         }
 
-        Session::flash('success','L\'organisme " . $request->input(\'name\') . " a été modifié.');
-
-      return redirect()->route('admin.contact.index');
-
-
-
-
-        /*return redirect()->route('admin.contact.index');
-        ->withSuccess("Your post was saved successfully.");*/
-
+        flash()->success('L\'organisme a bien été enregistré');
+        return redirect()->route('admin.contact.index');
     }
 
     /**
