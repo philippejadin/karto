@@ -17,14 +17,9 @@ Route::group(['middleware' => ['web']], function () {
 
 
 
+
     Route::get('test', function ()
     {
-        /*
-        $contacts = \App\Contact::whereNull('longitude')->orWhereNull('latitude')->take(5)->get();
-        dd($contacts);
-        */
-
-
         $geocode = Geocoder::geocode('5 rue de dublin, 1050 Ixelles');
         // The GoogleMapsProvider will return a result
         dd($geocode['latitude']);
@@ -32,33 +27,21 @@ Route::group(['middleware' => ['web']], function () {
     });
 
 
-
-
-    
-
-
     /********************** PUBLIC *****************************/
 
     Route::get('/', function () {
         return view('welcome');
     });
-
     Route::get('monAdresse', 'monAdresseController@monAdresse');
 
 
 
-
     /********************** ADMIN *****************************/
-
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
-
-
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
-
-
-    // gestion des contacts CRUD
+    // gestion des tags CRUD
     Route::resource('admin/tag', 'TagController');
 
 });

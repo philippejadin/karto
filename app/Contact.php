@@ -48,16 +48,22 @@ class Contact extends Model
   */
   public function geocode()
   {
-    $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country);
-
-    $this->latitude = $geocode['latitude'];
-    $this->longitude = $geocode['longitude'];
+    try
+    {
+      $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country);
+      $this->latitude = $geocode['latitude'];
+      $this->longitude = $geocode['longitude'];
+      return true;
+    }
+    catch (\Exception $e)
+    {
+      return false;
+    }
   }
 
-  public function tags(){
-
+  public function tags()
+  {
     return $this->belongsToMany('App\Tag')->withTimestamps();
-
   }
 
 
