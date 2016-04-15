@@ -6,21 +6,47 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB;
 use App\Http\Controllers\Controller;
+use Toin0u\Geocoder\Facade\Geocoder;
+use App\Contact;
 
 class monAdresseController extends Controller
 {
     //taper son addresse 
     public function monAdresse(Request $request)
     {
+        //récupérer l'adresse rentrée par l'utilisateur
+   	    $keyword = $request->get('keyword');
+
+
+    	//la géocoder
+        try 
+        {
+            $results = Geocoder::geocode($keyword); 
+        } 
+        catch (\Exception $e) 
+        {
+            // No exception will be thrown here
+            dd($e->getMessage());
+        }
+
+        //dd($results);
         
-       
-        /*$contact = DB::select('select name, address, postal_code, categorie from contacts where postal_code = ? order by categorie', array(1070));*/
+        $distance = 0.01506 * 10; // 10 km
 
-        $postal_code = $request->get('postal_code');
+    	//faire une recherche de proximité
+        $contacts = \App\Contact::where('longitude', '<', $results['longitude'] + $distance)
+                        ->where('longitude', '>', $results['longitude'] - $distance)
+                        ->where('latitude', '<', $results['latitude'] + $distance)
+                        ->where('latitude', '>', $results['latitude'] - $distance)
+                        ->paginate(50);
 
-        $contacts = \App\Contact::where('postal_code', '=', $postal_code)->paginate(20);
 
-        return view('adresse.monAdresse')
-        ->with('contacts', $contacts);
+       // dd($contacts);
+    	//l'afficher
+    	return view('adresse.monAdresse')
+        ->with('contacts', $contacts)
+        ->with('results', $results);
     }
+
+
 }

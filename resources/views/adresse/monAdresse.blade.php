@@ -1,43 +1,52 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="./JS/main.js"></script>
-	<title>Mon Adresse</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
 	</br>
 
-{{Form::open(['action' => 'monAdresseController@monAdresse', 'method'=>'GET'])}}
+	{{Form::open(['action' => 'monAdresseController@monAdresse', 'method'=>'GET'])}}
 
-	<input type ="text" id="contact" name="postal_code" placeholder="Tapez votre code postal"></input>
-{{Form::close()}}
- 
+		<div class="input-group">
+		<!-- Formulaire pour rentrer son adresse --> 
+		{{Form::text('keyword', null, ['placeholder'=>'Veuillez taper votre adresse', 'class' => 'form-control'])}}
+		
+        {{Form::submit('search')}}
+    </div>
 
-<div id="listContact">
+	{{Form::close()}}
 
-<table>
-@foreach ($contacts as $contact)
-	
-<tr>
-<td>
-{{$contact->categorie}} </br>
-</td>
+	<!-- div pour afficher ses données de géolocalisation -->
+<table id="list_asbl">
+		
+			<thead>
+				<tr>
+					<th>Nom</th>
+					<th>Adresse</th>
+					<th>Localité</th>
+				</tr>
+			</thead>
 
-<td>
-{{$contact->name}} </br>
-</td>
+
+			<tbody>
+			@foreach($contacts as $contact)
+				<tr>
+					<td>{{$contact->name}}</td>
+					<td>{{$contact->address}}</td>
+					<td>{{$contact->locality}}</td>
 
 
-</tr>
-@endforeach
+				</tr>
+			@endforeach	
+			</tbody>
+		</table>
+		
 
-</table>
 
 {!! $contacts->render() !!}
+</div> 
 
-</div>
+<pre>
+{{ var_dump($results) }}
+</pre>
 
-</body>
-</html>
+
+@endsection
