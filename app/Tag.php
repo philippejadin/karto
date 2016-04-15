@@ -15,8 +15,8 @@ class Tag extends Model
     ];
 
     public function contacts(){
-        
-        return $this->belongsToMany('App\Contact');
+
+        return $this->belongsToMany('App\Contact')->withTimestamps();
 
     }
 }
