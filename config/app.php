@@ -147,7 +147,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        
+        Laracasts\Flash\FlashServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Toin0u\Geocoder\GeocoderServiceProvider::class,
@@ -212,6 +213,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Geocoder' => Toin0u\Geocoder\Facade\Geocoder::class,
+        'Flash' => Laracasts\Flash\Flash::class,
 
     ],
 

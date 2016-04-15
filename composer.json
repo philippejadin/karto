@@ -11,7 +11,8 @@
         "intervention/image": "^2.3",
         "barryvdh/laravel-debugbar": "^2.2",
         "watson/validating": "^2.2",
-        "toin0u/geocoder-laravel": "@stable"
+        "toin0u/geocoder-laravel": "@stable",
+        "laracasts/flash": "^2.0"
 
     },
     "require-dev": {

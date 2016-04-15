@@ -102,7 +102,6 @@
 
 
     @include('common.errors')
-
     @yield('content')
 
     <!-- JavaScripts -->

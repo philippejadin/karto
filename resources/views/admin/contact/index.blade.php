@@ -2,6 +2,12 @@
 @section('content')
     <div class="container">
 
+        @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible">
+              {{ Session::get('success') }}
+            </div>
+        @endif
+
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Liste des organismes</h3>

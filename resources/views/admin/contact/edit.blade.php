@@ -6,6 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
     <div class="container">
+
         <br>
         <div class="panel panel-primary">
             <div class="panel-heading">Modification d'un organisme</div>

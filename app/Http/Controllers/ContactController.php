@@ -6,6 +6,7 @@ use App\Contact;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Session;
 
 class ContactController extends Controller
 {
@@ -17,7 +18,9 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::paginate(20);
+
         return view('admin.contact.index', compact('contacts'));
+
     }
 
     /**
@@ -56,10 +59,13 @@ class ContactController extends Controller
                 ->withInput();
         }
 
-        return redirect()->route('admin.contact.index')
+        Session::flash('success','Okey');
+
+        return redirect()->route('admin.contact.index');
+            /*
         ->withSuccess("Your post was saved successfully.")
             ->with('message', 'Message Body');
-
+                */
 
     }
 
@@ -95,8 +101,14 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
         $contact->fill($request->all());
-        $contact->tags()->sync($request->get('tags'));
+
+        if ($request->has('tags') ) {
+            $contact->tags()->sync($request->get('tags'));
+        }
+
         $contact->geocode();
+
+
 
         if ( ! $contact->save()) {
             return redirect()->back()
@@ -104,8 +116,15 @@ class ContactController extends Controller
             ->withInput();
         }
 
-        return redirect()->route('admin.contact.index')
-        ->withSuccess("Your post was saved successfully.");
+        Session::flash('success','L\'organisme " . $request->input(\'name\') . " a été modifié.');
+
+      return redirect()->route('admin.contact.index');
+
+
+
+
+        /*return redirect()->route('admin.contact.index');
+        ->withSuccess("Your post was saved successfully.");*/
 
     }
 
