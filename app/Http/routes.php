@@ -17,10 +17,6 @@ Route::auth();
 
 
 
-Route::group(['middleware' => ['web']], function () {
-
-
-
     Route::get('test', function ()
     {
         /*
@@ -72,4 +68,3 @@ Route::group(['middleware' => ['web']], function () {
     // gestion des contacts CRUD
     Route::resource('admin/tag', 'TagController');
 
-});
