@@ -14,13 +14,11 @@ class monAdresseController extends Controller
     //taper son addresse 
     public function monAdresse(Request $request)
     {
-        ///CODE DE GEOLOCALISATION
         //récupérer l'adresse rentrée par l'utilisateur
    	    $keyword = $request->get('keyword');
 
+
     	//la géocoder
-        //try and catch pour s'assurer qu'elle est bien géoloc
-        // !!faire l'entrée de l'adresse de manière plus structurée!!
         try 
         {
             $results = Geocoder::geocode($keyword); 
@@ -31,9 +29,15 @@ class monAdresseController extends Controller
             dd($e->getMessage());
         }
 
+<<<<<<< HEAD
         
         //variable de calcul de distance 
         $distance = 0.01506 * 10; // == 10 km
+=======
+        //dd($results);
+        
+        $distance = 0.01506 * 10; // 10 km
+>>>>>>> origin/master
 
     	//faire une recherche de proximité
         $contacts = \App\Contact::where('longitude', '<', $results['longitude'] + $distance / 2)
@@ -41,19 +45,22 @@ class monAdresseController extends Controller
                         ->where('latitude', '<', $results['latitude'] + $distance / 2)
                         ->where('latitude', '>', $results['latitude'] - $distance / 2)
                         ->paginate(50);
-        
-        //debug (dd == dump and die)
-        /*dd($contacts);*/
 
-    	//affichage 
+
+       // dd($contacts);
+    	//l'afficher
     	return view('adresse.monAdresse')
         ->with('contacts', $contacts)
+<<<<<<< HEAD
         ->with('results', $results)
         ->with('keyword', $keyword);
 
 
 
 
+=======
+        ->with('results', $results);
+>>>>>>> origin/master
     }
 
 

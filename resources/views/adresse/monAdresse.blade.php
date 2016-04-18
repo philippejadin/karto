@@ -61,6 +61,11 @@
 	<div class="container">
 		<!-- tableau pour afficher les contacts géographiquement près de l'adresse get -->
 		<table id="list_asbl" class="table">
+
+	<!-- div pour afficher ses données de géolocalisation -->
+<table id="list_asbl">
+		
+
 			<thead>
 				<tr>
 					<!-- titre -->

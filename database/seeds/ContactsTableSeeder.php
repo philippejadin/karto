@@ -43,4 +43,6 @@ class ContactsTableSeeder extends Seeder
         $contact4->tags()->attach($tag3);
 
     }
+
+    
 }

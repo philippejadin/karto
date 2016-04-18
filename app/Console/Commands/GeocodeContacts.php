@@ -11,7 +11,7 @@ class GeocodeContacts extends Command
      *
      * @var string
      */
-    protected $signature = 'karto:geocode';
+    protected $signature = 'karto:geocode {size=5}';
 
     /**
      * The console command description.
@@ -37,14 +37,18 @@ class GeocodeContacts extends Command
      */
     public function handle()
     {
+
+
         // trouver 5 contacts sans longitude ou latitude
         // les geocoder et le sauver (cfr. le modèle contact)
-        $contacts = \App\Contact::whereNull('longitude')->orWhereNull('latitude')->take(5)->get();
+        $contacts = \App\Contact::whereNull('longitude')->orWhereNull('latitude')->take($this->argument('size'))->get();
 
         foreach ($contacts as $contact)
         {
             $contact->geocode();
+            
             $contact->save();
+            $this->info('Contact ' . $contact->name . ' correctement géolocalisé');
         }
 
     }

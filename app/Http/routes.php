@@ -13,7 +13,7 @@
 
 Route::auth();
 
-Route::group(['middleware' => ['web']], function () {
+
 
 
 
@@ -58,8 +58,14 @@ Route::group(['middleware' => ['web']], function () {
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
 
+    //import depuis un fichier excel
+    Route::get('admin/import', 'ExcelController@getImport');
+    Route::post('admin/import', 'ExcelController@postImport');
+
+
+
+
 
     // gestion des contacts CRUD
     Route::resource('admin/tag', 'TagController');
 
-});
