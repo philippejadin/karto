@@ -11,7 +11,7 @@ use App\Contact;
 
 class monAdresseController extends Controller
 {
-    //taper son addresse 
+    //taper son addresse
     public function monAdresse(Request $request)
     {
         //récupérer l'adresse rentrée par l'utilisateur
@@ -19,25 +19,18 @@ class monAdresseController extends Controller
 
 
     	//la géocoder
-        try 
+        try
         {
-            $results = Geocoder::geocode($keyword); 
-        } 
-        catch (\Exception $e) 
+            $results = Geocoder::geocode($keyword);
+        }
+        catch (\Exception $e)
         {
             // No exception will be thrown here
             dd($e->getMessage());
         }
 
-<<<<<<< HEAD
-        
-        //variable de calcul de distance 
-        $distance = 0.01506 * 10; // == 10 km
-=======
-        //dd($results);
-        
-        $distance = 0.01506 * 10; // 10 km
->>>>>>> origin/master
+    //variable de calcul de distance
+        $distance = 0.01506 * 10; // = 10 km
 
     	//faire une recherche de proximité
         $contacts = \App\Contact::where('longitude', '<', $results['longitude'] + $distance / 2)
@@ -46,22 +39,10 @@ class monAdresseController extends Controller
                         ->where('latitude', '>', $results['latitude'] - $distance / 2)
                         ->paginate(50);
 
-
-       // dd($contacts);
     	//l'afficher
     	return view('adresse.monAdresse')
         ->with('contacts', $contacts)
-<<<<<<< HEAD
         ->with('results', $results)
         ->with('keyword', $keyword);
-
-
-
-
-=======
-        ->with('results', $results);
->>>>>>> origin/master
     }
-
-
 }

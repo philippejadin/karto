@@ -5,7 +5,7 @@
 	<div class="container">
 
 		<div class="row">
-				
+
 				<!-- ouverture du formulaire avec blade -->
 				{{Form::open(['action' => 'monAdresseController@monAdresse', 'method'=>'GET', 'class'=> 'navbar-form', 'role'=>'search'] )}}
 
@@ -32,7 +32,7 @@
 
 	<!-- script javascipt pour l'affichage de la map -->
 	<script>
-		//quand la fenêtre se charge la fonction initMap se lance 
+		//quand la fenêtre se charge la fonction initMap se lance
 		window.onload = function initMap(){
 
 			//ici, on crée la vue de base (coordonnées du get de l'adresse)
@@ -57,15 +57,10 @@
 		}
 	</script>
 
-		  
+
 	<div class="container">
 		<!-- tableau pour afficher les contacts géographiquement près de l'adresse get -->
 		<table id="list_asbl" class="table">
-
-	<!-- div pour afficher ses données de géolocalisation -->
-<table id="list_asbl">
-		
-
 			<thead>
 				<tr>
 					<!-- titre -->
@@ -78,10 +73,10 @@
 			</thead>
 
 			@foreach($contacts as $contact)
-				
+
 				<tbody>
 					<tr>
-						d<!-- données qu'on récupère dans la DB grace à ELOQUENT -->
+						<!-- données qu'on récupère dans la DB grace à ELOQUENT -->
 						<td>{{$contact->name}}</td>
 						<td>{{$contact->address}}</td>
 						<td>{{$contact->locality}}</td>
@@ -95,8 +90,8 @@
 				</tbody>
 			@endforeach
 		</table>
-	<!-- affichage des contacts en pagination -->	
+	<!-- affichage des contacts en pagination -->
 	{!! $contacts->render() !!}
-	</div> 
+	</div>
 
 @endsection

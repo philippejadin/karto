@@ -18,9 +18,7 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::paginate(20);
-
         return view('admin.contact.index', compact('contacts'));
-
     }
 
     /**
@@ -32,7 +30,7 @@ class ContactController extends Controller
     {
         $contact = new Contact();
         return view('admin.contact.create')
-            ->with('contact', $contact);
+        ->with('contact', $contact);
     }
 
     /**
@@ -43,7 +41,6 @@ class ContactController extends Controller
     */
     public function store(Request $request,  Contact $contact)
     {
-        //$contact = new Contact($request->all());
         $contact->fill($request->all());
         $contact->save();
 
@@ -51,22 +48,20 @@ class ContactController extends Controller
             $contact->tags()->sync($request->get('tags'));
         }
 
-        $contact->geocode();
-
-        if ( ! $contact->save()) {
-            return redirect()->back()
-                ->withErrors($contact->getErrors())
-                ->withInput();
+        if (! $contact->geocode())
+        {
+            flash()->info('Adresse pas géocodée');
         }
 
-        Session::flash('success','Okey');
+        if ( ! $contact->save()) {
+            flash()->error('Contact non valide');
+            return redirect()->back()
+            ->withErrors($contact->getErrors())
+            ->withInput();
+        }
 
+        flash()->success('Contact bien ajouté');
         return redirect()->route('admin.contact.index');
-            /*
-        ->withSuccess("Your post was saved successfully.")
-            ->with('message', 'Message Body');
-                */
-
     }
 
     /**
@@ -106,26 +101,21 @@ class ContactController extends Controller
             $contact->tags()->sync($request->get('tags'));
         }
 
-        $contact->geocode();
-
+        if (! $contact->geocode())
+        {
+            flash()->info('Adresse pas géocodée');
+        }
 
 
         if ( ! $contact->save()) {
+            flash()->error('Contact non valide');
             return redirect()->back()
             ->withErrors($contact->getErrors())
             ->withInput();
         }
 
-        Session::flash('success','L\'organisme " . $request->input(\'name\') . " a été modifié.');
-
-      return redirect()->route('admin.contact.index');
-
-
-
-
-        /*return redirect()->route('admin.contact.index');
-        ->withSuccess("Your post was saved successfully.");*/
-
+        flash()->success('L\'organisme a bien été enregistré');
+        return redirect()->route('admin.contact.index');
     }
 
     /**

@@ -8,24 +8,24 @@ use Toin0u\Geocoder\Facade\Geocoder;
 
 class Contact extends Model
 {
-  use ValidatingTrait;
+    use ValidatingTrait;
 
 
-  /*
-  protected $rules = [
-      'name'  => 'required',
-      'address' => 'required',
-      'postal_code' => 'required',
-      'email' => 'email'
-  ];
-  */
+    /*
+    protected $rules = [
+    'name'  => 'required',
+    'address' => 'required',
+    'postal_code' => 'required',
+    'email' => 'email'
+];
+*/
 
 
 
-  protected $dates = ['deleted_at'];
-  protected $table    = 'contacts';
+protected $dates = ['deleted_at'];
+protected $table    = 'contacts';
 
-  protected $fillable = [
+protected $fillable = [
     'name',
     'description',
     'address',
@@ -40,25 +40,36 @@ class Contact extends Model
     'latitude',
     'longitude',
     'uuid'
-  ];
+];
 
 
-  /*
-  * Geocode le contact
-  */
-  public function geocode()
-  {
-    $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country);
+/*
+* Geocode le contact
+*/
+public function geocode()
+{
+    try
+    {
+        $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country);
+    }
+    catch (\Exception $e)
+    {
+        return false;
+    }
 
     $this->latitude = $geocode['latitude'];
     $this->longitude = $geocode['longitude'];
-  }
 
-  public function tags(){
+    return true;
+
+}
+
+public function tags()
+{
 
     return $this->belongsToMany('App\Tag')->withTimestamps();
 
-  }
+}
 
 
 

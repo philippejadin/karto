@@ -9,36 +9,9 @@
 </div>
 @endif
 
-
-@if ( Session::has('message') )
-<div class="alert alert-info alert-dismissible fade in" id="message">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-  <i class="fa fa-info-circle"></i>
-    {!! Session::get('message') !!}
-  </div>
-@endif
-
-
-@if ( Session::has('error') )
-<div class="alert alert-danger alert-dismissible fade in" id="error">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-  <i class="fa fa-exclamation-triangle"></i>
-    {{ Session::get('error') }}
-  </div>
-@endif
-
-
-@if (!empty($success))
-  <div class="alert alert-info alert-dismissible fade in" id="message">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <i class="fa fa-info-circle"></i>
-    {{ $success }}
-  </div>
-
+@if (Session::has('flash_notification.message'))
+    <div class="alert alert-{{ Session::get('flash_notification.level') }}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ Session::get('flash_notification.message') }}
+    </div>
 @endif
