@@ -1,12 +1,15 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
+    <div class="container" xmlns="http://www.w3.org/1999/html">
 
         @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible">
               {{ Session::get('success') }}
             </div>
         @endif
+
+
+
 
         <div class="panel panel-primary">
             <div class="panel-heading">

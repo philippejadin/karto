@@ -152,6 +152,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Toin0u\Geocoder\GeocoderServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
 
@@ -214,6 +215,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Geocoder' => Toin0u\Geocoder\Facade\Geocoder::class,
         'Flash' => Laracasts\Flash\Flash::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
