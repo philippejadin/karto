@@ -19,10 +19,11 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('test', function ()
     {
-        /*
-        $contacts = \App\Contact::whereNull('longitude')->orWhereNull('latitude')->take(5)->get();
-        dd($contacts);
-        */
+        
+        //$contacts = \App\Contact::whereNull('longitude')->orWhereNull('latitude')->take(5)->get();
+        $contacts = \App\Contact::all();
+        return($contacts);
+        
 
 
         $geocode = Geocoder::geocode('5 rue de dublin, 1050 Ixelles');

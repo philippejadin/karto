@@ -31,17 +31,15 @@ class monAdresseController extends Controller
             dd($e->getMessage());
         }
 
-        //debug (dd == dump and die)
-        /*dd($results);*/
         
-        //vairiable de calcul de distance 
+        //variable de calcul de distance 
         $distance = 0.01506 * 10; // == 10 km
 
     	//faire une recherche de proximité
-        $contacts = \App\Contact::where('longitude', '<', $results['longitude'] + $distance)
-                        ->where('longitude', '>', $results['longitude'] - $distance)
-                        ->where('latitude', '<', $results['latitude'] + $distance)
-                        ->where('latitude', '>', $results['latitude'] - $distance)
+        $contacts = \App\Contact::where('longitude', '<', $results['longitude'] + $distance / 2)
+                        ->where('longitude', '>', $results['longitude'] - $distance / 2)
+                        ->where('latitude', '<', $results['latitude'] + $distance / 2)
+                        ->where('latitude', '>', $results['latitude'] - $distance / 2)
                         ->paginate(50);
         
         //debug (dd == dump and die)
@@ -50,7 +48,8 @@ class monAdresseController extends Controller
     	//affichage 
     	return view('adresse.monAdresse')
         ->with('contacts', $contacts)
-        ->with('results', $results);
+        ->with('results', $results)
+        ->with('keyword', $keyword);
 
 
 
