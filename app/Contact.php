@@ -43,17 +43,35 @@ protected $fillable = [
 ];
 
 
+    public function getCountryAttribute($value)
+    {
+        if (empty($value))
+        {
+            return 'Belgique'; // TODO à configurer
+        }
+    }
+
 /*
 * Geocode le contact
 */
 public function geocode()
 {
+
+    // si on a déja essayé de géocoder, pas la peine de réessayer, ça ne marche pas
+    if ($this->latitude == -999)
+    {
+        return false;
+    }
+
     try
     {
         $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country);
     }
     catch (\Exception $e)
     {
+        // on met arbitrairement -10000 ce qui veut dire "géocodage foiré"
+        $this->latitude = -999;
+        $this->longitude = -999;
         return false;
     }
 

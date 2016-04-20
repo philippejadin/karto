@@ -40,7 +40,7 @@ class ImportContacts extends Command
     {
 
         Excel::load(storage_path('app/import/test.xls'), function ($reader) {
-
+       /* Excel::filter('chunk')->load(storage_path('app/import/test.xls'))->chunk(250, function($reader){*/
             $reader->each(function($sheet) {
                 foreach ($sheet->toArray() as $row) {
                     $contact = \App\Contact::firstOrCreate($row);
