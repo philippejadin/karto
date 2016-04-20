@@ -11,32 +11,35 @@
 
 			        <div class="input-group">
 			            <!-- rentrer l'adresse à géolocaliser / blade -->
-			            {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control'])}}
 
-						 <span class="input-group-btn">
+			            {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size'=>80])}}
 
-			                <button class="btn btn-default" type="submit">
+						 <div class="input-group-btn">
+
+			                <button id="button" class="btn btn-default" type="submit">
 
 			                	<i class="glyphicon glyphicon-search"></i>
 
 			                </button>
-			            </span>
+			            </div>
 			        </div>
+
 				<!-- fermeture du formulaire avec blade -->
 		        {{Form::close()}}
 		</div>
 	</div>
+
+	@if ($searched)
 
 	<!-- affichage de la map -->
 	<div id="map"></div>
 
 	<!-- script javascipt pour l'affichage de la map -->
 	<script>
-		//quand la fenêtre se charge la fonction initMap se lance
-		window.onload = function initMap(){
 
+		window.onload=function initMap(){
 			//ici, on crée la vue de base (coordonnées du get de l'adresse)
-				var mymap = L.map('map').setView([{{$results['latitude']}}, {{$results['longitude']}}],16);
+			var mymap = L.map('map').setView([{{$results['latitude']}}, {{$results['longitude']}}],16);
 
 			//On set le "provider" et on set les attributions
 		    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -45,7 +48,7 @@
 			//rajouter ça à la variable
 			}).addTo(mymap);
 
-		    //affichage des contacts géograpphiquement près de l'adresse en get
+	    	//affichage des contacts géograpphiquement près de l'adresse en get
 			@foreach($contacts as $contact)
 				//création du marqueur
 			   L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
@@ -54,7 +57,8 @@
 			    //ouverture du pop up
 			    .openPopup();
 			@endforeach
-		}
+		};
+
 	</script>
 
 
@@ -72,8 +76,8 @@
 				</tr>
 			</thead>
 
-			@foreach($contacts as $contact)
 
+			@foreach($contacts as $contact)
 				<tbody>
 					<tr>
 						<!-- données qu'on récupère dans la DB grace à ELOQUENT -->
@@ -93,5 +97,6 @@
 	<!-- affichage des contacts en pagination -->
 	{!! $contacts->render() !!}
 	</div>
+	@endif
 
 @endsection

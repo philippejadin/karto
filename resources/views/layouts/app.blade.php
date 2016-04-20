@@ -23,17 +23,10 @@
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <style>
-        #map { 
-            display:block;
-            margin-left:auto;
-            margin-right: auto;
-            margin-top: 10px;
-            height: 450px; 
-            width:100%;
-            background-color: black;
-        }
-    </style>
+
+    {!! Html::style('css/style.css') !!}
+
+    
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top">

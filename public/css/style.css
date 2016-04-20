@@ -1,0 +1,9 @@
+    #map { 
+            display:block;
+            margin-left:auto;
+            margin-right: auto;
+            margin-top: 10px;
+            height: 450px; 
+            width:100%;
+            background-color: black;
+        }

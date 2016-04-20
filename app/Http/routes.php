@@ -30,6 +30,8 @@ Route::auth();
         // The GoogleMapsProvider will return a result
         dd($geocode['latitude']);
 
+
+
     });
 
 
@@ -40,16 +42,18 @@ Route::auth();
 
     /********************** PUBLIC *****************************/
 
-    Route::get('/', function () {
+/*    Route::get('/', function () {
         return view('welcome');
-    });
+    });*/
 
-    Route::get('monAdresse', 'monAdresseController@monAdresse');
+    Route::get('/', 'monAdresseController@monAdresse');
 
 
 
 
     /********************** ADMIN *****************************/
+
+//Route::group(['middleware' => 'auth'], function () {
 
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
@@ -63,9 +67,7 @@ Route::auth();
     Route::post('admin/import', 'ExcelController@postImport');
 
 
-
-
-
     // gestion des contacts CRUD
     Route::resource('admin/tag', 'TagController');
 
+//});

@@ -14,9 +14,11 @@ class monAdresseController extends Controller
     //taper son addresse
     public function monAdresse(Request $request)
     {
-        //récupérer l'adresse rentrée par l'utilisateur
-   	    $keyword = $request->get('keyword');
+        if ($request->has('keyword'))
+        {
 
+        //récupérer l'adresse rentrée par l'utilisateur
+   	    $keyword = $request->get('keyword'); 
 
     	//la géocoder
         try
@@ -43,6 +45,15 @@ class monAdresseController extends Controller
     	return view('adresse.monAdresse')
         ->with('contacts', $contacts)
         ->with('results', $results)
-        ->with('keyword', $keyword);
+        ->with('keyword', $keyword)
+        ->with('searched', true);
+    }
+    else
+    {
+        //l'afficher
+        return view('adresse.monAdresse')
+        ->with('keyword', null)
+        ->with('searched', false);
+    }
     }
 }
