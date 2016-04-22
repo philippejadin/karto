@@ -13,7 +13,7 @@ class AddGeocodeStatusToContacts extends Migration
     public function up()
     {
         Schema::table('contacts', function ($table) {
-            $table->tinyInteger('geocode_status');
+            $table->tinyInteger('geocode_status')->default(0);
         });
     }
 

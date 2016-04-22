@@ -43,6 +43,7 @@ protected $fillable = [
 ];
 
 
+/*
 public function getCountryAttribute($value)
 {
     if (empty($value))
@@ -50,6 +51,7 @@ public function getCountryAttribute($value)
         return 'Belgique'; // TODO à configurer
     }
 }
+*/
 
 
 
@@ -71,10 +73,11 @@ public function getCountryAttribute($value)
 
 *
 */
-public function geocode()
+public function geocode($force = false)
 {
     // si on a déja essayé de géocoder et que l'erreur est persisante, pas la peine de réessayer, ça ne marchera pas
-    if ($this->geocode_status < -20)
+    // sauf si on force le géocodage avec $force = true
+    if ($this->geocode_status < -20 && ! $force)
     {
         return false;
     }
@@ -85,13 +88,11 @@ public function geocode()
     }
     catch (\Exception $e)
     {
-
         if ($e instanceof HttpError)
         {
             $this->geocode_status = -10; // erreur HTTP
             return false;
         }
-
 
         if ($e instanceof QuotaExceeded )
         {
@@ -100,6 +101,12 @@ public function geocode()
         }
 
         if ($e instanceof NoResult)
+        {
+            $this->geocode_status = -30; // erreur HTTP
+            return false;
+        }
+
+        if ($e instanceof ChainNoResultException)
         {
             $this->geocode_status = -30; // erreur HTTP
             return false;

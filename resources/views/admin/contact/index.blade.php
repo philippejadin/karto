@@ -38,7 +38,8 @@
                     <th style="width:5%">Code postal</th>
                     <th style="width:10%" class="hidden-xs">Commune</th>
                     <th style="width:10%" class="hidden-xs">Téléphone</th>
-                    <th style="width:10%">Tag </th >
+                    <th style="width:10%">Tags</th >
+                        <th style="width:5%">Status de géocodage</th >
                     <th style="width:20%">Actions</th>
                 </tr>
                 </thead>
@@ -60,6 +61,22 @@
                                     @endforeach
                             </td>
 
+                            <td>
+                                @if ($contact->geocode_status == 1)
+                                    <i class="fa fa-check" aria-hidden="true" title="Contact correctement géocodé"></i>
+
+                                @endif
+
+                                @if ($contact->geocode_status == 0)
+                                    <i class="fa fa-clock-o" aria-hidden="true" title="Contact pas encore géocodé"></i>
+
+                                @endif
+
+                                @if ($contact->geocode_status < 0)
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true" title="Erreur de géocolocalisation, vérifiez l'adresse encodée"></i>
+                                @endif
+
+                            </td>
                             <td>
                                 <a href="{{ route('admin.contact.show',  [$contact->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                                 <a href="{{ route('admin.contact.edit', [$contact->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a>
