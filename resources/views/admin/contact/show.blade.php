@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
         <br>
         <div class="panel panel-primary">
             <div class="panel-heading">Fiche d'utilisateur</div>

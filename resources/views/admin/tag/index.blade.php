@@ -4,7 +4,7 @@
 
 
 
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -33,14 +33,13 @@
                         <td class="text-primary"><div style="background-color:{{ $tag->color }}; width:30px; height: 30px">&nbsp;</div></td>
 
 
-                        <td><a href="{{ route('admin.tag.show',  [$tag->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                        <td><a href="{{ route('admin.tag.edit', [$tag->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a>
-                        <td><a href="{{ route('admin.tag.destroy', [$tag->id]) }}" class="btn btn-danger"><i class="fa fa-trash" ></i></a>
+                        <td><a href="{{ route('admin.tag.show',  [$tag->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                        <td><a href="{{ route('admin.tag.edit', [$tag->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a></td>
 
 
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['admin.tag.destroy', $tag->id]]) !!}
-                            {!! Form::submit('Supprimer', ['class' => 'btn btn-danger btn-block', 'onclick' => 'return confirm(\'Vraiment supprimer ce tag?\')']) !!}
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Vraiment supprimer ce tag?')"><i class="fa fa-trash"></i></button>
                             {!! Form::close() !!}
 
                         </td>
