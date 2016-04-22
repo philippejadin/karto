@@ -70,4 +70,8 @@ Route::auth();
     // gestion des contacts CRUD
     Route::resource('admin/tag', 'TagController');
 
+
+    Route::post('admin/batch', 'BatchController@action');
+
+
 //});
