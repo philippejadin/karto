@@ -1,4 +1,6 @@
-    #map { 
+/************************* Partie publique ********************/
+
+    #map {
             display:block;
             margin-left:auto;
             margin-right: auto;
@@ -8,6 +10,39 @@
             background-color: black;
         }
 
+
     .dropdown{
-    	margin-left: 50px;
+        margin-left: 50px;
     }
+
+
+/**************************** Admin *******************************/
+    td.ellipse
+    {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+
+    table.special {
+        table-layout: fixed
+    }
+
+    table.special td.content
+    {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    /* fixe le bug d'affichage de la poubelle dans les actions*/
+    table.special form{
+        display: inline;
+    }
+
+
+
+
+
+
