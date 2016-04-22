@@ -47,11 +47,11 @@ class GeocodeContacts extends Command
         {
             if ($contact->geocode())
             {
-
                 $contact->save();
                 $this->info('Contact ' . $contact->name . ' correctement geolocalise');
             }
             else {
+                $contact->save();
                 $this->error('Contact ' . $contact->name . ' pas geolocalise');
 
             }
