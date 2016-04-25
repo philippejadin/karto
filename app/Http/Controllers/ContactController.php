@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use Session;
+use App\Http\Requests;
+use Illuminate\Pagination\Paginator;
 
 class ContactController extends Controller
 {
@@ -55,6 +55,27 @@ class ContactController extends Controller
         }
 
 
+
+        /******* TODO voir si c'est une bonne idée ce stockage de la page en cours dans la session : **********/
+
+        // si l'utilisateur est sur une page (autre que 0) o la stocke dans sa session
+        if ($request->input('page'))
+        {
+            $request->session()->set('page', $request->input('page'));
+        }
+
+
+        // si on a un numéro de page dans la session, on va à cette page
+        if ($request->session()->get('page'))
+        {
+
+            $currentPage = $request->session()->get('page');
+            Paginator::currentPageResolver(function() use ($currentPage) {
+                return $currentPage;
+            });
+        }
+
+        /**************************************/
 
          $contacts=Contact::orderBy($sort, $order)->paginate(20);
 
