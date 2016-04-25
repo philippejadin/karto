@@ -13,13 +13,16 @@
             <div class="panel-body">
                 <div class="col-sm-12">
                     {!! Form::model($contact, ['route' => ['admin.contact.update', $contact->id], 'method' => 'put', 'class' => 'form-horizontal panel']) !!}
+
+
+
                     <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                         {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
                         {!! $errors->first('name', '<small class="help-block">:message</small>') !!}
                     </div>
-                    <div class="form-group {!! $errors->has('presentation') ? 'has-error' : '' !!}">
-                        {!! Form::text('presentation', null, ['class' => 'form-control', 'placeholder' => 'Présentation']) !!}
-                        {!! $errors->first('presentation', '<small class="help-block">:message</small>') !!}
+                    <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
+                        {!! Form::text('description', null, ['class' => 'form-control', 'placeholder' => 'Présentation']) !!}
+                        {!! $errors->first('description', '<small class="help-block">:message</small>') !!}
                     </div>
                     <div class="form-group {!! $errors->has('address') ? 'has-error' : '' !!}">
                         {!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => 'Adresse']) !!}
@@ -65,6 +68,7 @@
                         {!! Form::label('tags[]', 'Tag') !!}
                         {!! Form::select('tags[]', App\Tag::pluck('name','id'),$contact->tags->pluck('id')->all(),['class' =>'form-control input-lg','multiple'=>true,'id' => 'prettify']) !!}
                     </div>
+
 
 
 

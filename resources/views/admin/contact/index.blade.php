@@ -29,24 +29,35 @@
             <table class="table special">
                 <thead>
                 <tr>
-                    <th style="width:15px"></th>
-                    <th style="width:20px">ID</th>
-                    <th style="width:20%">Nom
-
-                       <a href="{{ action('ContactController@index') }}?sort=name&order=asc"><i class="fa fa-sort-asc"></i></a>
-                       <a href="{{ action('ContactController@index') }}?sort=name&order=desc"><i class="fa fa-sort-desc"></i></a>
-
-
-
+                    <th style="width:20px"></th>
+                    <th style="width:40px">ID
+                        <a href="{{ action('ContactController@index') }}?sort=id&order=asc"><i class="fa fa-sort-asc"></i></a>
+                        <a href="{{ action('ContactController@index') }}?sort=id&order=desc"><i class="fa fa-sort-desc"></i></a>
                     </th>
-                    <th style="width:10%" class="hidden-xs">Description</th>
-                    <th style="width:10%" class="hidden-xs">Adresse</th>
-                    <th style="width:5%">Code postal</th>
-                    <th style="width:10%" class="hidden-xs">Commune</th>
+                    <th style="width:20%">Nom
+                        <a href="{{ action('ContactController@index') }}?sort=name&order=asc"><i class="fa fa-sort-asc"></i></a>
+                        <a href="{{ action('ContactController@index') }}?sort=name&order=desc"><i class="fa fa-sort-desc"></i></a>
+                    </th>
+
+                    <th style="width:10%" class="hidden-xs">Adresse
+                        <a href="{{ action('ContactController@index') }}?sort=address&order=asc"><i class="fa fa-sort-asc"></i></a>
+                        <a href="{{ action('ContactController@index') }}?sort=address&order=desc"><i class="fa fa-sort-desc"></i></a>
+                    </th>
+                    <th style="width:7%">CP
+                        <a href="{{ action('ContactController@index') }}?sort=postal_code&order=asc"><i class="fa fa-sort-asc"></i></a>
+                        <a href="{{ action('ContactController@index') }}?sort=postal_code&order=desc"><i class="fa fa-sort-desc"></i></a>
+                    </th>
+                    <th style="width:10%" class="hidden-xs">Commune
+                        <a href="{{ action('ContactController@index') }}?sort=locality&order=asc"><i class="fa fa-sort-asc"></i></a>
+                        <a href="{{ action('ContactController@index') }}?sort=locality&order=desc"><i class="fa fa-sort-desc"></i></a>
+                    </th>
                     <th style="width:10%" class="hidden-xs">Téléphone</th>
                     <th style="width:10%">Tags</th >
-                        <th style="width:5%">Status de géocodage</th >
-                    <th style="width:20%">Actions</th>
+                        <th style="width:5%">Status</th >
+                    <th style="width:20%">Actions
+                        <a href="{{ action('ContactController@index') }}?sort=geocode_status&order=asc"><i class="fa fa-sort-asc"></i></a>
+                        <a href="{{ action('ContactController@index') }}?sort=geocode_status&order=desc"><i class="fa fa-sort-desc"></i></a>
+                    </th>
 
                 </tr>
                 </thead>
@@ -56,8 +67,11 @@
                     <tr>
                             <td>{{ form::checkbox('check[' . $contact->id . ']',1,0) }} </td>
                             <td>{!! $contact->id !!}</td>
-                            <td class="text-primary ellipse"><a href="{{ route('admin.contact.edit',  [$contact->id]) }}" ><strong>{!! $contact->name !!}</strong></a></td>
-                            <td class="text-primary ellipse hidden-xs"><strong>{!! $contact->description!!}</strong></td>
+                            <td class="text-primary ellipse"><a href="{{ route('admin.contact.edit',  [$contact->id]) }}" ><strong>{!! $contact->name !!}</strong></a>
+                            <br/>
+                                {!! $contact->description!!}
+                            </td>
+
                             <td class="text-primary ellipse hidden-xs"><strong>{!! $contact->address !!}</strong></td>
                             <td class="text-primary ellipse"><strong>{!! $contact->postal_code !!}</strong></td>
                             <td class="text-primary hidden-xs ellipse"><strong>{!! $contact->locality !!}</strong></td>

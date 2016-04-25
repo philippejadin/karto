@@ -19,9 +19,9 @@
                         {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
                         {!! $errors->first('name', '<small class="help-block">:message</small>') !!}
                     </div>
-                    <div class="form-group {!! $errors->has('presentation') ? 'has-error' : '' !!}">
-                        {!! Form::text('presentation', null, ['class' => 'form-control', 'placeholder' => 'Présentation']) !!}
-                        {!! $errors->first('presentation', '<small class="help-block">:message</small>') !!}
+                    <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
+                        {!! Form::text('description', null, ['class' => 'form-control', 'placeholder' => 'Présentation']) !!}
+                        {!! $errors->first('description', '<small class="help-block">:message</small>') !!}
                     </div>
                     <div class="form-group {!! $errors->has('address') ? 'has-error' : '' !!}">
                         {!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => 'Adresse']) !!}
