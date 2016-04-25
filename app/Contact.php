@@ -52,36 +52,78 @@ protected $fillable = [
         }
     }
 
+
+
+
+
+
 /*
 * Geocode le contact
-*/
-public function geocode()
-{
+* On stocke dans geocode status où on en est  :
 
-    // si on a déja essayé de géocoder, pas la peine de réessayer, ça ne marche pas
-    if ($this->latitude == -999)
+0 = pas géocodé
+1 = géocodé ok
+-10 = erreur http (erreur provisoire)
+-20 = quota exceeded (erreur provisoire)
+
+-30 = pas de résultat
+-40 = trop de résultats
+-50 = adresse ambigue ou de faible qualité
+-100 = autre erreur
+
+
+*
+*/
+public function geocode($force = false)
+{
+    // si on a déja essayé de géocoder et que l'erreur est persisante, pas la peine de réessayer, ça ne marchera pas
+    // sauf si on force le géocodage avec $force = true
+    if ($this->geocode_status < -20 && ! $force)
     {
         return false;
     }
 
     try
     {
-        $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country);
+        $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country); // TODO : peux mieux faire, certains géocodeurs acceptent les infos séparément
     }
     catch (\Exception $e)
     {
-        // on met arbitrairement -10000 ce qui veut dire "géocodage foiré"
-        $this->latitude = -999;
-        $this->longitude = -999;
+        if ($e instanceof HttpError)
+        {
+            $this->geocode_status = -10; // erreur HTTP
+            return false;
+        }
+
+        if ($e instanceof QuotaExceeded )
+        {
+            $this->geocode_status = -20; // erreur HTTP
+            return false;
+        }
+
+        if ($e instanceof NoResult)
+        {
+            $this->geocode_status = -30; // erreur HTTP
+            return false;
+        }
+
+        if ($e instanceof ChainNoResultException)
+        {
+            $this->geocode_status = -30; // erreur HTTP
+            return false;
+        }
+
+        $this->geocode_status = -100; // erreur HTTP
         return false;
     }
 
+
+    $this->geocode_status = 1;
     $this->latitude = $geocode['latitude'];
     $this->longitude = $geocode['longitude'];
-
     return true;
-
 }
+
 
 public function tags()
 {

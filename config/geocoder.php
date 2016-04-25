@@ -14,9 +14,9 @@ return [
     // The first one to return a result will be used.
     'providers' => [
         'Geocoder\Provider\OpenStreetMapProvider'  => null,
-        'Geocoder\Provider\GoogleMapsProvider' => ['fr-FR', 'Île-de-France', true],
+        'Geocoder\Provider\GoogleMapsProvider' => ['fr-FR', 'Belgique', false],
         'Geocoder\Provider\FreeGeoIpProvider'  => null,
-        
+
     ],
     'adapter'  => 'Geocoder\HttpAdapter\CurlHttpAdapter',
 ];

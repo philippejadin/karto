@@ -11,6 +11,11 @@
         }
 
 
+    .dropdown{
+        margin-left: 50px;
+    }
+
+
 /**************************** Admin *******************************/
     td.ellipse
     {
@@ -35,5 +40,9 @@
     table.special form{
         display: inline;
     }
+
+
+
+
 
 

@@ -37,11 +37,11 @@ class GeocodeContacts extends Command
     */
     public function handle()
     {
-
-
         // trouver 5 contacts sans longitude ou latitude
         // les geocoder et le sauver (cfr. le modèle contact)
-        $contacts = \App\Contact::whereNull('longitude')->orWhereNull('latitude')->take($this->argument('size'))->get();
+
+        $contacts = \App\Contact::where('geocode_status', '=', 0)->take($this->argument('size'))->get();
+
 
         foreach ($contacts as $contact)
         {
@@ -52,9 +52,11 @@ class GeocodeContacts extends Command
             }
             else {
                 $contact->save();
-                $this->error('Contact ' . $contact->name . ' pas geolocalise');
+                $this->error('Contact ' . $contact->name . ' pas geolocalise, geocode status : ' . $contact->geocode_status);
 
             }
+
+            //sleep(1);
         }
     }
 
