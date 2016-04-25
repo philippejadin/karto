@@ -89,7 +89,6 @@ class ContactController extends Controller
             $contact->tags()->sync($request->get('tags'));
         }
 
-        if (! $contact->geocode($force = true))
         if (! $contact->geocode())
         {
             flash()->info('Adresse pas géocodée');
