@@ -9,15 +9,15 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use App\Role;
-use Laraveldaily\Quickadmin\Observers\UserActionsObserver;
-use Laraveldaily\Quickadmin\Traits\AdminPermissionsTrait;
+
+
 
 class User extends Model implements AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, AdminPermissionsTrait;
+    use Authenticatable, Authorizable, CanResetPassword;
+    use \Venturecraft\Revisionable\RevisionableTrait;
 
     /**
      * The database table used by the model.
@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'role_id'];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -40,11 +40,5 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        User::observe(new UserActionsObserver);
-    }
 
 }

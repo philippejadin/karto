@@ -196,6 +196,11 @@ class ContactController extends Controller
     }
 
 
+    public function history(Contact $contact)
+    {
+        return view('admin.contact.history')->with('contact', $contact);
+    }
+
 
 
 }

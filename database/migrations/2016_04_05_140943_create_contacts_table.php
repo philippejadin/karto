@@ -15,20 +15,20 @@ class CreateContactsTable extends Migration {
     {
         Schema::create('contacts',function(Blueprint $table){
             $table->increments("id");
-            $table->string("name")->nullable();
-            $table->string("description")->nullable();
-            $table->string("address")->nullable();
-            $table->string("postal_code")->nullable();
-            $table->string("locality")->nullable();
-            $table->string("country")->nullable();
-            $table->string("phone")->nullable();
-            $table->string("phone2")->nullable();
-            $table->string("website")->nullable();
-            $table->string("email")->nullable();
-            $table->tinyInteger("public")->default(0)->nullable();
-            $table->float('latitude', 10, 7)->nullable();
-            $table->float('longitude', 10, 7)->nullable();
-            $table->string("uuid")->nullable();
+            $table->string("name");
+            $table->string("description");
+            $table->string("address");
+            $table->string("postal_code");
+            $table->string("locality");
+            $table->string("country");
+            $table->string("phone");
+            $table->string("phone2");
+            $table->string("website");
+            $table->string("email");
+            $table->tinyInteger("public")->default(0);
+            $table->float('latitude', 10, 7);
+            $table->float('longitude', 10, 7);
+            $table->string("uuid");
             $table->timestamps();
             $table->softDeletes();
         });

@@ -21,6 +21,7 @@ Route::auth();
 
 
     Route::get('/', 'monAdresseController@monAdresse');
+    Route::get('home', 'monAdresseController@monAdresse');
 
 
 
@@ -47,5 +48,8 @@ Route::auth();
     // actions en masse sur les contacts
     Route::post('admin/batch', 'BatchController@action');
 
+
+    // affichage de l'historique d emodification d'un contact
+    Route::get('admin/contact/{contact}/history' ,'ContactController@history');
 
 

@@ -25,7 +25,16 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Liste des organismes</h3>
+
+                {!! link_to_route('admin.contact.create', 'Ajouter un organisme', [], ['class' => 'btn btn-info pull-right']) !!}
+                {!! $contacts->render() !!}
             </div>
+
+
+
+
+
+
             <table class="table special">
                 <thead>
                 <tr>
@@ -102,14 +111,23 @@
                                 <a href="{{ route('admin.contact.show',  [$contact->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                                 <a href="{{ route('admin.contact.edit', [$contact->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a>
                                 <a href="{{ action('ContactController@destroy', [$contact->id]) }}" class="btn btn-danger"  onclick="return confirm('Vraiment supprimer cet organisme?')"><i class="fa fa-trash"></i></a>
+
+                                <a href="{{ action('ContactController@history', [$contact->id]) }}" class="btn btn-info"><i class="fa fa-history"></i></a>
+
+
+
                             </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
+            <div class="panel-footer">
+            {!! link_to_route('admin.contact.create', 'Ajouter un organisme', [], ['class' => 'btn btn-info pull-right']) !!}
+            {!! $contacts->render() !!}
+            </div>
+
         </div>
-        {!! link_to_route('admin.contact.create', 'Ajouter un organisme', [], ['class' => 'btn btn-info pull-right']) !!}
-        {!! $contacts->render() !!}
+
     </div>
 
 

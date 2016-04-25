@@ -13,7 +13,8 @@
         "watson/validating": "^2.2",
         "toin0u/geocoder-laravel": "@stable",
         "laracasts/flash": "^2.0",
-        "maatwebsite/excel": "~2.1.0"
+        "maatwebsite/excel": "~2.1.0",
+        "venturecraft/revisionable": "1.*"
 
     },
     "require-dev": {

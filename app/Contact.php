@@ -9,16 +9,22 @@ use Toin0u\Geocoder\Facade\Geocoder;
 class Contact extends Model
 {
     use ValidatingTrait;
+    use \Venturecraft\Revisionable\RevisionableTrait;
 
 
-    /*
+    protected $dontKeepRevisionOf = [
+        'country',
+        'latitude',
+        'longitude'
+    ];
+
     protected $rules = [
     'name'  => 'required',
     'address' => 'required',
     'postal_code' => 'required',
     'email' => 'email'
 ];
-*/
+
 
 
 
