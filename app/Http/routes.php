@@ -14,37 +14,11 @@
 Route::auth();
 
 
-
-
-
-    Route::get('test', function ()
-    {
-        
-        //$contacts = \App\Contact::whereNull('longitude')->orWhereNull('latitude')->take(5)->get();
-        $contacts = \App\Contact::all();
-        return($contacts);
-        
-
-
-        $geocode = Geocoder::geocode('5 rue de dublin, 1050 Ixelles');
-        // The GoogleMapsProvider will return a result
-        dd($geocode['latitude']);
-
-
-
-    });
-
-
-
-
     
 
 
     /********************** PUBLIC *****************************/
 
-/*    Route::get('/', function () {
-        return view('welcome');
-    });*/
 
     Route::get('/', 'monAdresseController@monAdresse');
 
@@ -53,8 +27,6 @@ Route::auth();
 
     /********************** ADMIN *****************************/
 
-//Route::group(['middleware' => 'auth'], function () {
-
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
 
@@ -62,16 +34,18 @@ Route::auth();
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
 
-    //import depuis un fichier excel
+    // import depuis un fichier excel TODO
     Route::get('admin/import', 'ExcelController@getImport');
     Route::post('admin/import', 'ExcelController@postImport');
 
 
     // gestion des contacts CRUD
     Route::resource('admin/tag', 'TagController');
+    Route::get('admin/contact/{contact}/delete' ,'ContactController@destroy');
 
 
+    // actions en masse sur les contacts
     Route::post('admin/batch', 'BatchController@action');
 
 
-//});
+

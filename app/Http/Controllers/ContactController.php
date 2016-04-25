@@ -15,9 +15,50 @@ class ContactController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function index()
+    public function index(Request $request)
     {
-        $contacts = Contact::paginate(20);
+
+        // tri recherche session
+        // sinon tri par défaut sur le nom par ordre alphabétique
+        if ($request->session()->get('sort'))
+        {
+            $sort = $request->session()->get('sort');
+        }
+        else
+        {
+            $sort = 'name';
+        }
+
+        if ($request->session()->get('order'))
+        {
+            $order = $request->session()->get('order');
+        }
+        else
+        {
+            $order = 'asc';
+        }
+
+
+
+        //... sauf si l'utilisateur demande autre chose :
+        if ($request->input('sort'))
+        {
+            $sort = $request->input('sort');
+            $request->session()->set('sort', $sort);
+        }
+
+
+        if ($request->input('order'))
+        {
+            $order = $request->input('order');
+            $request->session()->set('order', $order);
+        }
+
+
+
+         $contacts=Contact::orderBy($sort, $order)->paginate(20);
+
+
         return view('admin.contact.index', compact('contacts'));
     }
 
@@ -67,7 +108,7 @@ class ContactController extends Controller
     /**
     * Display the specified resource.
     *
-    * @param  int  $id
+    * @param  Contact  $contact
     * @return \Illuminate\Http\Response
     */
     public function show(Contact $contact)

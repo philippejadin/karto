@@ -43,11 +43,12 @@ protected $fillable = [
 ];
 
 
+    // on renvoit d'office un pays par défaut, ce qui aide le géocodage
     public function getCountryAttribute($value)
     {
         if (empty($value))
         {
-            return 'Belgique'; // TODO à configurer
+            return env('DEFAULT_COUNTRY', 'Belgique');
         }
     }
 

@@ -9,6 +9,17 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
 use Excel;
 
+
+/**
+ * 
+ * Classe qui est remplacée par la commande karto:import
+ * 
+ * TODO : faire une interface d'import qui marche par le web et pas en ligne de commande
+ * 
+ * Class ExcelController
+ * @package App\Http\Controllers
+ * 
+ */
 class ExcelController extends Controller
 {
     public function getImport()

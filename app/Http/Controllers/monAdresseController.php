@@ -9,6 +9,14 @@ use App\Http\Controllers\Controller;
 use Toin0u\Geocoder\Facade\Geocoder;
 use App\Contact;
 
+
+/**
+ * Class monAdresseController
+ * @package App\Http\Controllers
+ * 
+ * Page d'accueil publique qui affiche une boite de recherche, une carte et les résultats
+ * 
+ */
 class monAdresseController extends Controller
 {
     //taper son addresse

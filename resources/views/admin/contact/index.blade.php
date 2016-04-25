@@ -13,7 +13,7 @@
         @endif
 
 
-            {{Form::open(['action' => 'BatchController@action'])}}
+            {!!Form::open(['action' => 'BatchController@action', 'method' => 'post'])!!}
 
             <select type="select" name="action">
                 <option name="select" value="select" selected="selected">Choisissez l'action à effectuer ci dessous...</option>
@@ -21,7 +21,6 @@
             </select>
 
             <button type="submit">Effectuer</button>
-
 
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -32,7 +31,14 @@
                 <tr>
                     <th style="width:15px"></th>
                     <th style="width:20px">ID</th>
-                    <th style="width:20%">Nom</th>
+                    <th style="width:20%">Nom
+
+                       <a href="{{ action('ContactController@index') }}?sort=name&order=asc"><i class="fa fa-sort-asc"></i></a>
+                       <a href="{{ action('ContactController@index') }}?sort=name&order=desc"><i class="fa fa-sort-desc"></i></a>
+
+
+
+                    </th>
                     <th style="width:10%" class="hidden-xs">Description</th>
                     <th style="width:10%" class="hidden-xs">Adresse</th>
                     <th style="width:5%">Code postal</th>
@@ -40,6 +46,7 @@
                     <th style="width:10%" class="hidden-xs">Téléphone</th>
                     <th style="width:10%">Tag </th >
                     <th style="width:20%">Actions</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -48,7 +55,7 @@
                     <tr>
                             <td>{{ form::checkbox('check[' . $contact->id . ']',1,0) }} </td>
                             <td>{!! $contact->id !!}</td>
-                            <td class="text-primary ellipse"><a href="{{ route('admin.contact.show',  [$contact->id]) }}" ><strong>{!! $contact->name !!}</strong></a></td>
+                            <td class="text-primary ellipse"><a href="{{ route('admin.contact.edit',  [$contact->id]) }}" ><strong>{!! $contact->name !!}</strong></a></td>
                             <td class="text-primary ellipse hidden-xs"><strong>{!! $contact->description!!}</strong></td>
                             <td class="text-primary ellipse hidden-xs"><strong>{!! $contact->address !!}</strong></td>
                             <td class="text-primary ellipse"><strong>{!! $contact->postal_code !!}</strong></td>
@@ -63,9 +70,7 @@
                             <td>
                                 <a href="{{ route('admin.contact.show',  [$contact->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                                 <a href="{{ route('admin.contact.edit', [$contact->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a>
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['admin.contact.destroy', $contact->id]]) !!}
-                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Vraiment supprimer cet organisme?')"><i class="fa fa-trash"></i></button>
-                                {!! Form::close() !!}
+                                <a href="{{ action('ContactController@destroy', [$contact->id]) }}" class="btn btn-danger"  onclick="return confirm('Vraiment supprimer cet organisme?')"><i class="fa fa-trash"></i></a>
                             </td>
                     </tr>
                 @endforeach
