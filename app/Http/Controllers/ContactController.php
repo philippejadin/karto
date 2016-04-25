@@ -90,6 +90,7 @@ class ContactController extends Controller
         }
 
         if (! $contact->geocode($force = true))
+        if (! $contact->geocode())
         {
             flash()->info('Adresse pas géocodée');
         }
