@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Contact;
 
 class Tag extends Model
 {
@@ -19,6 +20,5 @@ class Tag extends Model
     public function contacts(){
 
         return $this->belongsToMany('App\Contact')->withTimestamps();
-
     }
 }
