@@ -4,6 +4,7 @@
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.5.8/standard/ckeditor.js"></script>
 
     <div class="container-fluid">
         <br>
@@ -14,64 +15,7 @@
 
                     {!! Form::model($contact, ['route' => ['admin.contact.store'], 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
 
-
-                    <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
-                        {!! $errors->first('name', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
-                        {!! Form::text('description', null, ['class' => 'form-control', 'placeholder' => 'Présentation']) !!}
-                        {!! $errors->first('description', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('address') ? 'has-error' : '' !!}">
-                        {!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => 'Adresse']) !!}
-                        {!! $errors->first('address', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('postal_code') ? 'has-error' : '' !!}">
-                        {!! Form::text('postal_code', null, ['class' => 'form-control', 'placeholder' => 'Code postal']) !!}
-                        {!! $errors->first('postal_code', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('locality') ? 'has-error' : '' !!}">
-                        {!! Form::text('locality', null, ['class' => 'form-control', 'placeholder' => 'Commune']) !!}
-                        {!! $errors->first('locality', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('country') ? 'has-error' : '' !!}">
-                        {!! Form::text('country', null, ['class' => 'form-control', 'placeholder' => 'Pays']) !!}
-                        {!! $errors->first('country', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('categorie') ? 'has-error' : '' !!}">
-                        {!! Form::text('categorie', null, ['class' => 'form-control', 'placeholder' => 'Categorie']) !!}
-                        {!! $errors->first('categorie', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
-                        {!! Form::text('phone', null, ['class' => 'form-control', 'placeholder' => 'Téléphone']) !!}
-                        {!! $errors->first('phone', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('phone2') ? 'has-error' : '' !!}">
-                        {!! Form::text('phone2', null, ['class' => 'form-control', 'placeholder' => 'Téléphone2']) !!}
-                        {!! $errors->first('phone2', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('website') ? 'has-error' : '' !!}">
-                        {!! Form::text('website', null, ['class' => 'form-control', 'placeholder' => 'Site web']) !!}
-                        {!! $errors->first('website', '<small class="help-block">:message</small>') !!}
-                    </div>
-                    <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
-                        {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
-                        {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('tags[]', 'Tag') !!}
-                        {!! Form::select('tags[]', App\Tag::pluck('name','id'),$contact->tags->pluck('id')->all(),['class' =>'form-control input-lg','multiple'=>true,'id' => 'prettify']) !!}
-                    </div>
-
-
-
-                    <script type="text/javascript">
-                        $('#prettify').select2();
-                    </script>
-
-
+                    @include ('admin.contact.form')
 
 
 

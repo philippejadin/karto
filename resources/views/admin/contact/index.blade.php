@@ -78,7 +78,7 @@
                             <td>{!! $contact->id !!}</td>
                             <td class="text-primary ellipse"><a href="{{ route('admin.contact.edit',  [$contact->id]) }}" ><strong>{!! $contact->name !!}</strong></a>
                             <br/>
-                                {!! $contact->description!!}
+                                {{ strip_tags($contact->description) }}
                             </td>
 
                             <td class="text-primary ellipse hidden-xs"><strong>{!! $contact->address !!}</strong></td>

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Watson\Validating\ValidatingTrait;
 use Toin0u\Geocoder\Facade\Geocoder;
+use App\Tag;
 
 class Contact extends Model
 {
@@ -59,8 +60,13 @@ protected $fillable = [
     }
 
 
-
-
+     // Filtrage du html de description
+    public function getDescriptionAttribute($value)
+    {
+    
+           return strip_tags($value, '<p><h1><h2><h3><h4><br><strong><em><img><ul><li><span><div>');
+        
+    }
 
 
 /*
@@ -133,9 +139,7 @@ public function geocode($force = false)
 
 public function tags()
 {
-
     return $this->belongsToMany('App\Tag')->withTimestamps();
-
 }
 
 

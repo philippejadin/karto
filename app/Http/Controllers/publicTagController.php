@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Tag;
 use App\Http\Requests;
 use App\Contact;
+use App\Tag;
 
 class publicTagController extends Controller
 {
-    public function afficherContactsParTag(){
-	   	$tag=$this->contacts()
-	    		   ->get();	
-
-		return view('adresse.monAdresse')
-			->with('tag', $tag)
-			->with('contact', $contact);
+   
+    public function show(Tag $tag)
+    {
+        return view('tag.show')
+        ->with('tag', $tag);
     }
+    
+
 }

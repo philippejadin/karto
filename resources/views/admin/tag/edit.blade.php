@@ -37,15 +37,13 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css' />
 
     <script>
-
-
         $("#color").spectrum({
             preferredFormat: "hex",
             showPaletteOnly: true,
             togglePaletteOnly: true,
             togglePaletteMoreText: 'more',
             togglePaletteLessText: 'less',
-            color: 'blanchedalmond',
+            color: '{{$tag->color}}',
             palette: [
                 ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
                 ["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],

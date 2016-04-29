@@ -58,7 +58,7 @@ class ContactController extends Controller
 
         /******* TODO voir si c'est une bonne idée ce stockage de la page en cours dans la session : **********/
 
-        // si l'utilisateur est sur une page (autre que 0) o la stocke dans sa session
+        // si l'utilisateur est sur une page (autre que 0) on la stocke dans sa session
         if ($request->input('page'))
         {
             $request->session()->set('page', $request->input('page'));
@@ -104,7 +104,15 @@ class ContactController extends Controller
     public function store(Request $request,  Contact $contact)
     {
         $contact->fill($request->all());
-        $contact->save();
+        
+        // on tente de sauver une première fois le contact pour avoir son id (pour si jamais, lui attacher des tags)
+        if (!$contact->save())
+        {
+             flash()->error('Contact non valide');
+            return redirect()->back()
+            ->withErrors($contact->getErrors())
+            ->withInput();
+        }
 
         if ($request->has('tags') ) {
             $contact->tags()->sync($request->get('tags'));

@@ -14,23 +14,19 @@
 Route::auth();
 
 
-    
-
-
     /********************** PUBLIC *****************************/
 
 
     Route::get('/', 'monAdresseController@monAdresse');
     Route::get('home', 'monAdresseController@monAdresse');
-
-
+    Route::get('tag/{tag}', 'publicTagController@show');
+    Route::get('contact/{contact}', 'publicContactController@detail');
 
 
     /********************** ADMIN *****************************/
 
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
-
 
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
@@ -47,7 +43,6 @@ Route::auth();
 
     // actions en masse sur les contacts
     Route::post('admin/batch', 'BatchController@action');
-
 
     // affichage de l'historique d emodification d'un contact
     Route::get('admin/contact/{contact}/history' ,'ContactController@history');

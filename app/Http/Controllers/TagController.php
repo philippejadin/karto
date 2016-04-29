@@ -17,7 +17,9 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::paginate(20);
-        return view('admin.tag.index', compact('tags'));
+        
+        return view('admin.tag.index')
+         ->with('tags', $tags);
     }
 
     /**
@@ -36,10 +38,9 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Tag $tag)
     {
-        $tag = new Tag($request->all());
-
+        $tag->fill($request->all());
        /* $contact->geocode();*/
 
         if ( ! $tag->save()) {
@@ -48,10 +49,9 @@ class TagController extends Controller
                 ->withInput();
         }
 
-        return redirect()->route('admin.tag.index')
-            ->withSuccess("Your post was saved successfully.");
+        flash()->success('Tag bien ajouté');
 
-
+        return redirect()->route('admin.tag.index');
     }
 
     /**
@@ -62,7 +62,8 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        return view('admin.tag.show',  compact('tag'));
+        return view('admin.tag.show')
+        ->with('tag', $tag);
     }
 
     /**
@@ -73,7 +74,8 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        return view('admin.tag.edit',  compact('tag'));
+        return view('admin.tag.edit')
+         ->with('tag', $tag);
     }
 
     /**

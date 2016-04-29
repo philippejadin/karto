@@ -51,7 +51,6 @@
 
 	<!-- script javascipt pour l'affichage de la map -->
 	<script>
-
 		window.onload=function initMap(){
 			//ici, on crée la vue de base (coordonnées du get de l'adresse)
 			var mymap = L.map('map').setView([{{$results['latitude']}}, {{$results['longitude']}}],16);
@@ -96,17 +95,17 @@
 				<tbody>
 					<tr>
 						<!-- données qu'on récupère dans la DB grace à ELOQUENT -->
-						<td>{{$contact->name}}</td>
+						<td><a href="{{action('publicContactController@detail', $contact)}}">{{$contact->name}}</td></a>
 						<td>{{$contact->address}}</td>
 						<td>{{$contact->locality}}</td>
 						<td>
 							@foreach ($contact->tags as $tag)
-								<span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span>
+								<a href="{{action('publicTagController@show', $tag)}}"><span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span></a>
 							@endforeach
 						</td>
 						<td>{{$contact->latitude}}, {{$contact->longitude}}</td>
 					</tr>
-				</tbody>
+				</tbody> 
 			@endforeach
 		</table>
 	</div>

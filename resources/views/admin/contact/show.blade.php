@@ -8,7 +8,7 @@
             <div class="panel-heading">Fiche d'utilisateur</div>
             <div class="panel-body">
                 <p>Nom : {{ $contact->name }}</p>
-                <p>Présentation : {{ $contact->description}}</p>
+                <p>Présentation : {!! $contact->description !!}</p>
                 <p>Adresse : {{ $contact->address}}</p>
                 <p>Code postal : {{ $contact->postal_code}}</p>
                 <p>Commune: {{ $contact->locality }}</p>
