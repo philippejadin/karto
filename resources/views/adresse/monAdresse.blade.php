@@ -14,31 +14,24 @@
 
 		        <div class="input-group">
 		            <!-- rentrer l'adresse à géolocaliser / blade -->
-
 		            {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size'=>80])}}
-
-					 <div class="input-group-btn">
-
-		                <button id="button" class="btn btn-default" type="submit">
-
-		                	<i class="glyphicon glyphicon-search"></i>
-
-		                </button>
+				</div>
+			</div>
+				<div class="form-group">
+					<div class='dropdown'>
+						{!! Form::select('km',array('0'=>'Choissisez le périmètre de recherche','1'=>'1 km', '2'=>'2 km','5'=>'5 km','10'=>'10 km', '15'=>'15 km','20'=> '20 km','100'=>'100 km'), $km, ['class' => 'form-control'])!!}
 					</div>
 
 				</div>
+				<button id="button" class="btn btn-default" type="submit">
 
-				</div>
+            		<i class="glyphicon glyphicon-search"></i>
+
+            	</button>
 
 
-					<div class="form-group">
 
-				<div class='dropdown'>
-					{!!Form::label('km','Distance')!!}
-						{!! Form::select('km',array('1'=>'1 km', '2'=>'2 km','5'=>'5 km','10'=>'10 km', '15'=>'15 km','20'=> '20 km','100'=>'100'), $km, ['class' => 'form-control'])!!}
-					</div>
 
-					</div>
 			<!-- fermeture du formulaire avec blade -->
 	        {{Form::close()}}
 		</div>
@@ -53,7 +46,7 @@
 	<script>
 		window.onload=function initMap(){
 			//ici, on crée la vue de base (coordonnées du get de l'adresse)
-			var mymap = L.map('map').setView([{{$results['latitude']}}, {{$results['longitude']}}],16);
+			var mymap = L.map('map').setView([{{$results['latitude']}}, {{$results['longitude']}}],14);
 
 			//On set le "provider" et on set les attributions
 		    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -62,14 +55,16 @@
 			//rajouter ça à la variable
 			}).addTo(mymap);
 
+			 L.marker([{{$results['latitude']}},{{$results['longitude']}}]).addTo(mymap)
+			 .bindPopup("vous êtes ici");
+
 	    	//affichage des contacts géograpphiquement près de l'adresse en get
 			@foreach($contacts as $contact)
 				//création du marqueur
 			   L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
 			   	//ce qu'il y a d'écrit dans le pop up
-			    .bindPopup('{{$contact->name}}')
-			    //ouverture du pop up
-			    .openPopup();
+			    .bindPopup("<a href=\"{{action('publicContactController@detail', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+			    
 			@endforeach
 		};
 

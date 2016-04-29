@@ -50,7 +50,7 @@ class monAdresseController extends Controller
                 }
                 else
                 {
-                    $km = 5;
+                    $km = 0;
                 }
                 
 
@@ -79,7 +79,7 @@ class monAdresseController extends Controller
             //l'afficher
             return view('adresse.monAdresse')
             ->with('keyword', null)
-            ->with('km', 5)
+            ->with('km', 0)
             ->with('searched', false);
         }
     }

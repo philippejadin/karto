@@ -7,11 +7,7 @@
 		<div class="row">
 
 		<h1>{{$contact->name}}</h1>
-		
-	<table class="table">
-			@foreach($contacts as $contact)
-				<tr>
-					<td>{{$contact->name}}</td>
+				
 					<td>{{$contact->address}}</td>
 					<td>{{$contact->locality}}</td>
 					<td>
@@ -19,11 +15,11 @@
 							<span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span>
 						@endforeach
 					</td>
-				</tr>
-			@endforeach
-		</table>
-
+		
 		</div>
+
+<a href="{{action('ContactController@edit', $contact)}}">Modifier cet organisme</a>
+
 	</div>
 
 @endsection

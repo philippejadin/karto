@@ -69,6 +69,12 @@ protected $fillable = [
     }
 
 
+
+    public function summary($length = 200)
+    {
+        return str_replace(array("\n", "\t", "\r"), '',  substr(strip_tags($this->description), 0, $length));
+    }
+
 /*
 * Geocode le contact
 * On stocke dans geocode status où on en est  :
