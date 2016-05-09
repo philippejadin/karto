@@ -45,8 +45,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Karto
                 </a>
+                
             </div>
-
+            @if(Auth::check())
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
@@ -54,6 +55,7 @@
                     <li><a href="{{url('admin/tag')}}">Tag</a></li>
 
                 </ul>
+            @endif
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">

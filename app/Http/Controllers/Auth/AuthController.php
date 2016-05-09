@@ -23,7 +23,13 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectAfterLogout = 'login';
+    /*protected $redirectAfterLogout = 'login';*/
+        /**
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
 
     /**
      * Create a new authentication controller instance.
@@ -32,8 +38,9 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->redirectAfterLogout = config('quickadmin.homeRoute');
-        $this->middleware('guest', ['except' => 'getLogout']);
+        
+        /*$this->middleware('guest', ['except' => 'getLogout']);*/
+        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
@@ -65,6 +72,8 @@ class AuthController extends Controller
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
+            'admin' => isset($data['admin']),
         ]);
     }
+
 }
