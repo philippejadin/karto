@@ -19,7 +19,7 @@
 			</div>
 				<div class="form-group">
 					<div class='dropdown'>
-						{!! Form::select('km',array('0'=>'Choissisez le périmètre de recherche','1'=>'1 km', '2'=>'2 km','5'=>'5 km','10'=>'10 km', '15'=>'15 km','20'=> '20 km','100'=>'100 km'), $km, ['class' => 'form-control'])!!}
+						{!! Form::select('km',array('1'=>'1 km', '2'=>'2 km','5'=>'5 km','10'=>'10 km', '15'=>'15 km','20'=> '20 km','100'=>'100 km'), $km, ['class' => 'form-control'])!!}
 					</div>
 
 				</div>
@@ -81,7 +81,6 @@
 					<th>Adresse</th>
 					<th>Localité</th>
 					<th>Tags</th>
-					<th>Coordonnées</th>
 				</tr>
 			</thead>
 
@@ -98,7 +97,6 @@
 								<a href="{{action('publicTagController@show', $tag)}}"><span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span></a>
 							@endforeach
 						</td>
-						<td>{{$contact->latitude}}, {{$contact->longitude}}</td>
 					</tr>
 				</tbody> 
 			@endforeach

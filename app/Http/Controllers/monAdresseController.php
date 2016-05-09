@@ -26,6 +26,7 @@ class monAdresseController extends Controller
         if ($request->has('keyword'))
         {
 
+            
             //récupérer l'adresse rentrée par l'utilisateur
        	    $keyword = $request->get('keyword'); 
 
@@ -39,13 +40,17 @@ class monAdresseController extends Controller
                 // No exception will be thrown here
                 dd($e->getMessage());
             }
+            
+
+            
+/*            $results['longitude'] = "4.367414";
+            $results['latitude'] = "50.837530";*/
+
+
 
             //variable de calcul de distance
-            
-
-            
             if ($request->has('km'))
-                {
+                { 
                     $km = $request->get('km');
                 }
                 else
@@ -53,25 +58,37 @@ class monAdresseController extends Controller
                     $km = 0;
                 }
                 
-
-
-            $distance = 0.01506 * $km; // = 10 km
+            $distance = 0.01506 * $km;
 
         	//faire une recherche de proximité
             $contacts = \App\Contact::where('longitude', '<', $results['longitude'] + $distance / 2)
-                            ->where('longitude', '>', $results['longitude'] - $distance / 2)
-                            ->where('latitude', '<', $results['latitude'] + $distance / 2)
-                            ->where('latitude', '>', $results['latitude'] - $distance / 2)
-        
-                            ->get();
+                    ->where('longitude', '>', $results['longitude'] - $distance / 2)
+                    ->where('latitude', '<', $results['latitude'] + $distance / 2)
+                    ->where('latitude', '>', $results['latitude'] - $distance / 2)
+                    ->limit(250)
+                    ->get();
 
-        	//l'afficher
-        	return view('adresse.monAdresse')
-            ->with('contacts', $contacts)
-            ->with('results', $results)
-            ->with('keyword', $keyword)
-            ->with('km', $km)
-            ->with('searched', true);
+            if (count($contacts)>300) {
+                return view('adresse.monAdresse')
+                    ->with('contacts', $contacts)
+                    ->with('results', $results)
+                    ->with('keyword', $keyword)
+                    ->with('km', $km)
+                    ->with('searched', true);
+            }
+            else{
+                //l'afficher
+                return view('adresse.monAdresse')
+                    ->with('contacts', $contacts)
+                    ->with('results', $results)
+                    ->with('keyword', $keyword)
+                    ->with('km', $km)
+                    ->with('searched', true); 
+            }   
+
+            
+
+
         }
         /*s'il n'y a pas de keyword, ne rien afficher*/
         else
