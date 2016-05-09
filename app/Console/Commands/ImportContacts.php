@@ -47,10 +47,7 @@ class ImportContacts extends Command
                     $contact->fill($row);
 
                     if ($contact->save())
-
                     {
-
-
                         // handle tags
                         if (isset($row['tags']))
                         {

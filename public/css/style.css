@@ -1,48 +1,43 @@
 /************************* Partie publique ********************/
 
-    #map {
-            display:block;
-            margin-left:auto;
-            margin-right: auto;
-            margin-top: 10px;
-            height: 450px; 
-            width:100%;
-            background-color: black;
-        }
+#map {
+    display:block;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 10px;
+    height: 450px;
+    width:100%;
+    background-color: #000;
+
+}
 
 
-    .dropdown{
-        margin-left: 50px;
-    }
+.dropdown{
+    margin-left: 50px;
+}
 
 
 /**************************** Admin *******************************/
-    td.ellipse
-    {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
+td.ellipse
+{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
 
-    table.special {
-        table-layout: fixed
-    }
+table.special {
+    table-layout: fixed
+}
 
-    table.special td.content
-    {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
+table.special td.content
+{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
-    /* fixe le bug d'affichage de la poubelle dans les actions*/
-    table.special form{
-        display: inline;
-    }
-
-
-
-
-
-
+/* fixe le bug d'affichage de la poubelle dans les actions*/
+table.special form{
+    display: inline;
+}

@@ -14,17 +14,24 @@
 Route::auth();
 
 
-    /********************** PUBLIC *****************************/
+/********************** PUBLIC *****************************/
 
 
-    Route::get('/', 'monAdresseController@monAdresse');
-    Route::get('home', 'monAdresseController@monAdresse');
-    Route::get('tag/{tag}', 'publicTagController@show');
-    Route::get('contact/{contact}', 'publicContactController@detail');
+Route::get('/', 'monAdresseController@monAdresse');
+Route::get('home', 'monAdresseController@monAdresse');
+Route::get('tag/{tag}', 'publicTagController@show');
+Route::get('contact/{contact}', 'publicContactController@detail');
 
 
-    /********************** ADMIN *****************************/
+/********************** USERS *****************************/
 
+/*
+Ici on va mettre les routes pour els personnes connectées qui fot de suggestions de modifs
+*/
+
+
+/********************** ADMIN *****************************/
+Route::group(['middleware' => ['admin']], function () {
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
 
@@ -46,5 +53,4 @@ Route::auth();
 
     // affichage de l'historique d emodification d'un contact
     Route::get('admin/contact/{contact}/history' ,'ContactController@history');
-
-
+});

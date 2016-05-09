@@ -17,7 +17,6 @@ class ContactController extends Controller
     */
     public function index(Request $request)
     {
-
         // tri recherche session
         // sinon tri par défaut sur le nom par ordre alphabétique
         if ($request->session()->get('sort'))
@@ -77,7 +76,7 @@ class ContactController extends Controller
 
         /**************************************/
 
-         $contacts=Contact::orderBy($sort, $order)->paginate(20);
+        $contacts=Contact::orderBy($sort, $order)->paginate(20);
 
 
         return view('admin.contact.index', compact('contacts'));
@@ -93,6 +92,7 @@ class ContactController extends Controller
         $contact = new Contact();
         return view('admin.contact.create')
         ->with('contact', $contact);
+        
     }
 
     /**
@@ -104,11 +104,11 @@ class ContactController extends Controller
     public function store(Request $request,  Contact $contact)
     {
         $contact->fill($request->all());
-        
+
         // on tente de sauver une première fois le contact pour avoir son id (pour si jamais, lui attacher des tags)
         if (!$contact->save())
         {
-             flash()->error('Contact non valide');
+            flash()->error('Contact non valide');
             return redirect()->back()
             ->withErrors($contact->getErrors())
             ->withInput();
@@ -186,7 +186,7 @@ class ContactController extends Controller
 
 
 
-            flash()->success('L\'organisme a bien été enregistré');
+        flash()->success('L\'organisme a bien été enregistré');
         return redirect()->route('admin.contact.index');
     }
 

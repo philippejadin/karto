@@ -26,7 +26,7 @@
 
     {!! Html::style('css/style.css') !!}
 
-    
+
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top">
@@ -45,9 +45,10 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Karto
                 </a>
-                
+
             </div>
-            @if(Auth::check())
+
+            @if(Auth::check() && Auth::user()->isAdmin())
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">

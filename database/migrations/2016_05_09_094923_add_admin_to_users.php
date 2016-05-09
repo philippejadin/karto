@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserIdToContacts extends Migration
+class AddAdminToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddUserIdToContacts extends Migration
      */
     public function up()
     {
-        Schema::table('contacts', function ($table) {
-            $table->integer('user_id')->references('id')->on('users');
+        Schema::table('users', function ($table) {
+            $table->tinyInteger('admin')->default(0);
         });
     }
 
@@ -24,6 +24,6 @@ class AddUserIdToContacts extends Migration
      */
     public function down()
     {
-        $table->dropColumn('user_id');
+        $table->dropColumn('admin');
     }
 }

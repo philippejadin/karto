@@ -13,32 +13,59 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 
 
 class User extends Model implements AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
+AuthorizableContract,
+CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
     use \Venturecraft\Revisionable\RevisionableTrait;
 
     /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
+    * The database table used by the model.
+    *
+    * @var string
+    */
     protected $table = 'users';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
     protected $fillable = ['name', 'email', 'password'];
 
     /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
+    * The attributes excluded from the model's JSON form.
+    *
+    * @var array
+    */
     protected $hidden = ['password', 'remember_token'];
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // le premier user sera un admin TODO securité check
+        static::creating(function($user)
+        {
+            if (\App\User::count() == 0)
+            {
+                $user->admin = 1;
+            }
+        });
+    }
+
+
+    public function isAdmin()
+    {
+        if ($this->admin == 1)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
 
 }
