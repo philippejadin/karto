@@ -1,0 +1,10 @@
+SELECT DISTINCT *
+FROM   contacts T1
+WHERE  EXISTS (SELECT *
+               FROM   contacts T2
+               WHERE  T1.id <> T2.id
+                 AND T1.name = T2.name
+                 AND  T1.address    = T2.address
+                 AND  T1.postal_code = T2.postal_code)
+                 
+order by name
