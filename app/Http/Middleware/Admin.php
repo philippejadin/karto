@@ -30,9 +30,6 @@ class Admin
   */
   public function handle($request, Closure $next)
   {
-    // if current user is not a member of the passed in group
-    // curently it means the user must have membership level higher than 10
-
     if ($this->auth->guest()) {
       return redirect()->guest('login');
     }
