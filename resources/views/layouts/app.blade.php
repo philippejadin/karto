@@ -18,7 +18,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <!-- leaflet - map -->
-     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -49,14 +49,14 @@
             </div>
 
             @if(Auth::check() && Auth::user()->isAdmin())
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{url('admin/contact')}}">Contact</a></li>
-                    <li><a href="{{url('admin/tag')}}">Tag</a></li>
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{url('admin/contact')}}">Contact</a></li>
+                        <li><a href="{{url('admin/tag')}}">Tag</a></li>
 
-                </ul>
-            @endif
+                    </ul>
+                @endif
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -82,13 +82,13 @@
 
 
                     {{ Form::open(['action'=>'SearchController@search', 'method'=>'GET', 'class'=>'navbar-form',  'role'=>'search'] ) }}
-                        <div class="input-group">
+                    <div class="input-group">
 
-                            {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
+                        {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </div>
+                    </div>
                     {!! Form::close() !!}
 
 
@@ -101,7 +101,9 @@
 
 
 
-    @include('common.errors')
+    @include('flash::messages')
+
+
     @yield('content')
 
     <!-- JavaScripts -->
@@ -110,6 +112,12 @@
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <!-- JavaScript - Leaflet -->
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+
+    <script>
+    // Rendre modal le panneau overlay éventuel
+    $('#flash-overlay-modal').modal();
+    </script>
 
 </body>
 </html>
