@@ -7,21 +7,24 @@
             <div class="panel-heading">Modification d'un tag</div>
             <div class="panel-body">
                 <div class="col-sm-12">
+
+
                     {!! Form::model($tag, ['route' => ['admin.tag.update', $tag->id], 'method' => 'put', 'class' => 'form-horizontal panel']) !!}
-                    <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
+                    
+                    <div class="form-group">
                         {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
-                        {!! $errors->first('name', '<small class="help-block">:message</small>') !!}
                     </div>
-                    <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
-                        {!! Form::text('description', null, ['class' => 'form-control', 'placeholder' => 'Description']) !!}
-                        {!! $errors->first('description', '<small class="help-block">:message</small>') !!}
+                   
+                   <div class="form-group ">
+                        {!! Form::text('description', null, ['class' => 'form-control', 'placeholder' => 'Description']) !!}   
                     </div>
-                    <div class="form-group {!! $errors->has('color') ? 'has-error' : '' !!}">
+                    
+                    <div class="form-group">
                         {!! Form::text('color', null, ['id' => 'color', 'class' => 'form-control', 'placeholder' => 'Couleur']) !!}
-                        {!! $errors->first('color', '<small class="help-block">:message</small>') !!}
+
+                        {!!Form::label('master_tag', 'Tag principal')!!}
+                        {!!Form::checkbox('master_tag',null, null)!!}
                     </div>
-
-
 
                     {!! Form::submit('Envoyer', ['class' => 'btn btn-primary pull-right']) !!}
                     {!! Form::close() !!}
