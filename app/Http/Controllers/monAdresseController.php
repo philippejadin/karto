@@ -59,16 +59,58 @@ class monAdresseController extends Controller
                 }
                 
             $distance = 0.01506 * $km;
-
-        	//faire une recherche de proximité
+                        //faire une recherche de proximité
             $contacts = \App\Contact::where('longitude', '<', $results['longitude'] + $distance / 2)
                     ->where('longitude', '>', $results['longitude'] - $distance / 2)
                     ->where('latitude', '<', $results['latitude'] + $distance / 2)
                     ->where('latitude', '>', $results['latitude'] - $distance / 2)
-                    ->limit(250)
                     ->get();
 
-            if (count($contacts)>300) {
+
+            
+            // compter combien y'en a
+            $contact_count = count($contacts);
+            $max_results = 5;
+
+            // si plus de $max * 2
+            // réduire la distance / 2
+            if ($contact_count > ($max_results*2)){
+                    return view('adresse.monAdresse')
+                    ->with('distance', $distance/2)
+                    ->with('contacts', $contacts)
+                    ->with('results', $results)
+                    ->with('keyword', $keyword)
+                    ->with('km', $km)
+                    ->with('searched', true);
+
+            }
+
+             // si plus de $max * 4
+            // réduire la distance / 4
+            elseif ($contact_count>($max_results*4)) {
+                    return view('adresse.monAdresse')
+                    ->with('distance', $distance/4)
+                    ->with('contacts', $contacts)
+                    ->with('results', $results)
+                    ->with('keyword', $keyword)
+                    ->with('km', $km)
+                    ->with('searched', true);
+            }
+
+            // si plus de $max * 8
+            // réduire la distance / 8
+            elseif($contact_count >($max_results*8)){
+                    return view('adresse.monAdresse')
+                    ->with('distance', $distance/8)
+                    ->with('contacts', $contacts)
+                    ->with('results', $results)
+                    ->with('keyword', $keyword)
+                    ->with('km', $km)
+                    ->with('searched', true);
+            }
+            // dans tous les cas afficher
+            else{
+
                 return view('adresse.monAdresse')
                     ->with('contacts', $contacts)
                     ->with('results', $results)
@@ -76,19 +118,7 @@ class monAdresseController extends Controller
                     ->with('km', $km)
                     ->with('searched', true);
             }
-            else{
-                //l'afficher
-                return view('adresse.monAdresse')
-                    ->with('contacts', $contacts)
-                    ->with('results', $results)
-                    ->with('keyword', $keyword)
-                    ->with('km', $km)
-                    ->with('searched', true); 
-            }   
-
             
-
-
         }
         /*s'il n'y a pas de keyword, ne rien afficher*/
         else

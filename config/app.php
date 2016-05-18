@@ -153,7 +153,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Toin0u\Geocoder\GeocoderServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
+/*        DraperStudio\Picible\PicibleServiceProvider::class,
+*/
 
 
         /*

@@ -41,7 +41,16 @@ class TagController extends Controller
     public function store(Request $request, Tag $tag)
     {
         $tag->fill($request->all());
-       /* $contact->geocode();*/
+      
+        if ($request->has('master_tag'))
+        {
+            $tag->master_tag = 1;
+        }
+        else
+        {
+             $tag->master_tag = 0;
+        }
+
 
         if ( ! $tag->save()) {
             return redirect()->back()
@@ -88,7 +97,16 @@ class TagController extends Controller
     public function update(Request $request, Tag $tag)
     {
         $tag->fill($request->all());
-        /*$contact->geocode();*/
+     
+
+        if ($request->has('master_tag'))
+        {
+            $tag->master_tag = 1;
+        }
+        else
+        {
+             $tag->master_tag = 0;
+        }
 
         if ( ! $tag->save()) {
             return redirect()->back()

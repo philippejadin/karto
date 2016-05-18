@@ -11,7 +11,7 @@ class GeocodeContacts extends Command
     *
     * @var string
     */
-    protected $signature = 'karto:geocode {size=5}';
+    protected $signature = 'karto:geocode {size=500}';
 
     /**
     * The console command description.
@@ -47,7 +47,7 @@ class GeocodeContacts extends Command
         {
             if ($contact->geocode())
             {
-                $contact->save();
+                $contact->forceSave();
                 $this->info('Contact ' . $contact->name . ' correctement geolocalise');
             }
             else {

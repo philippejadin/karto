@@ -15,6 +15,7 @@ class Tag extends Model
         'name',
         'description',
         'color',
+        'master_tag'
     ];
 
     public function contacts(){

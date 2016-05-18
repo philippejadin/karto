@@ -13,8 +13,8 @@ return [
     // Providers get called in the chain order given here.
     // The first one to return a result will be used.
     'providers' => [
-        'Geocoder\Provider\OpenStreetMapProvider'  => null,
-        'Geocoder\Provider\GoogleMapsProvider' => ['fr-FR', 'Belgique', false],
+        'Geocoder\Provider\GoogleMapsProvider'  => ['fr-FR', 'Belgique', false],
+        'Geocoder\Provider\OpenStreetMapProvider' => null,
         'Geocoder\Provider\FreeGeoIpProvider'  => null,
 
     ],
