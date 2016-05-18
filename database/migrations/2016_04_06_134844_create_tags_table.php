@@ -22,6 +22,7 @@ class CreateTagsTable extends Migration
         });
 
         Schema::create('contact_tag', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('contact_id')->unsigned()->index();
             $table->integer('tag_id')->unsigned()->index();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');

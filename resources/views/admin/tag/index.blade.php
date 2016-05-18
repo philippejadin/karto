@@ -18,6 +18,7 @@
                     <th>Nom</th>
                     <th>Description</th>
                     <th>Couleur</th>
+                    <th>Tag principal ?</th>
 
 
 
@@ -28,9 +29,15 @@
                     <tr>
 
                         <td>{!! $tag->id !!}</td>
-                        <td class="text-primary"><strong>{{ $tag->name }}</strong></td>
-                        <td class="text-primary"><strong>{{ $tag->description }}</strong></td>
-                        <td class="text-primary"><div style="background-color:{{ $tag->color }}; width:30px; height: 30px">&nbsp;</div></td>
+                        <td><strong>{{ $tag->name }}</strong></td>
+                        <td><strong>{{ $tag->description }}</strong></td>
+                        <td><div style="background-color:{{ $tag->color }}; width:30px; height: 30px">&nbsp;</div></td>
+
+                        <td>
+                            @if ($tag->master_tag == 1)
+                                Oui
+                            @endif
+                        </td>
 
 
                         <td><a href="{{ route('admin.tag.show',  [$tag->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>

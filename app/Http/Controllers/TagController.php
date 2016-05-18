@@ -16,8 +16,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::paginate(20);
-        
+        $tags = Tag::orderBy('name')->paginate(20);
+
         return view('admin.tag.index')
          ->with('tags', $tags);
     }
@@ -41,7 +41,7 @@ class TagController extends Controller
     public function store(Request $request, Tag $tag)
     {
         $tag->fill($request->all());
-      
+
         if ($request->has('master_tag'))
         {
             $tag->master_tag = 1;
@@ -97,7 +97,7 @@ class TagController extends Controller
     public function update(Request $request, Tag $tag)
     {
         $tag->fill($request->all());
-     
+
 
         if ($request->has('master_tag'))
         {

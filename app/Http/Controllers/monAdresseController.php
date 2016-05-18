@@ -90,60 +90,71 @@ class monAdresseController extends Controller
 
 
 
+
+            $distance = 0.01506 * $km;
+
+            // Dans tous les cas on affiche
+
+            $tags = \App\Tag::where('master_tag', 1)
+            ->with(['contacts' => function ($query) use ($results, $distance) {
+                $query->where('longitude', '<', $results['longitude'] + $distance / 2)
+                ->where('longitude', '>', $results['longitude'] - $distance / 2)
+                ->where('latitude', '<', $results['latitude'] + $distance / 2)
+                ->where('latitude', '>', $results['latitude'] - $distance / 2)
+                ->with('tags');
+
+            }])->get();
+
+            //dd($tags);
+
             /*
-            // si plus de $max * 8
-            // réduire la distance / 8
-            if ($contact_count > ($max_results * 8))
+            $tags = \App\Tag::where('master_tag', 1)->get();
+
+            foreach ($tags as $tag)
             {
-            $km = $km / 8;
-            flash()->info("Il y a trop de résultats (8x) dans le périmètre choisi, nous avons automatiquement réduit le périmètre de recherche (" . $km . "km)");
+                $tag->load('contacts')->where('longitude', '<', $results['longitude'] + $distance / 2)
+                ->where('longitude', '>', $results['longitude'] - $distance / 2)
+                ->where('latitude', '<', $results['latitude'] + $distance / 2)
+                ->where('latitude', '>', $results['latitude'] - $distance / 2);
+            }
+            */
+
+
+
+            // Dans tous les cas on affiche
+
+            /*
+            $contacts = \App\Contact::with('tags', 'masterTags')
+            ->where('longitude', '<', $results['longitude'] + $distance / 2)
+            ->where('longitude', '>', $results['longitude'] - $distance / 2)
+            ->where('latitude', '<', $results['latitude'] + $distance / 2)
+            ->where('latitude', '>', $results['latitude'] - $distance / 2)
+            ->get()->groupBy('masterTag');
+
+
+            dd($contacts);
+            */
+
+
+            //flash()->info(count($contacts) . " résultats trouvés");
+
+            return view('adresse.monAdresse')
+            ->with('tags', $tags)
+            ->with('results', $results)
+            ->with('keyword', $keyword)
+            ->with('km', $km)
+            ->with('searched', true);
+
+
         }
-        // si plus de $max * 4
-        // réduire la distance / 4
-        elseif ($contact_count > ($max_results * 4))
+        /*s'il n'y a pas de keyword, ne rien afficher*/
+        else
         {
-        $km = $km / 4;
-        flash()->info("Il y a trop de résultats (4x) dans le périmètre choisi, nous avons automatiquement réduit le périmètre de recherche (" . $km . "km)");
+            //l'afficher
+            return view('adresse.monAdresse')
+            ->with('keyword', null)
+            ->with('km', 0)
+            ->with('searched', false);
+        }
     }
-    // si plus de $max * 2
-    // réduire la distance / 2
-    elseif ($contact_count > ($max_results * 2))
-    {
-    $km = $km / 2;
-    flash()->info("Il y a trop de résultats (2x) dans le périmètre choisi, nous avons automatiquement réduit le périmètre de recherche (" . $km . "km)");
-}
-*/
-
-
-$distance = 0.01506 * $km;
-
-// Dans tous les cas on affiche
-$contacts = \App\Contact::with('tags')
-->where('longitude', '<', $results['longitude'] + $distance / 2)
-->where('longitude', '>', $results['longitude'] - $distance / 2)
-->where('latitude', '<', $results['latitude'] + $distance / 2)
-->where('latitude', '>', $results['latitude'] - $distance / 2)
-->get();
-
-flash()->info(count($contacts) . " résultats trouvés");
-
-return view('adresse.monAdresse')
-->with('contacts', $contacts)
-->with('results', $results)
-->with('keyword', $keyword)
-->with('km', $km)
-->with('searched', true);
-
-
-}
-/*s'il n'y a pas de keyword, ne rien afficher*/
-else
-{
-    //l'afficher
-    return view('adresse.monAdresse')
-    ->with('keyword', null)
-    ->with('km', 0)
-    ->with('searched', false);
-}
-}
 }
