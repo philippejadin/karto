@@ -5,9 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Contact;
 use Mexitek\PHPColors\Color;
+use Watson\Validating\ValidatingTrait;
 
 class Tag extends Model
 {
+
+    use ValidatingTrait;
     use \Venturecraft\Revisionable\RevisionableTrait;
 
     protected $table    = 'tags';
@@ -19,6 +22,10 @@ class Tag extends Model
         'master_tag'
     ];
 
+
+    protected $rules = [
+        'name'  => 'required|unique'
+    ];
 
 
     public function contacts(){
@@ -36,7 +43,7 @@ class Tag extends Model
         }
         else
         {
-                return new Color($this->color);
+            return new Color($this->color);
         }
 
     }

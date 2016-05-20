@@ -40,6 +40,11 @@ class ImportContacts extends Command
     public function handle()
     {
         $file = $this->choice('Quel fichier importer?', Storage::files('/import/'));
+
+
+        // TODO validation colonnes dans fichier excell
+
+
         Excel::load(storage_path('app/' . $file), function ($reader) {
             $reader->each(function($sheet) {
                 foreach ($sheet->toArray() as $row) {
@@ -54,6 +59,7 @@ class ImportContacts extends Command
                             $tags = explode(',', $row['tags']);
                             foreach ($tags as $tag)
                             {
+                                trim($tag);
                                 $contact->tags()->attach(\App\Tag::firstOrCreate(['name'=> $tag])->id);
                             }
                         }

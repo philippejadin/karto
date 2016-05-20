@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tag;
+use App\Contact;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,7 +20,7 @@ class TagController extends Controller
         $tags = Tag::orderBy('name')->paginate(20);
 
         return view('admin.tag.index')
-         ->with('tags', $tags);
+        ->with('tags', $tags);
     }
 
     /**
@@ -48,20 +49,20 @@ class TagController extends Controller
         }
         else
         {
-             $tag->master_tag = 0;
-        }
+         $tag->master_tag = 0;
+     }
 
-
-        if ( ! $tag->save()) {
-            return redirect()->back()
-                ->withErrors($tag->getErrors())
-                ->withInput();
-        }
-
-        flash()->success('Tag bien ajouté');
-
-        return redirect()->route('admin.tag.index');
+     if ( ! $tag->save())
+     {
+        return redirect()->back()
+        ->withErrors($tag->getErrors())
+        ->withInput();
     }
+
+    flash()->success('Tag bien ajouté');
+
+    return redirect()->route('admin.tag.index');
+}
 
     /**
      * Display the specified resource.
@@ -84,7 +85,7 @@ class TagController extends Controller
     public function edit(Tag $tag)
     {
         return view('admin.tag.edit')
-         ->with('tag', $tag);
+        ->with('tag', $tag);
     }
 
     /**
@@ -105,19 +106,20 @@ class TagController extends Controller
         }
         else
         {
-             $tag->master_tag = 0;
-        }
+         $tag->master_tag = 0;
+     }
 
-        if ( ! $tag->save()) {
-            return redirect()->back()
-                ->withErrors($tag->getErrors())
-                ->withInput();
-        }
-
-        return redirect()->route('admin.tag.index')
-            ->withSuccess("Your post was saved successfully.");
-
+     if ( ! $tag->save()) 
+     {
+        return redirect()->back()
+        ->withErrors($tag->getErrors())
+        ->withInput();
     }
+
+    return redirect()->route('admin.tag.index')
+    ->withSuccess("Your post was saved successfully.");
+
+}
 
     /**
      * Remove the specified resource from storage.
@@ -125,10 +127,48 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        $tag = Tag::findOrFail($id);
         $tag->delete();
         return redirect()->back();
+    }
+
+    public function changeForm()
+    {
+        return view('admin.tag.change')
+        ->with('tags', \App\Tag::all());
+    }
+
+    public function change(Request $request)
+    {
+        $tag = \App\Tag::findOrFail($request->get('tag'));
+
+        if ($request->get('tag_to_add') <> 0) 
+        {
+            $tag_to_add = \App\Tag::findOrFail($request->get('tag_to_add'));
+
+            foreach ($tag->contacts as $contact) 
+            {
+                $contact->tags()->attach($tag_to_add->id);
+            }
+
+            flash()->success('Le tag a bien été changé');         
+        }
+
+        if ($request->get('tag_to_remove') <> 0)
+        {
+            $tag_to_remove = \App\Tag::findOrFail($request->get('tag_to_remove'));
+
+            foreach ($tag->contacts as $contact) 
+            {
+                $contact->tags()->detach($tag_to_remove->id);
+            }
+
+            flash()->success('Le tag a bien été changé');
+              
+        }
+
+        return redirect()->action('TagController@index');
+
     }
 }

@@ -33,24 +33,33 @@ Ici on va mettre les routes pour els personnes connectées qui fot de suggestion
 /********************** ADMIN *****************************/
 Route::group(['middleware' => ['admin']], function () {
     // gestion des contacts CRUD
+    Route::get('admin/contact/{contact}/delete' ,'ContactController@destroy');
     Route::resource('admin/contact', 'ContactController');
+    
 
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
+
+     // gestion des tags CRUD
+    Route::get('admin/tag/change','TagController@changeForm');
+    Route::post('admin/tag/change','TagController@change');
+    Route::resource('admin/tag', 'TagController');
+ 
+
 
     // import depuis un fichier excel TODO
     Route::get('admin/import', 'ExcelController@getImport');
     Route::post('admin/import', 'ExcelController@postImport');
 
 
-    // gestion des contacts CRUD
-    Route::resource('admin/tag', 'TagController');
-    Route::get('admin/contact/{contact}/delete' ,'ContactController@destroy');
+   
+ 
+    
 
 
     // actions en masse sur les contacts
     Route::post('admin/batch', 'BatchController@action');
 
-    // affichage de l'historique d emodification d'un contact
+    // affichage de l'historique de modification d'un contact
     Route::get('admin/contact/{contact}/history' ,'ContactController@history');
 });
