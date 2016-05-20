@@ -73,45 +73,45 @@
         </script>
 
 
-        <div class="container">
 
 
 
 
-            @foreach($tags as $tag)
-                @if ($tag->contacts->count() > 0)
-                    <h1> {{$tag->name}}</h1>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <!-- titre -->
-                                <th>Nom</th>
-                                <th>Adresse</th>
-                                <th>Localité</th>
-                                <th>Tags</th>
-                            </tr>
-                        </thead>
 
-                        <tbody>
-                            @foreach($tag->contacts as $contact)
-                                <tr>
-                                    <!-- données qu'on récupère dans la DB grace à ELOQUENT -->
-                                    <td><a href="{{action('publicContactController@detail', $contact)}}">{{$contact->name}}</td></a>
-                                    <td>{{$contact->address}}</td>
-                                    <td>{{$contact->locality}}</td>
-                                    <td>
-                                        @foreach ($contact->tags as $tag)
-                                            <a href="{{action('publicTagController@show', $tag)}}"><span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span></a>
-                                        @endforeach
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
-            @endforeach
+        @foreach($tags as $tag)
+            @if ($tag->contacts->count() > 0)
+                <div class="contacts">
+                    <div class="tag  @if ($tag->getColor()->isLight()) darktext @endif" style="background-color: #{{$tag->getColor()->lighten()}}">
+                        <h2> {{$tag->name}}</h2>
+                        <p> {{$tag->description}}</p>
+                    </div>
 
-        </div>
-    @endif
+                    <div class="container">
+
+                        @foreach($tag->contacts->chunk(3) as $chunk)
+                            <div class="row">
+                                @foreach ($chunk as $contact)
+                                    <div class="col-sm-4 contact">
+                                        <h3><a href="{{action('publicContactController@detail', $contact)}}">{{$contact->name}}</a></h3>
+                                        <p class="description"> {{summary($contact->description)}}</p>
+                                        <p class="address">{{$contact->address}}, {{$contact->locality}}</p>
+
+                                        <div class="tags">
+                                            @foreach ($contact->tags as $tag)
+                                                <a href="{{action('publicTagController@show', $tag)}}"><span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span></a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+            @endif
+        @endforeach
+
+    </div>
+@endif
 
 @endsection

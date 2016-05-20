@@ -1,4 +1,20 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald400,300|Roboto:300,400,400italic,700);
+
+
 /************************* Partie publique ********************/
+
+
+body
+{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+h1, h2, h3
+{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
 
 #map {
     display:block;
@@ -14,6 +30,68 @@
 
 .dropdown{
     margin-left: 50px;
+}
+
+
+.label
+{
+    font-weight: 300;
+}
+
+
+/************************ affichage homepage **********************/
+.contacts h3
+{
+    font-size: 1.2em;
+
+}
+
+.contacts h3 a
+{
+    color: black;
+}
+
+.contacts .contact
+{
+    margin-bottom: 2em;
+}
+
+.contacts
+{
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+
+}
+
+.contact .address
+{
+    font-size: 0.8em;
+}
+
+
+.tag
+{
+    padding-top: 4em;
+    padding-bottom: 4em;
+    color: white;
+    font-weight: 300;
+}
+
+.tag.darktext
+{
+    color: black;
+}
+
+.tag h2
+{
+    font-size: 4em;
+    text-align: center;
+}
+
+.tag p
+{
+    font-size: 1.5em;
+    text-align: center;
 }
 
 
