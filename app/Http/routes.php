@@ -35,7 +35,7 @@ Route::group(['middleware' => ['admin']], function () {
     // gestion des contacts CRUD
     Route::get('admin/contact/{contact}/delete' ,'ContactController@destroy');
     Route::resource('admin/contact', 'ContactController');
-    
+
 
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
@@ -44,7 +44,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin/tag/change','TagController@changeForm');
     Route::post('admin/tag/change','TagController@change');
     Route::resource('admin/tag', 'TagController');
- 
+
 
 
     // import depuis un fichier excel TODO
@@ -52,9 +52,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('admin/import', 'ExcelController@postImport');
 
 
-   
- 
-    
+
+
+
 
 
     // actions en masse sur les contacts

@@ -149,7 +149,10 @@ class TagController extends Controller
 
             foreach ($tag->contacts as $contact)
             {
-                $contact->tags()->sync([$tag_to_add->id], false);
+                if (!$contact->tags->contains($tag_to_add->id))
+                {
+                    $contact->tags()->save($tag_to_add);
+                }
             }
 
             flash()->success('Le tag a bien été changé');

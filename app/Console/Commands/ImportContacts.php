@@ -57,11 +57,21 @@ class ImportContacts extends Command
                         if (isset($row['tags']))
                         {
                             $tags = explode(',', $row['tags']);
+
                             foreach ($tags as $tag)
                             {
                                 trim($tag);
-                                $contact->tags()->sync([\App\Tag::firstOrCreate(['name'=> $tag])->id], false);
+                                $the_tag = \App\Tag::firstOrCreate(['name'=> $tag]);
+
+                                if (!$contact->tags->contains($the_tag->id))
+                                {
+                                    $contact->tags()->save($the_tag);
+                                }
                             }
+
+
+
+
                         }
 
                         $this->info('Contact ' . $contact->name . ' correctement importe');
