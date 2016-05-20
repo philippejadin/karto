@@ -60,7 +60,7 @@ class ImportContacts extends Command
                             foreach ($tags as $tag)
                             {
                                 trim($tag);
-                                $contact->tags()->attach(\App\Tag::firstOrCreate(['name'=> $tag])->id);
+                                $contact->tags()->sync([\App\Tag::firstOrCreate(['name'=> $tag])->id], false);
                             }
                         }
 

@@ -109,7 +109,7 @@ class TagController extends Controller
          $tag->master_tag = 0;
      }
 
-     if ( ! $tag->save()) 
+     if ( ! $tag->save())
      {
         return redirect()->back()
         ->withErrors($tag->getErrors())
@@ -143,29 +143,29 @@ class TagController extends Controller
     {
         $tag = \App\Tag::findOrFail($request->get('tag'));
 
-        if ($request->get('tag_to_add') <> 0) 
+        if ($request->get('tag_to_add') <> 0)
         {
             $tag_to_add = \App\Tag::findOrFail($request->get('tag_to_add'));
 
-            foreach ($tag->contacts as $contact) 
+            foreach ($tag->contacts as $contact)
             {
-                $contact->tags()->attach($tag_to_add->id);
+                $contact->tags()->sync([$tag_to_add->id], false);
             }
 
-            flash()->success('Le tag a bien été changé');         
+            flash()->success('Le tag a bien été changé');
         }
 
         if ($request->get('tag_to_remove') <> 0)
         {
             $tag_to_remove = \App\Tag::findOrFail($request->get('tag_to_remove'));
 
-            foreach ($tag->contacts as $contact) 
+            foreach ($tag->contacts as $contact)
             {
                 $contact->tags()->detach($tag_to_remove->id);
             }
 
             flash()->success('Le tag a bien été changé');
-              
+
         }
 
         return redirect()->action('TagController@index');
