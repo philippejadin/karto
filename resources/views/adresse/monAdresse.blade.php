@@ -149,7 +149,7 @@
         <div class="contacts">
             <div class="tag" style="background-color: #a0a">
                 <h2>Autres organismes</h2>
-                <p>Les organismes ci-dessous ne sont pas repris dans une des catégories principales, mais peuvent nénamoins vous intéresser</p>
+                <p>Les organismes ci-dessous ne sont pas repris dans une des catégories principales, mais peuvent néanmoins vous intéresser</p>
             </div>
 
             <div class="container">

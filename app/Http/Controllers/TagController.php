@@ -11,10 +11,10 @@ use App\Http\Requests;
 class TagController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
         $tags = Tag::orderBy('name')->paginate(20);
@@ -24,21 +24,21 @@ class TagController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function create()
     {
         return view('admin.tag.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request, Tag $tag)
     {
         $tag->fill($request->all());
@@ -49,27 +49,27 @@ class TagController extends Controller
         }
         else
         {
-         $tag->master_tag = 0;
-     }
+            $tag->master_tag = 0;
+        }
 
-     if ( ! $tag->save())
-     {
-        return redirect()->back()
-        ->withErrors($tag->getErrors())
-        ->withInput();
+        if ( ! $tag->save())
+        {
+            return redirect()->back()
+            ->withErrors($tag->getErrors())
+            ->withInput();
+        }
+
+        flash()->success('Tag bien ajouté');
+
+        return redirect()->route('admin.tag.index');
     }
 
-    flash()->success('Tag bien ajouté');
-
-    return redirect()->route('admin.tag.index');
-}
-
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function show(Tag $tag)
     {
         return view('admin.tag.show')
@@ -77,11 +77,11 @@ class TagController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function edit(Tag $tag)
     {
         return view('admin.tag.edit')
@@ -89,12 +89,12 @@ class TagController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function update(Request $request, Tag $tag)
     {
         $tag->fill($request->all());
@@ -106,27 +106,27 @@ class TagController extends Controller
         }
         else
         {
-         $tag->master_tag = 0;
-     }
+            $tag->master_tag = 0;
+        }
 
-     if ( ! $tag->save())
-     {
-        return redirect()->back()
-        ->withErrors($tag->getErrors())
-        ->withInput();
+        if ( ! $tag->save())
+        {
+            return redirect()->back()
+            ->withErrors($tag->getErrors())
+            ->withInput();
+        }
+
+        return redirect()->route('admin.tag.index')
+        ->withSuccess("Your post was saved successfully.");
+
     }
 
-    return redirect()->route('admin.tag.index')
-    ->withSuccess("Your post was saved successfully.");
-
-}
-
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function destroy(Tag $tag)
     {
         $tag->delete();
@@ -136,36 +136,49 @@ class TagController extends Controller
     public function changeForm()
     {
         return view('admin.tag.change')
-        ->with('tags', \App\Tag::all());
+        ->with('tags', \App\Tag::orderBy('name')->get());
     }
 
     public function change(Request $request)
     {
-        $tag = \App\Tag::findOrFail($request->get('tag'));
 
-        if ($request->get('tag_to_add') <> 0)
+        foreach ($request->get('tags') as $tag_id)
+        {
+            $tags[] = \App\Tag::findOrFail($tag_id);
+        }
+
+
+
+        if ($request->get('tag_to_add'))
         {
             $tag_to_add = \App\Tag::findOrFail($request->get('tag_to_add'));
 
-
-            foreach ($tag->contacts as $contact)
+            foreach ($tags as $tag)
             {
-                if (!$contact->tags->contains($tag_to_add->id))
+                foreach ($tag->contacts as $contact)
                 {
-                    $contact->tags()->save($tag_to_add);
+                    if (!$contact->tags->contains($tag_to_add->id))
+                    {
+                        $contact->tags()->save($tag_to_add);
+                    }
                 }
+
+                flash()->success('Le tag ' .$tag->name . ' a bien été changé');
             }
 
-            flash()->success('Le tag a bien été changé');
+
         }
 
         if ($request->get('tag_to_remove') <> 0)
         {
             $tag_to_remove = \App\Tag::findOrFail($request->get('tag_to_remove'));
 
-            foreach ($tag->contacts as $contact)
+            foreach ($tags as $tag)
             {
-                $contact->tags()->detach($tag_to_remove->id);
+                foreach ($tag->contacts as $contact)
+                {
+                    $contact->tags()->detach($tag_to_remove->id);
+                }
             }
 
             flash()->success('Le tag a bien été changé');
