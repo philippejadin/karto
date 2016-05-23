@@ -58,16 +58,25 @@
             L.marker([{{$results['latitude']}},{{$results['longitude']}}]).addTo(mymap)
             .bindPopup("vous êtes ici");
 
-            //affichage des contacts géograpphiquement près de l'adresse en get
+            // affichage des contacts qui ont un master tag
             @foreach ($tags as $tag)
-            @foreach($tag['contacts'] as $contact)
-            //création du marqueur
-            L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
-            //ce qu'il y a d'écrit dans le pop up
-            .bindPopup("<a href=\"{{action('publicContactController@detail', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+                @foreach($tag['contacts'] as $contact)
+                //création du marqueur
+                L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
+                //ce qu'il y a d'écrit dans le pop up
+                .bindPopup("<a href=\"{{action('publicContactController@detail', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+                @endforeach
+            @endforeach
 
-            @endforeach
-            @endforeach
+            // affichage des autres contacts
+            @if (count($other_contacts) > 0)
+                @foreach($other_contacts as $contact)
+                //création du marqueur
+                L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
+                //ce qu'il y a d'écrit dans le pop up
+                .bindPopup("<a href=\"{{action('publicContactController@detail', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+                @endforeach
+            @endif
         };
 
         </script>
