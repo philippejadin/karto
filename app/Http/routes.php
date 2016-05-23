@@ -20,7 +20,7 @@ Route::auth();
 Route::get('/', 'monAdresseController@monAdresse');
 Route::get('home', 'monAdresseController@monAdresse');
 Route::get('tag/{tag}', 'publicTagController@show');
-Route::get('contact/{contact}', 'publicContactController@detail');
+Route::get('contact/{contact}', 'publicContactController@show');
 
 
 /********************** USERS *****************************/

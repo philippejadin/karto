@@ -9,12 +9,12 @@ use App\Tag;
 
 class publicContactController extends Controller
 {
-   
-    public function detail(Contact $contact)
+
+    public function show(Contact $contact)
     {
-        return view('contact.detail')
+        return view('contact.show')
         ->with('contact', $contact);
     }
-    
+
 
 }

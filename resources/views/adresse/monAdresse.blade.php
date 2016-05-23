@@ -64,7 +64,7 @@
                 //création du marqueur
                 L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
                 //ce qu'il y a d'écrit dans le pop up
-                .bindPopup("<a href=\"{{action('publicContactController@detail', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+                .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
                 @endforeach
             @endforeach
 
@@ -74,7 +74,7 @@
                 //création du marqueur
                 L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
                 //ce qu'il y a d'écrit dans le pop up
-                .bindPopup("<a href=\"{{action('publicContactController@detail', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+                .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
                 @endforeach
             @endif
         };
@@ -101,7 +101,7 @@
                         <div class="row">
                             @foreach ($chunk as $contact)
                                 <div class="col-sm-4 contact">
-                                    <h3><a href="{{action('publicContactController@detail', $contact)}}">{{$contact->name}}</a></h3>
+                                    <h3><a href="{{action('publicContactController@show', $contact)}}">{{$contact->name}}</a></h3>
                                     <p class="description"> {{summary($contact->description)}}</p>
                                     <p class="address">{{$contact->address}}, {{$contact->locality}}</p>
 
@@ -135,7 +135,7 @@
                     <div class="row">
                         @foreach ($chunk as $contact)
                             <div class="col-sm-4 contact">
-                                <h3><a href="{{action('publicContactController@detail', $contact)}}">{{$contact->name}}</a></h3>
+                                <h3><a href="{{action('publicContactController@show', $contact)}}">{{$contact->name}}</a></h3>
                                 <p class="description"> {{summary($contact->description)}}</p>
                                 <p class="address">{{$contact->address}}, {{$contact->locality}}</p>
 
