@@ -147,6 +147,7 @@ class TagController extends Controller
         {
             $tag_to_add = \App\Tag::findOrFail($request->get('tag_to_add'));
 
+
             foreach ($tag->contacts as $contact)
             {
                 if (!$contact->tags->contains($tag_to_add->id))

@@ -23,16 +23,6 @@ class monAdresseController extends Controller
     public function monAdresse(Request $request)
     {
 
-        /*
-        flash()->success('You successfully read this important alert message.')
-        ->info('This alert needs your attention, but it\'s not super important.')
-        ->warning('Better check yourself, you\'re not looking too good.')
-        ->error('Change a few things up and try submitting again.')
-        ->overlay('One fine body...');
-
-        dd($request);
-        */
-
         /*Si la requête a un keyword afficher la recherche*/
         if ($request->has('keyword'))
         {
@@ -66,8 +56,6 @@ class monAdresseController extends Controller
             }
 
 
-
-
             $distance = 0.01506 * $km;
 
             // compter le nombre d'orgnaismes trouvés
@@ -78,7 +66,7 @@ class monAdresseController extends Controller
             ->count();
 
 
-            $max_results = 300; // TODO configurabel
+            $max_results = 300; // TODO configurable
 
 
             if ($contact_count > ($max_results))
@@ -90,85 +78,71 @@ class monAdresseController extends Controller
 
 
 
-
             $distance = 0.01506 * $km;
 
-            // Dans tous les cas on affiche
-
-            $tags = \App\Tag::where('master_tag', 1)
-            ->with(['contacts' => function ($query) use ($results, $distance) {
-                $query->where('longitude', '<', $results['longitude'] + $distance / 2)
-                ->where('longitude', '>', $results['longitude'] - $distance / 2)
-                ->where('latitude', '<', $results['latitude'] + $distance / 2)
-                ->where('latitude', '>', $results['latitude'] - $distance / 2)
-                ->with('tags');
-
-            }])->get();
-
-
-            // TODO ajouter la liste des contacts qui n'ont pas de master tag
-            /*
             $contacts = \App\Contact::with('tags')
             ->where('longitude', '<', $results['longitude'] + $distance / 2)
             ->where('longitude', '>', $results['longitude'] - $distance / 2)
             ->where('latitude', '<', $results['latitude'] + $distance / 2)
             ->where('latitude', '>', $results['latitude'] - $distance / 2)
             ->get();
-            */
 
 
-
-
-            //dd($tags);
+            $tags = [];
+            $other_contacts = [];
 
             /*
-            $tags = \App\Tag::where('master_tag', 1)->get();
+            Trier par tags
+            Avec cette routine, la vue reçoit un beau tableau à deux dimmensions $tags
 
-            foreach ($tags as $tag)
+            qui contient chaque master tag
+
+            $tags[1]['tag'] -> objet master tag
+            $tags[1]['contacts'] -> liste des contacts associés
+            */
+            foreach ($contacts as $contact)
             {
-            $tag->load('contacts')->where('longitude', '<', $results['longitude'] + $distance / 2)
-            ->where('longitude', '>', $results['longitude'] - $distance / 2)
-            ->where('latitude', '<', $results['latitude'] + $distance / 2)
-            ->where('latitude', '>', $results['latitude'] - $distance / 2);
+                $has_master_tag = false;
+                foreach ($contact->tags as $tag)
+                {
+                    if ($tag->master_tag == 1)
+                    {
+                        $tags[$tag->id]['tag'] = $tag;
+                        $tags[$tag->id]['contacts'][] = $contact;
+                        $has_master_tag = true;
+                    }
+                }
+                // si le contact n'a pas de master tag, on le met dans un autre tableau appellé $other_contacts pour le mettre en fin de liste, rubrique "autres"
+                if (!$has_master_tag)
+                {
+                    $other_contacts[] = $contact;
+                }
+
+            }
+
+
+
+
+            //flash()->info(count($contacts) . " résultats trouvés");
+
+            return view('adresse.monAdresse')
+            ->with('tags', $tags)
+            ->with('other_contacts', $other_contacts)
+            ->with('results', $results)
+            ->with('keyword', $keyword)
+            ->with('km', $km)
+            ->with('searched', true);
+
+
         }
-        */
-
-
-
-        // Dans tous les cas on affiche
-
-        /*
-        $contacts = \App\Contact::with('tags', 'masterTags')
-        ->where('longitude', '<', $results['longitude'] + $distance / 2)
-        ->where('longitude', '>', $results['longitude'] - $distance / 2)
-        ->where('latitude', '<', $results['latitude'] + $distance / 2)
-        ->where('latitude', '>', $results['latitude'] - $distance / 2)
-        ->get()->groupBy('masterTag');
-
-
-        dd($contacts);
-        */
-
-
-        //flash()->info(count($contacts) . " résultats trouvés");
-
-        return view('adresse.monAdresse')
-        ->with('tags', $tags)
-        ->with('results', $results)
-        ->with('keyword', $keyword)
-        ->with('km', $km)
-        ->with('searched', true);
-
-
+        /*s'il n'y a pas de keyword, ne rien afficher*/
+        else
+        {
+            //l'afficher
+            return view('adresse.monAdresse')
+            ->with('keyword', null)
+            ->with('km', 0)
+            ->with('searched', false);
+        }
     }
-    /*s'il n'y a pas de keyword, ne rien afficher*/
-    else
-    {
-        //l'afficher
-        return view('adresse.monAdresse')
-        ->with('keyword', null)
-        ->with('km', 0)
-        ->with('searched', false);
-    }
-}
 }

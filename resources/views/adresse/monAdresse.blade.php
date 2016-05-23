@@ -60,7 +60,7 @@
 
             //affichage des contacts géograpphiquement près de l'adresse en get
             @foreach ($tags as $tag)
-            @foreach($tag->contacts as $contact)
+            @foreach($tag['contacts'] as $contact)
             //création du marqueur
             L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
             //ce qu'il y a d'écrit dans le pop up
@@ -79,39 +79,72 @@
 
 
         @foreach($tags as $tag)
-            @if ($tag->contacts->count() > 0)
+            @if (count($tag['contacts']) > 0)
                 <div class="contacts">
-                    <div class="tag  @if ($tag->getColor()->isLight()) darktext @endif" style="background-color: #{{$tag->getColor()->lighten()}}">
-                        <h2> {{$tag->name}}</h2>
-                        <p> {{$tag->description}}</p>
+                    <div class="tag  @if ($tag['tag']->getColor()->isLight()) darktext @endif" style="background-color: #{{$tag['tag']->getColor()->lighten()}}">
+                    <h2> {{$tag['tag']->name}}</h2>
+                    <p> {{$tag['tag']->description}}</p>
                     </div>
 
                     <div class="container">
 
-                        @foreach($tag->contacts->chunk(3) as $chunk)
-                            <div class="row">
-                                @foreach ($chunk as $contact)
-                                    <div class="col-sm-4 contact">
-                                        <h3><a href="{{action('publicContactController@detail', $contact)}}">{{$contact->name}}</a></h3>
-                                        <p class="description"> {{summary($contact->description)}}</p>
-                                        <p class="address">{{$contact->address}}, {{$contact->locality}}</p>
+                    @foreach(array_chunk($tag['contacts'], 3) as $chunk)
+                        <div class="row">
+                            @foreach ($chunk as $contact)
+                                <div class="col-sm-4 contact">
+                                    <h3><a href="{{action('publicContactController@detail', $contact)}}">{{$contact->name}}</a></h3>
+                                    <p class="description"> {{summary($contact->description)}}</p>
+                                    <p class="address">{{$contact->address}}, {{$contact->locality}}</p>
 
-                                        <div class="tags">
-                                            @foreach ($contact->tags as $tag)
-                                                <a href="{{action('publicTagController@show', $tag)}}"><span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span></a>
-                                            @endforeach
-                                        </div>
+                                    <div class="tags">
+                                        @foreach ($contact->tags as $tag)
+                                            <a href="{{action('publicTagController@show', $tag)}}"><span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span></a>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+        @endif
+    @endforeach
+
+
+
+    @if (count($other_contacts) > 0)
+        <div class="contacts">
+            <div class="tag" style="background-color: #aaa">
+                <h2>Autres organismes</h2>
+                <p>Les organismes ci-dessous ne sont pas repris dans une des catégories principales, mais peuvent nénamoins vous intéresser</p>
+            </div>
+
+            <div class="container">
+
+                @foreach(array_chunk($other_contacts, 3) as $chunk)
+                    <div class="row">
+                        @foreach ($chunk as $contact)
+                            <div class="col-sm-4 contact">
+                                <h3><a href="{{action('publicContactController@detail', $contact)}}">{{$contact->name}}</a></h3>
+                                <p class="description"> {{summary($contact->description)}}</p>
+                                <p class="address">{{$contact->address}}, {{$contact->locality}}</p>
+
+                                <div class="tags">
+                                    @foreach ($contact->tags as $tag)
+                                        <a href="{{action('publicTagController@show', $tag)}}"><span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span></a>
+                                    @endforeach
+                                </div>
                             </div>
                         @endforeach
                     </div>
-                </div>
+                @endforeach
+            </div>
+        </div>
 
-            @endif
-        @endforeach
+    @endif
 
-    </div>
+</div>
 @endif
 
 @endsection
