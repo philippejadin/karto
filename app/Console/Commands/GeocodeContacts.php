@@ -52,10 +52,8 @@ class GeocodeContacts extends Command
             }
             else {
                 $contact->save();
-                $this->error('Contact ' . $contact->name . ' pas geolocalise, geocode status : ' . $contact->geocode_status);
-
+                $this->error('Contact ' . $contact->name . ' pas geolocalise, geocode status : ' . $contact->geocode_status . ' / Message : ' . $contact->geocode_message);
             }
-
             //sleep(1);
         }
     }

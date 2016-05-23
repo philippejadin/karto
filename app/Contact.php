@@ -49,6 +49,8 @@ class Contact extends Model
         'uuid'
     ];
 
+    public $geocode_message;
+
 
     // on renvoit d'office un pays par défaut, ce qui aide le géocodage
     public function getCountryAttribute($value)
@@ -101,36 +103,63 @@ class Contact extends Model
 
         try
         {
-            $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ' ' . $this->country); // TODO : peux mieux faire, certains géocodeurs acceptent les infos séparément
+            $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ', ' . $this->country); // TODO : peut mieux faire, certains géocodeurs acceptent les infos séparément
         }
         catch (\Exception $e)
         {
-            if ($e instanceof HttpError)
+
+            $this->geocode_message = get_class($e) . ' / ' . $e->getMessage();
+
+            if (get_class($e) == 'Geocoder\Exception\ChainNoResultException')
+            {
+                $this->geocode_status = -30; //  erreur dans l'adresse
+                return false;
+            }
+
+
+            if (get_class($e) == 'Geocoder\Exception\HttpError')
+            {
+                $this->geocode_status = -10; //  erreur dans l'adresse
+                return false;
+            }
+
+            if (get_class($e) == 'Geocoder\Exception\QuotaExceeded')
+            {
+                $this->geocode_status = -20; //  erreur dans l'adresse
+                return false;
+            }
+
+
+            if ($e instanceof Geocoder\Exception\HttpError)
             {
                 $this->geocode_status = -10; // erreur HTTP
                 return false;
             }
 
-            if ($e instanceof QuotaExceeded )
+            if ($e instanceof Geocoder\Exception\QuotaExceeded )
             {
-                $this->geocode_status = -20; // erreur HTTP
+                $this->geocode_status = -20; // erreur quota
                 return false;
             }
 
-            if ($e instanceof NoResult)
+            if ($e instanceof Geocoder\Exception\NoResult)
             {
-                $this->geocode_status = -30; // erreur HTTP
+                $this->geocode_status = -30; // erreur dans l'adresse
                 return false;
             }
 
-            if ($e instanceof ChainNoResultException)
+            if ($e instanceof Geocoder\Exception\ChainNoResultException)
             {
-                $this->geocode_status = -30; // erreur HTTP
+                $this->geocode_status = -30; //  erreur dans l'adresse
+                return false;
+            }
+            else
+            {
+                $this->geocode_status = -100; // erreur HTTP
                 return false;
             }
 
-            $this->geocode_status = -100; // erreur HTTP
-            return false;
+
         }
 
 
@@ -152,7 +181,7 @@ class Contact extends Model
     }
 
 
-    
+
 
 
 
