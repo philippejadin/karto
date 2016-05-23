@@ -44,7 +44,6 @@
 
         <!-- script javascipt pour l'affichage de la map -->
         <script>
-        window.onload=function initMap(){
             //ici, on crée la vue de base (coordonnées du get de l'adresse)
             var mymap = L.map('map').setView([{{$results['latitude']}}, {{$results['longitude']}}],14);
 
@@ -55,29 +54,53 @@
                 //rajouter ça à la variable
             }).addTo(mymap);
 
+            /*
             L.marker([{{$results['latitude']}},{{$results['longitude']}}]).addTo(mymap)
             .bindPopup("vous êtes ici");
+            */
+
+            // Creates a red marker with the coffee icon
+            var redMarker = L.VectorMarkers.icon({
+                icon: 'volume-off',
+                markerColor: '#aaa'
+            });
+
+            L.marker([{{$results['latitude']}},{{$results['longitude']}}], {icon: redMarker}).addTo(mymap).bindPopup("vous êtes ici");
+
 
             // affichage des contacts qui ont un master tag
             @foreach ($tags as $tag)
-                @foreach($tag['contacts'] as $contact)
-                //création du marqueur
-                L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
-                //ce qu'il y a d'écrit dans le pop up
-                .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
-                @endforeach
+
+            var tmp_marker = L.VectorMarkers.icon({
+                icon: 'coffee',
+                markerColor: '{{$tag['tag']->color}}'
+            });
+
+
+            @foreach($tag['contacts'] as $contact)
+            //création du marqueur
+            L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: tmp_marker}).addTo(mymap)
+            //ce qu'il y a d'écrit dans le pop up
+            .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
             @endforeach
+            @endforeach
+
+
+            var tmp_marker = L.VectorMarkers.icon({
+                icon: 'coffee',
+                markerColor: '#a0a'
+            });
 
             // affichage des autres contacts
             @if (count($other_contacts) > 0)
-                @foreach($other_contacts as $contact)
-                //création du marqueur
-                L.marker([{{$contact->latitude}},{{$contact->longitude}}]).addTo(mymap)
-                //ce qu'il y a d'écrit dans le pop up
-                .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
-                @endforeach
+            @foreach($other_contacts as $contact)
+            //création du marqueur
+            L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: tmp_marker}).addTo(mymap)
+            //ce qu'il y a d'écrit dans le pop up
+            .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+            @endforeach
             @endif
-        };
+
 
         </script>
 
@@ -124,7 +147,7 @@
 
     @if (count($other_contacts) > 0)
         <div class="contacts">
-            <div class="tag" style="background-color: #aaa">
+            <div class="tag" style="background-color: #a0a">
                 <h2>Autres organismes</h2>
                 <p>Les organismes ci-dessous ne sont pas repris dans une des catégories principales, mais peuvent nénamoins vous intéresser</p>
             </div>
