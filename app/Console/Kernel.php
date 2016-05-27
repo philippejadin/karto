@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        $schedule->command('karto:geocode')
-                 ->everyMinute();
+        $schedule->command('karto:geocode 10')
+                 ->everyFiveMinutes();
     }
 }

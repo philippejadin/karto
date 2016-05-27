@@ -58,7 +58,7 @@
         </div>
         {!! link_to_route('admin.tag.create', 'Ajouter un tag', [], ['class' => 'btn btn-info pull-right']) !!}
 
-        {!! $tags->render() !!}
+        
     </div>
 
 
