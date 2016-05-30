@@ -154,8 +154,6 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
-        // DraperStudio\Picible\PicibleServiceProvider::class,
-
 
         DraperStudio\Flash\ServiceProvider::class,
 
@@ -219,7 +217,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Geocoder' => Toin0u\Geocoder\Facade\Geocoder::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        
+
 
     ],
 

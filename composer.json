@@ -14,9 +14,8 @@
         "toin0u/geocoder-laravel": "@stable",
         "maatwebsite/excel": "~2.1.0",
         "venturecraft/revisionable": "1.*",
-        "draperstudio/laravel-picible": "^0.1.0",
-        "draperstudio/laravel-flash": "^0.1.0",
-        "mexitek/phpcolors": "dev-master"
+        "mexitek/phpcolors": "dev-master",
+        "draperstudio/laravel-flash": "^0.1.0"
 
 
 
