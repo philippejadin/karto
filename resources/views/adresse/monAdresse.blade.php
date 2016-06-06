@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <div class="row">
+        <div class="row" style="padding: 2em">
 
             @unless ($searched)
                 <div class="alert alert-info">
@@ -18,17 +18,10 @@
             <!-- ouverture du formulaire avec blade -->
             {{Form::open(['action' => 'monAdresseController@monAdresse', 'method'=>'GET', 'class'=> 'form-inline', 'role'=>'search'] )}}
             <div class="form-group">
-                {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size'=>80])}}
-            </div>
-            <div class="form-group">
-                <div class='dropdown'>
-                    {!! Form::select('km',array('1'=>'1 km', '2'=>'2 km','5'=>'5 km','10'=>'10 km', '15'=>'15 km','20'=> '20 km','100'=>'100 km'), $km, ['class' => 'form-control'])!!}
-                </div>
-
-            </div>
-            <div class="form-group">
-                <button id="button" class="btn btn-default" type="submit">
-                    <i class="glyphicon glyphicon-search"></i>
+                {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size' => '80'])}}
+                {!! Form::select('km',array('1'=>'1 km', '2'=>'2 km','5'=>'5 km','10'=>'10 km', '15'=>'15 km','20'=> '20 km','100'=>'100 km'), $km, ['class' => 'form-control'])!!}
+                <button id="button" class="btn btn-primary" type="submit">
+                    <i class="glyphicon glyphicon-search"></i> Chercher
                 </button>
             </div>
             <!-- fermeture du formulaire avec blade -->
