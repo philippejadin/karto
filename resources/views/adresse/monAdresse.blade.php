@@ -6,22 +6,19 @@
 
         <div class="row">
 
-          @unless ($searched)
-          <div class="alert alert-info">
-            Bienvenue dans le système de cartographie de Yapaka. Entrez ci-dessous une adresse afin de trouver les organismes susceptibles de vous aider à proximité de chez vous. Le système est en construction, n'hésitez pas à nous faire part de vos commentaires.
-          </div>
-          @endunless
+            @unless ($searched)
+                <div class="alert alert-info">
+                    Bienvenue dans le système de cartographie de Yapaka. Entrez ci-dessous une adresse afin de trouver les organismes susceptibles de vous aider à proximité de chez vous. Le système est en construction, n'hésitez pas à nous faire part de vos commentaires.
+                </div>
+            @endunless
+
+
+
 
             <!-- ouverture du formulaire avec blade -->
             {{Form::open(['action' => 'monAdresseController@monAdresse', 'method'=>'GET', 'class'=> 'form-inline', 'role'=>'search'] )}}
-
-
             <div class="form-group">
-
-                <div class="input-group">
-                    <!-- rentrer l'adresse à géolocaliser / blade -->
-                    {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size'=>80])}}
-                </div>
+                {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size'=>80])}}
             </div>
             <div class="form-group">
                 <div class='dropdown'>
@@ -30,15 +27,16 @@
 
             </div>
             <div class="form-group">
-            <button id="button" class="btn btn-default" type="submit">
-                <i class="glyphicon glyphicon-search"></i>
-            </button>
-          </div>
-
+                <button id="button" class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
             <!-- fermeture du formulaire avec blade -->
             {{Form::close()}}
+
         </div>
     </div>
+
 
     @if ($searched)
 
@@ -75,28 +73,28 @@
         });
 
 
-        tagLayerGroup{{$tag['tag']->id}} = L.layerGroup()
-        @foreach($tag['contacts'] as $contact)
-        .addLayer(L.marker([ {{$contact->latitude}}, {{$contact->longitude}} ], {icon: marker})
-        .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
-        @endforeach
-        .addTo(map);
-        layerControl.addOverlay(tagLayerGroup{{$tag['tag']->id}}, "{{$tag['tag']->name}}");
-        @endforeach;
+tagLayerGroup{{$tag['tag']->id}} = L.layerGroup()
+@foreach($tag['contacts'] as $contact)
+.addLayer(L.marker([ {{$contact->latitude}}, {{$contact->longitude}} ], {icon: marker})
+.bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
+@endforeach
+.addTo(map);
+layerControl.addOverlay(tagLayerGroup{{$tag['tag']->id}}, "{{$tag['tag']->name}}");
+@endforeach;
 
 
 
         // affichage des autres contacts
-        @if (count($other_contacts) > 0)
-        var othersLayerGroup = L.layerGroup()
-        @foreach($other_contacts as $contact)
-        .addLayer(L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: youarehereMarker})
-        .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
-        @endforeach
-        .addTo(map);
+@if (count($other_contacts) > 0)
+var othersLayerGroup = L.layerGroup()
+@foreach($other_contacts as $contact)
+.addLayer(L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: youarehereMarker})
+.bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
+@endforeach
+.addTo(map);
+layerControl.addOverlay(othersLayerGroup, "Autres organismes");
 
-        layerControl.addOverlay(othersLayerGroup, "Autres organismes");
-        @endif
+@endif
 
         </script>
 

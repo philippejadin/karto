@@ -60,8 +60,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="{{action('ContactController@index')}}">Contact</a></li>
-                        <li><a href="{{action('TagController@index')}}">Tag</a></li>
+                        <li><a href="{{action('ContactController@index')}}">Admin contacts</a></li>
+                        <li><a href="{{action('TagController@index')}}">Admin tags</a></li>
                         <li><a href="{{action('TagController@change')}}">Changement en masse de tag</a></li>
 
                     </ul>

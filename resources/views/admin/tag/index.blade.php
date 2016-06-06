@@ -6,25 +6,21 @@
 
     <div class="container-fluid">
 
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Liste des tags</h3>
-            </div>
-            <table class="table">
-                <thead>
-                <tr>
+        {!! link_to_route('admin.tag.create', 'Ajouter un tag', [], ['class' => 'btn btn-info pull-right']) !!}
 
+        <h1>Liste des tags</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
                     <th>ID</th>
                     <th>Nom</th>
                     <th>Description</th>
                     <th>Couleur</th>
                     <th>Tag principal ?</th>
-
-
-
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 @foreach ($tags as $tag)
                     <tr>
 
@@ -53,13 +49,15 @@
 
                     </tr>
                 @endforeach
-                </tbody>
-            </table>
-        </div>
-        {!! link_to_route('admin.tag.create', 'Ajouter un tag', [], ['class' => 'btn btn-info pull-right']) !!}
+            </tbody>
+        </table>
 
-        
+        {!! link_to_route('admin.tag.create', 'Ajouter un tag', [], ['class' => 'btn btn-info pull-right']) !!}
     </div>
+
+
+
+</div>
 
 
 @stop

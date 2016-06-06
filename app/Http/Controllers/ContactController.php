@@ -25,7 +25,7 @@ class ContactController extends Controller
         }
         else
         {
-            $sort = 'name';
+            $sort = 'updated_at';
         }
 
         if ($request->session()->get('order'))
@@ -34,7 +34,7 @@ class ContactController extends Controller
         }
         else
         {
-            $order = 'asc';
+            $order = 'desc';
         }
 
 
@@ -92,7 +92,7 @@ class ContactController extends Controller
         $contact = new Contact();
         return view('admin.contact.create')
         ->with('contact', $contact);
-        
+
     }
 
     /**

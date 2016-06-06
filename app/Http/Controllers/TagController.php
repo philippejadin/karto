@@ -17,7 +17,7 @@ class TagController extends Controller
     */
     public function index()
     {
-        $tags = Tag::orderBy('name')->get();
+        $tags = Tag::orderBy('master_tag', 'desc')->orderBy('name')->get();
 
         return view('admin.tag.index')
         ->with('tags', $tags);
