@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
     {!! Html::style('js/leaflet-vector-markers/Leaflet.vector-markers.css') !!}
 
-    
+
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -51,7 +51,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Karto
+                    Cartographie de Yapaka
                 </a>
 
             </div>
@@ -87,6 +87,7 @@
                 </ul>
 
 
+                @if(Auth::check() && Auth::user()->isAdmin())
                 <div class="col-sm-3 col-md-3 pull-right">
 
 
@@ -103,6 +104,7 @@
 
 
                 </div>
+                @endif
 
             </div>
         </div>

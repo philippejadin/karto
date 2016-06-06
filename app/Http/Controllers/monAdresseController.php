@@ -23,6 +23,8 @@ class monAdresseController extends Controller
     public function monAdresse(Request $request)
     {
 
+
+
         /*Si la requête a un keyword afficher la recherche*/
         if ($request->has('keyword'))
         {
@@ -41,24 +43,38 @@ class monAdresseController extends Controller
             //récupérer l'adresse rentrée par l'utilisateur
             $keyword = $request->get('keyword');
 
-            //la géocoder
-            try
+            if ($keyword == 'debug')
             {
-                $results = Geocoder::geocode($keyword);
+              $results['latitude'] = 50.850340;
+              $results['longitude'] = 4.351710;
             }
-            catch (\Exception $e)
-            {
-                flash()->warning("Merci de réessayer avec une adresse standard comprenant une rue, un numéro, et un code postal", "Votre adresse n'a pas été localisée");
-                return view('adresse.monAdresse')
-                ->with('keyword', $request->keyword)
-                ->with('searched', false)
-                ->with('km', $km);
+            else
+            {  
+
+              //la géocoder
+
+              try
+              {
+                  $results = Geocoder::geocode($keyword);
+              }
+              catch (\Exception $e)
+              {
+                  flash()->warning("Merci de réessayer avec une adresse standard comprenant une rue, un numéro, et un code postal. ("  . $e->getMessage() . ")", "Votre adresse n'a pas été localisée ");
+                  return view('adresse.monAdresse')
+                  ->with('keyword', $request->keyword)
+                  ->with('searched', false)
+                  ->with('km', $km);
+              }
+
             }
+
+
+
 
 
             $distance = 0.01506 * $km;
 
-            // compter le nombre d'orgnaismes trouvés
+            // compter le nombre d'organismes trouvés
             $contact_count = \App\Contact::where('longitude', '<', $results['longitude'] + $distance / 2)
             ->where('longitude', '>', $results['longitude'] - $distance / 2)
             ->where('latitude', '<', $results['latitude'] + $distance / 2)

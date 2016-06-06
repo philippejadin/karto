@@ -6,6 +6,12 @@
 
         <div class="row">
 
+          @unless ($searched)
+          <div class="alert alert-info">
+            Bienvenue dans le système de cartographie de Yapaka. Entrez ci-dessous une adresse afin de trouver les organismes susceptibles de vous aider à proximité de chez vous. Le système est en construction, n'hésitez pas à nous faire part de vos commentaires.
+          </div>
+          @endunless
+
             <!-- ouverture du formulaire avec blade -->
             {{Form::open(['action' => 'monAdresseController@monAdresse', 'method'=>'GET', 'class'=> 'form-inline', 'role'=>'search'] )}}
 
@@ -23,11 +29,11 @@
                 </div>
 
             </div>
-
+            <div class="form-group">
             <button id="button" class="btn btn-default" type="submit">
                 <i class="glyphicon glyphicon-search"></i>
             </button>
-
+          </div>
 
             <!-- fermeture du formulaire avec blade -->
             {{Form::close()}}
