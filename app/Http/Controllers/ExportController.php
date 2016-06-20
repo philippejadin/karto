@@ -26,17 +26,23 @@ class ExportController extends Controller
     {
         if ($request->has('tags'))
         {
+            // une requête par tag et donc un onglet par tag dans le fichier excell, c'est soit disant plus lent, mais plus simple :
+            $tags = \App\Tag::find($request->get('tags'));
 
-            $contacts = \App\Contact::with('tags')->whereHas('tags', function($query) use ($request) {
-                $query->whereIn('tags.id', $request->get('tags'));
-            })->get();
-
-            Excel::create('Filename', function($excel) use($contacts) {
-                $excel->sheet('Export', function($sheet) use($contacts) {
-                    $sheet->fromModel($contacts);
-                });
+            Excel::create('Filename', function($excel) use($tags) {
+                foreach ($tags as $tag)
+                {
+                    $excel->sheet($tag->name, function($sheet) use($tag) {
+                        $sheet->fromModel($tag->contacts);
+                    });
+                }
             })->export('xls');
 
+        }
+        else
+        {
+            flash()->error('Il faut sélectionner au moins un tag');
+            return redirect()->back();
         }
     }
 

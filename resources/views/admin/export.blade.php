@@ -6,7 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script src="//cdn.ckeditor.com/4.5.8/standard/ckeditor.js"></script>
 
-    <div class="container-fluid">
+    <div class="container">
 
 
 
