@@ -55,31 +55,10 @@ class ContactController extends Controller
 
 
 
-        /******* TODO voir si c'est une bonne idée ce stockage de la page en cours dans la session : **********/
-
-        // si l'utilisateur est sur une page (autre que 0) on la stocke dans sa session
-        if ($request->input('page'))
-        {
-            $request->session()->set('page', $request->input('page'));
-        }
-
-
-        // si on a un numéro de page dans la session, on va à cette page
-        if ($request->session()->get('page'))
-        {
-
-            $currentPage = $request->session()->get('page');
-            Paginator::currentPageResolver(function() use ($currentPage) {
-                return $currentPage;
-            });
-        }
-
-        /**************************************/
-
         $contacts=Contact::orderBy($sort, $order)->paginate(20);
 
-
-        return view('admin.contact.index', compact('contacts'));
+        return view('admin.contact.index')
+        ->with('contacts', $contacts);
     }
 
     /**

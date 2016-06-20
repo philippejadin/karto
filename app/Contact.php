@@ -16,7 +16,8 @@ class Contact extends Model
     protected $dontKeepRevisionOf = [
         'country',
         'latitude',
-        'longitude'
+        'longitude',
+        'geocode_status'
     ];
 
     protected $rules = [
@@ -46,7 +47,8 @@ class Contact extends Model
         'public',
         'latitude',
         'longitude',
-        'uuid'
+        'uuid',
+        'prefix'
     ];
 
     public $geocode_message;
