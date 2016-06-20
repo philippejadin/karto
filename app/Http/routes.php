@@ -40,7 +40,7 @@ Route::group(['middleware' => ['admin']], function () {
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
 
-     // gestion des tags CRUD
+    // gestion des tags CRUD
     Route::get('admin/tag/change','TagController@changeForm');
     Route::post('admin/tag/change','TagController@change');
     Route::resource('admin/tag', 'TagController');
@@ -48,12 +48,10 @@ Route::group(['middleware' => ['admin']], function () {
 
 
     // import depuis un fichier excel TODO
+    /*
     Route::get('admin/import', 'ExcelController@getImport');
     Route::post('admin/import', 'ExcelController@postImport');
-
-
-
-
+    */
 
 
 
@@ -62,4 +60,12 @@ Route::group(['middleware' => ['admin']], function () {
 
     // affichage de l'historique de modification d'un contact
     Route::get('admin/contact/{contact}/history' ,'ContactController@history');
+
+
+    // export de contacts par tags
+    Route::get('admin/export' ,'ExportController@form');
+    Route::post('admin/export' ,'ExportController@export');
+
+
+
 });
