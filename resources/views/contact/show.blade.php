@@ -71,7 +71,7 @@
         </div>
 
         @if(Auth::check() && Auth::user()->isAdmin())
-            <a href="{{action('ContactController@edit', $contact)}}">Modifier cet organisme</a>
+            <a href="{{action('ContactController@edit', $contact)}}">Modifier ce contact</a>
         @endif
 
     </div>

@@ -10,7 +10,7 @@
 
 
 
-        <h1>Exportation d'organisme</h1>
+        <h1>Exportation d'organismes</h1>
 
         {!! Form::open(['action' =>'ExportController@export']) !!}
 

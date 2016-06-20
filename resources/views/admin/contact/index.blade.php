@@ -8,10 +8,10 @@
 
         {!!Form::open(['action' => 'BatchController@action', 'method' => 'post'])!!}
 
-        <h1>Liste des organismes</h1>
+        <h1>Liste des contacts</h1>
 
 
-        {!! link_to_route('admin.contact.create', 'Ajouter un organisme', [], ['class' => 'btn btn-info pull-right']) !!}
+        {!! link_to_route('admin.contact.create', 'Ajouter un contact', [], ['class' => 'btn btn-info pull-right']) !!}
         {!! $contacts->render() !!}
 
 
@@ -93,8 +93,7 @@
                                 <td>
                                     <a href="{{ route('admin.contact.show',  [$contact->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                                     <a href="{{ route('admin.contact.edit', [$contact->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a>
-                                    <a href="{{ action('ContactController@destroy', [$contact->id]) }}" class="btn btn-danger"  onclick="return confirm('Vraiment supprimer cet organisme?')"><i class="fa fa-trash"></i></a>
-
+                                    <a href="{{ route('contact.delete', [$contact->id]) }}" class="btn btn-danger"  onclick="return confirm('Vraiment supprimer ce contact?')"><i class="fa fa-trash"></i></a>
                                     <a href="{{ action('ContactController@history', [$contact->id]) }}" class="btn btn-info"><i class="fa fa-history"></i></a>
 
 

@@ -163,9 +163,7 @@ class ContactController extends Controller
             ->withInput();
         }
 
-
-
-        flash()->success('L\'organisme a bien été enregistré');
+        flash()->success('Le contact a bien été enregistré');
         return redirect()->route('admin.contact.index');
     }
 
@@ -179,6 +177,7 @@ class ContactController extends Controller
     {
         $contact->tags()->detach();
         $contact->delete();
+        flash()->success('Le contact a bien été effacé');
         return redirect()->back();
     }
 

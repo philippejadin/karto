@@ -33,8 +33,9 @@ Ici on va mettre les routes pour els personnes connectées qui fot de suggestion
 /********************** ADMIN *****************************/
 Route::group(['middleware' => ['admin']], function () {
     // gestion des contacts CRUD
-    Route::get('admin/contact/{contact}/delete' ,'ContactController@destroy');
     Route::resource('admin/contact', 'ContactController');
+    Route::get('admin/contact/{contact}/delete' ,['as'=>'contact.delete','uses'=>'ContactController@destroy']);
+
 
 
     // recherche dans les contacts

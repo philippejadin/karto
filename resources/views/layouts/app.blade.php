@@ -60,9 +60,34 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="{{action('ContactController@index')}}">Admin contacts</a></li>
-                        <li><a href="{{action('TagController@index')}}">Admin tags</a></li>
-                        <li><a href="{{action('TagController@change')}}">Changement en masse de tag</a></li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Contacts <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{action('ContactController@index')}}">Liste</a></li>
+                                <li><a href="{{action('ContactController@create')}}">Ajouter</a></li>
+                                <li><a href="{{action('ExportController@form')}}">Exporter</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Tags <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{action('TagController@index')}}">Liste</a></li>
+                                <li><a href="{{action('TagController@create')}}">Ajouter</a></li>
+                                <li><a href="{{action('TagController@change')}}">Changement en masse</a></li>
+                            </ul>
+                        </li>
+
+
+
 
                     </ul>
                 @endif
@@ -88,22 +113,22 @@
 
 
                 @if(Auth::check() && Auth::user()->isAdmin())
-                <div class="col-sm-3 col-md-3 pull-right">
+                    <div class="col-sm-3 col-md-3 pull-right">
 
 
-                    {{ Form::open(['action'=>'SearchController@search', 'method'=>'GET', 'class'=>'navbar-form',  'role'=>'search'] ) }}
-                    <div class="input-group">
+                        {{ Form::open(['action'=>'SearchController@search', 'method'=>'GET', 'class'=>'navbar-form',  'role'=>'search'] ) }}
+                        <div class="input-group">
 
-                        {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
                         </div>
+                        {!! Form::close() !!}
+
+
+
                     </div>
-                    {!! Form::close() !!}
-
-
-
-                </div>
                 @endif
 
             </div>

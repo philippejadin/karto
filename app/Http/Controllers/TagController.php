@@ -130,6 +130,7 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         $tag->delete();
+        flash()->success('Le tag a bien été effacé');
         return redirect()->back();
     }
 
