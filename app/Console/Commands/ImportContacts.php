@@ -8,6 +8,9 @@ use Storage;
 
 class ImportContacts extends Command
 {
+
+    public $contact_imported = 0;
+
     /**
     * The name and signature of the console command.
     *
@@ -44,6 +47,7 @@ class ImportContacts extends Command
 
         // TODO validation colonnes dans fichier excell
 
+        $this->contact_imported = 0;
 
         Excel::load(storage_path('app/' . $file), function ($reader) {
             $reader->each(function($sheet) {
@@ -75,6 +79,8 @@ class ImportContacts extends Command
                         }
 
                         $this->info('Contact ' . $contact->name . ' correctement importe');
+                        $this->contact_imported ++;
+                        $this->info($this->contact_imported . ' contacts importés avec succès');
                     }
                     else
                     {
@@ -84,6 +90,8 @@ class ImportContacts extends Command
                 }
             });
         });
+
+        $this->info($this->contact_imported . ' contacts importés avec succès');
 
 
     }
