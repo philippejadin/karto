@@ -35,7 +35,7 @@ Route::group(['middleware' => ['admin']], function () {
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
     Route::get('admin/contact/{contact}/delete' ,['as'=>'contact.delete','uses'=>'ContactController@destroy']);
-
+    Route::get('admin/geocoded', 'ContactController@indexGeocoded');
 
 
     // recherche dans les contacts

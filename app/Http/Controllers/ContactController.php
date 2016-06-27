@@ -55,7 +55,19 @@ class ContactController extends Controller
 
 
 
-        $contacts=Contact::orderBy($sort, $order)->paginate(20);
+        $contacts=Contact::orderBy($sort, $order)->paginate(40);
+
+        return view('admin.contact.index')
+        ->with('contacts', $contacts);
+    }
+
+
+    /**
+     * Affiche les contacts non géocodés
+     */
+    public function indexGeocoded(Request $request)
+    {
+        $contacts=Contact::where('geocode_status', '<' , 0)->paginate(40);
 
         return view('admin.contact.index')
         ->with('contacts', $contacts);

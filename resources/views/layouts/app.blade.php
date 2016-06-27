@@ -70,6 +70,7 @@
                                 <li><a href="{{action('ContactController@index')}}">Liste</a></li>
                                 <li><a href="{{action('ContactController@create')}}">Ajouter</a></li>
                                 <li><a href="{{action('ExportController@form')}}">Exporter</a></li>
+                                <li><a href="{{action('ContactController@indexGeocoded')}}">Liste des contacts en erreur de géocodage</a></li>
                             </ul>
                         </li>
 

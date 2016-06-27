@@ -16,8 +16,6 @@
 
 
 
-
-
         <table class="table special">
             <thead>
                 <tr>
@@ -121,5 +119,12 @@
 
 
         {!! Form::close() !!}
+
+
+        <div>
+            <li>{{\App\Contact::where('geocode_status', '<' , 0)->count()}} contacts en erreur de géocalisation</li>
+            <li>{{\App\Contact::where('geocode_status', 1)->count()}} contacts correctement géocalisés</li>
+            <li>{{\App\Contact::where('geocode_status', 0)->count()}} contacts en attente</li>
+        </div>
 
     @stop
