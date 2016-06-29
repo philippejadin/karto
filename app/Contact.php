@@ -104,7 +104,8 @@ class Contact extends Model
 
         try
         {
-            $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . $this->locality . ', ' . $this->country); // TODO : peut mieux faire, certains géocodeurs acceptent les infos séparément
+            // on ne met pas la commune si on a le code postal, ça géocode quasi tout de cette manière !
+            $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . (empty($this->postal_code)) ? $this->locality : '' . ', ' . $this->country);
         }
         catch (\Exception $e)
         {
