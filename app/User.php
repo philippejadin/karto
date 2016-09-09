@@ -19,6 +19,7 @@ CanResetPasswordContract
     use Authenticatable, Authorizable, CanResetPassword;
     use \Venturecraft\Revisionable\RevisionableTrait;
 
+
     /**
     * The database table used by the model.
     *

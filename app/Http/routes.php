@@ -46,6 +46,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('admin/tag/change','TagController@change');
     Route::resource('admin/tag', 'TagController');
 
+    // gestionnaire d'utilisateurs
+    Route::resource('admin/user', 'UserController');
 
 
     // import depuis un fichier excel TODO
