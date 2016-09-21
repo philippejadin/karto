@@ -79,10 +79,13 @@ class ContactController extends Controller
     */
     public function datatableData()
     {
-        return Datatables::of(Contact::query())->make(true);
+        return Datatables::of(Contact::query())
+        ->addColumn('action', function ($contact) {
+            return '<a href="'. action('ContactController@edit', $contact->id) . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+        })
+        ->make(true);
 
-        $contacts = Contact::select(['id', 'name', 'email', 'created_at', 'updated_at'])->get();
-        return Datatables::of($contacts)->make();
+
     }
 
 
