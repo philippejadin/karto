@@ -32,10 +32,21 @@ Ici on va mettre les routes pour els personnes connectées qui fot de suggestion
 
 /********************** ADMIN *****************************/
 Route::group(['middleware' => ['admin']], function () {
+
+    // test datatables
+    Route::any('admin/contact/datatable', 'ContactController@datatable');
+    Route::any('admin/contact/datatabledata', 'ContactController@datatableData');
+
+
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
     Route::get('admin/contact/{contact}/delete' ,['as'=>'contact.delete','uses'=>'ContactController@destroy']);
     Route::get('admin/geocoded', 'ContactController@indexGeocoded');
+
+
+
+
+
 
 
     // recherche dans les contacts

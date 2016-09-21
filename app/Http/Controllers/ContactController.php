@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Http\Requests;
 use Illuminate\Pagination\Paginator;
+use Datatables;
 
 class ContactController extends Controller
 {
@@ -63,8 +64,31 @@ class ContactController extends Controller
 
 
     /**
-     * Affiche les contacts non géocodés
-     */
+    * Datables attempt n°1
+    */
+
+    public function datatable()
+    {
+        return view('admin.contact.datatablesindex');
+    }
+
+    /**
+    * Process datatables ajax request.
+    *
+    * @return \Illuminate\Http\JsonResponse
+    */
+    public function datatableData()
+    {
+        return Datatables::of(Contact::query())->make(true);
+
+        $contacts = Contact::select(['id', 'name', 'email', 'created_at', 'updated_at'])->get();
+        return Datatables::of($contacts)->make();
+    }
+
+
+    /**
+    * Affiche les contacts non géocodés
+    */
     public function indexGeocoded(Request $request)
     {
         $contacts=Contact::where('geocode_status', '<' , 0)->paginate(40);

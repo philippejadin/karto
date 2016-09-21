@@ -20,13 +20,9 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
     {!! Html::style('js/leaflet-vector-markers/Leaflet.vector-markers.css') !!}
 
+    <!-- DataTables -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-    <!-- leaflet - Vector markers -->
-    {!! Html::script('js/leaflet-vector-markers/Leaflet.vector-markers.min.js') !!}
 
 
     <!-- Custom, final styling -->
@@ -154,10 +150,21 @@
 
     @yield('content')
 
-    <script>
-    // Rendre modal le panneau overlay éventuel
-    $('#flash-overlay-modal').modal();
-    </script>
+
+
+    <!-- JavaScripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+    <!-- DataTables -->
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+
+    <!-- leaflet - Vector markers -->
+    {!! Html::script('js/leaflet-vector-markers/Leaflet.vector-markers.min.js') !!}
+
+    @stack('scripts')
+
 
 </body>
 </html>
