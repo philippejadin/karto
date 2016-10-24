@@ -44,6 +44,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin/geocoded', 'ContactController@indexGeocoded');
 
 
+    // importation
+
+    Route::get('admin/import', 'ImportController@importForm');
+    Route::post('admin/import', 'ImportController@import');
 
 
 

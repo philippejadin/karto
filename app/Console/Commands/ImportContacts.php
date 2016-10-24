@@ -44,47 +44,59 @@ class ImportContacts extends Command
     {
         $file = $this->choice('Quel fichier importer?', Storage::files('/import/'));
 
-
         // TODO validation colonnes dans fichier excell
-
         $this->contact_imported = 0;
 
-        Excel::load(storage_path('app/' . $file), function ($reader) {
-            $reader->each(function($sheet) {
-                foreach ($sheet->toArray() as $row) {
-                    $contact = \App\Contact::firstOrCreate(['address' => $row['address'], 'postal_code' => $row['postal_code'], 'name' => $row['name'] ] );
-                    $contact->fill($row);
+        Excel::load(storage_path('app/' . $file), function ($reader)
+        {
+            //$reader->dump();
+            $reader->each(function($sheet)
+            {
+                foreach ($sheet->toArray() as $row)
+                {
 
-                    if ($contact->save())
+                    //dd ($row);
+
+                    //$this->info('Contact ' . $row['address'] . ' analysé');
+
+                    if (isset($row['address']) && isset($row['name']) && isset($row['postal_code']))
                     {
-                        // handle tags
-                        if (isset($row['tags']))
+
+                        $contact = \App\Contact::firstOrCreate(['address' => $row['address'], 'postal_code' => $row['postal_code'], 'name' => $row['name'] ] );
+                        $contact->fill($row);
+
+                        if ($contact->save())
                         {
-                            $tags = explode(',', $row['tags']);
-
-                            foreach ($tags as $tag)
+                            // handle tags
+                            if (isset($row['tags']))
                             {
-                                trim($tag);
-                                $the_tag = \App\Tag::firstOrCreate(['name'=> $tag]);
+                                $tags = explode(',', $row['tags']);
 
-                                if (!$contact->tags->contains($the_tag->id))
+                                foreach ($tags as $tag)
                                 {
-                                    $contact->tags()->save($the_tag);
+                                    trim($tag);
+                                    $the_tag = \App\Tag::firstOrCreate(['name'=> $tag]);
+
+                                    if (!$contact->tags->contains($the_tag->id))
+                                    {
+                                        $contact->tags()->save($the_tag);
+                                    }
                                 }
+
                             }
 
-
-
-
+                            $this->info('Contact ' . $contact->name . ' correctement importe');
+                            $this->contact_imported ++;
+                            $this->info($this->contact_imported . ' contacts importés avec succès');
                         }
-
-                        $this->info('Contact ' . $contact->name . ' correctement importe');
-                        $this->contact_imported ++;
-                        $this->info($this->contact_imported . ' contacts importés avec succès');
+                        else
+                        {
+                            $this->error('Contact ' . $contact->name . ' pas importé');
+                        }
                     }
                     else
                     {
-                        $this->error('Contact ' . $contact->name . ' pas importé');
+                        $this->error('Ligne ' . $row . ' pas importé');
                     }
 
                 }
