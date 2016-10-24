@@ -10,6 +10,7 @@ class ImportContacts extends Command
 {
 
     public $contact_imported = 0;
+    public $contact_not_imported = 0;
 
     /**
     * The name and signature of the console command.
@@ -44,67 +45,77 @@ class ImportContacts extends Command
     {
         $file = $this->choice('Quel fichier importer?', Storage::files('/import/'));
 
-        // TODO validation colonnes dans fichier excell
-        $this->contact_imported = 0;
 
-        Excel::load(storage_path('app/' . $file), function ($reader)
+        $this->contact_imported = 0;
+        $this->contact_not_imported = 0;
+
+        $data = Excel::load(storage_path('app/' . $file), function($reader) {
+        })->get();
+
+        $lines = $data->first(); // get first sheet from our file. Oh yes we won't support multiple sheets
+
+        if(!empty($lines) && $lines->count())
         {
-            //$reader->dump();
-            $reader->each(function($sheet)
+            $bar = $this->output->createProgressBar($lines->count());
+
+            foreach ($lines->toArray() as $row)
             {
-                foreach ($sheet->toArray() as $row)
+
+
+                if (isset($row['address']) && isset($row['name']) && isset($row['postal_code']))
                 {
 
-                    //dd ($row);
+                    $contact = \App\Contact::firstOrCreate(['address' => $row['address'], 'postal_code' => $row['postal_code'], 'name' => $row['name'] ] );
+                    $contact->fill($row);
 
-                    //$this->info('Contact ' . $row['address'] . ' analysé');
-
-                    if (isset($row['address']) && isset($row['name']) && isset($row['postal_code']))
+                    if ($contact->save())
                     {
-
-                        $contact = \App\Contact::firstOrCreate(['address' => $row['address'], 'postal_code' => $row['postal_code'], 'name' => $row['name'] ] );
-                        $contact->fill($row);
-
-                        if ($contact->save())
+                        // handle tags
+                        if (isset($row['tags']))
                         {
-                            // handle tags
-                            if (isset($row['tags']))
+                            $tags = explode(',', $row['tags']);
+
+                            foreach ($tags as $tag)
                             {
-                                $tags = explode(',', $row['tags']);
+                                trim($tag);
+                                $the_tag = \App\Tag::firstOrCreate(['name'=> $tag]);
 
-                                foreach ($tags as $tag)
+                                if (!$contact->tags->contains($the_tag->id))
                                 {
-                                    trim($tag);
-                                    $the_tag = \App\Tag::firstOrCreate(['name'=> $tag]);
-
-                                    if (!$contact->tags->contains($the_tag->id))
-                                    {
-                                        $contact->tags()->save($the_tag);
-                                    }
+                                    $contact->tags()->save($the_tag);
                                 }
-
                             }
 
-                            $this->info('Contact ' . $contact->name . ' correctement importe');
-                            $this->contact_imported ++;
-                            $this->info($this->contact_imported . ' contacts importés avec succès');
                         }
-                        else
-                        {
-                            $this->error('Contact ' . $contact->name . ' pas importé');
-                        }
+
+                        $this->info('Contact ' . $contact->name . ' correctement importé');
+                        $this->contact_imported ++;
                     }
                     else
                     {
-                        $this->error('Ligne ' . $row . ' pas importé');
+                        $this->error('Contact ' . $contact->name . ' pas importé');
+                        $this->contact_not_imported ++;
                     }
-
                 }
-            });
-        });
+                else
+                {
+                    $this->contact_not_imported ++;
+                    $this->error('Ligne vide ou incomplète détectée');
+                }
 
+                $bar->advance();
+            }
+
+            $bar->finish();
+        }
+
+
+        $this->line('--------------------------------');
         $this->info($this->contact_imported . ' contacts importés avec succès');
+        $this->error($this->contact_not_imported . ' contacts pas importés (voir messages ci-dessus)');
+
 
 
     }
+
 }
