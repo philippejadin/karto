@@ -37,9 +37,11 @@ Route::group(['middleware' => ['admin']], function () {
     Route::any('admin/contact/datatable', 'ContactController@datatable');
     Route::any('admin/contact/datatabledata', 'ContactController@datatableData');
 
+    Route::any('admin/contact/edit', 'ContactController@anyEdit');
 
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
+
     Route::get('admin/contact/{contact}/delete' ,['as'=>'contact.delete','uses'=>'ContactController@destroy']);
     Route::get('admin/geocoded', 'ContactController@indexGeocoded');
 

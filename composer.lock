@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0dd1ede8e49e74ce712b0826e229f9b0",
-    "content-hash": "0fe324b3cb345e71138c95db99a7179d",
+    "hash": "e6af65a336d10aaca526881f76226880",
+    "content-hash": "4ec39599029b36267ed2ecfa6074e3fe",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -3066,6 +3066,108 @@
                 "psr-7"
             ],
             "time": "2017-01-23 04:53:24"
+        },
+        {
+            "name": "zofe/burp",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zofe/burp.git",
+                "reference": "f69d1cb1ee498c02f83baa99ccefd379bd1a4325"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zofe/burp/zipball/f69d1cb1ee498c02f83baa99ccefd379bd1a4325",
+                "reference": "f69d1cb1ee498c02f83baa99ccefd379bd1a4325",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zofe\\Burp\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Felice Ostuni",
+                    "email": "felice.ostuni@gmail.com"
+                }
+            ],
+            "description": "Simple PHP router that works with query-string and uri-segments",
+            "homepage": "https://github.com/zofe/burp",
+            "keywords": [
+                "Simple",
+                "filter",
+                "front controller",
+                "php",
+                "router"
+            ],
+            "time": "2015-03-09 22:51:58"
+        },
+        {
+            "name": "zofe/rapyd",
+            "version": "2.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zofe/rapyd-laravel.git",
+                "reference": "1fa6d8a7f0895fc4573bc7d3cb25391060d27e68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zofe/rapyd-laravel/zipball/1fa6d8a7f0895fc4573bc7d3cb25391060d27e68",
+                "reference": "1fa6d8a7f0895fc4573bc7d3cb25391060d27e68",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "intervention/image": "2.*",
+                "laravelcollective/html": "~5.0",
+                "php": ">=5.4.0",
+                "zofe/burp": "2.*"
+            },
+            "suggest": {
+                "baum/baum": "Allows to use the DataTree widget"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "migrations"
+                ],
+                "psr-4": {
+                    "Zofe\\Rapyd\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "zofe",
+                    "email": "felice.ostuni@gmail.com"
+                }
+            ],
+            "description": "crud widgets for laravel, to make an admin in few lines of code",
+            "homepage": "https://github.com/zofe/rapyd-laravel",
+            "keywords": [
+                "Rapyd",
+                "admin",
+                "administrator",
+                "backend",
+                "crud",
+                "datatable",
+                "form",
+                "laravel"
+            ],
+            "time": "2017-01-24 17:26:09"
         }
     ],
     "packages-dev": [

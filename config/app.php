@@ -150,13 +150,11 @@ return [
 
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        /*Toin0u\Geocoder\GeocoderServiceProvider::class,*/
         Geocoder\Laravel\Providers\GeocoderService::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
-
-
         DraperStudio\Flash\ServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Zofe\Rapyd\RapydServiceProvider::class,
 
 
         /*
@@ -167,7 +165,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Yajra\Datatables\DatatablesServiceProvider::class,
+
 
     ],
 

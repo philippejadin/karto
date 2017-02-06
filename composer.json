@@ -15,7 +15,8 @@
         "maatwebsite/excel": "~2.1.0",
         "venturecraft/revisionable": "1.*",
         "mexitek/phpcolors": "dev-master",
-        "yajra/laravel-datatables-oracle": "~6.0"
+        "yajra/laravel-datatables-oracle": "~6.0",
+        "zofe/rapyd": "2.2.*"
 
 
 
