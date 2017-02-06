@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Watson\Validating\ValidatingTrait;
-use Toin0u\Geocoder\Facade\Geocoder;
+use Geocoder\Laravel\Facades\Geocoder;
 use App\Tag;
 
 class Contact extends Model
@@ -105,7 +105,8 @@ class Contact extends Model
         try
         {
             // on ne met pas la commune si on a le code postal, ça géocode quasi tout de cette manière !
-            $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . (empty($this->postal_code)) ? $this->locality : '' . ', ' . $this->country);
+            $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . (empty($this->postal_code)) ? $this->locality : '' . ', ' . $this->country)
+            ->get()->first();
         }
         catch (\Exception $e)
         {
@@ -166,8 +167,8 @@ class Contact extends Model
 
 
         $this->geocode_status = 1;
-        $this->latitude = $geocode['latitude'];
-        $this->longitude = $geocode['longitude'];
+        $this->latitude = $geocode->getLatitude();
+        $this->longitude = $geocode->getLongitude();
         return true;
     }
 

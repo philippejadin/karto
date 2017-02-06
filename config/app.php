@@ -150,7 +150,8 @@ return [
 
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        Toin0u\Geocoder\GeocoderServiceProvider::class,
+        /*Toin0u\Geocoder\GeocoderServiceProvider::class,*/
+        Geocoder\Laravel\Providers\GeocoderService::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
 

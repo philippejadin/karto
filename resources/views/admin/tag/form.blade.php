@@ -19,6 +19,8 @@
 </div>
 
 
+@push('scripts')
+  
 <script src='https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.js'></script>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css' />
 
@@ -42,3 +44,4 @@ $("#color").spectrum({
     ]
 });
 </script>
+@endpush

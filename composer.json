@@ -11,7 +11,7 @@
         "intervention/image": "^2.3",
         "barryvdh/laravel-debugbar": "^2.2",
         "watson/validating": "^2.2",
-        "toin0u/geocoder-laravel": "@stable",
+        "toin0u/geocoder-laravel": "^1.0",
         "maatwebsite/excel": "~2.1.0",
         "venturecraft/revisionable": "1.*",
         "mexitek/phpcolors": "dev-master",

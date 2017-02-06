@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB;
 use App\Http\Controllers\Controller;
-use Toin0u\Geocoder\Facade\Geocoder;
+use Geocoder\Laravel\Facades\Geocoder;
 use App\Contact;
 
 
@@ -43,19 +43,14 @@ class monAdresseController extends Controller
             //récupérer l'adresse rentrée par l'utilisateur
             $keyword = $request->get('keyword');
 
-            if ($keyword == 'debug')
-            {
-              $results['latitude'] = 50.850340;
-              $results['longitude'] = 4.351710;
-            }
-            else
-            {  
 
               //la géocoder
 
               try
               {
-                  $results = Geocoder::geocode($keyword);
+                  $result = Geocoder::geocode($keyword)->get()->first();
+                  $results['latitude'] = $result->getLatitude();
+                  $results['longitude'] = $result->getLongitude();
               }
               catch (\Exception $e)
               {
@@ -66,7 +61,7 @@ class monAdresseController extends Controller
                   ->with('km', $km);
               }
 
-            }
+
 
 
 
@@ -75,10 +70,10 @@ class monAdresseController extends Controller
             $distance = 0.01506 * $km;
 
             // compter le nombre d'organismes trouvés
-            $contact_count = \App\Contact::where('longitude', '<', $results['longitude'] + $distance / 2)
-            ->where('longitude', '>', $results['longitude'] - $distance / 2)
-            ->where('latitude', '<', $results['latitude'] + $distance / 2)
-            ->where('latitude', '>', $results['latitude'] - $distance / 2)
+            $contact_count = \App\Contact::where('longitude', '<', $result->getLongitude() + $distance / 2)
+            ->where('longitude', '>', $result->getLongitude() - $distance / 2)
+            ->where('latitude', '<', $result->getLatitude() + $distance / 2)
+            ->where('latitude', '>', $result->getLatitude() - $distance / 2)
             ->count();
 
 
@@ -97,10 +92,10 @@ class monAdresseController extends Controller
             $distance = 0.01506 * $km;
 
             $contacts = \App\Contact::with('tags')
-            ->where('longitude', '<', $results['longitude'] + $distance / 2)
-            ->where('longitude', '>', $results['longitude'] - $distance / 2)
-            ->where('latitude', '<', $results['latitude'] + $distance / 2)
-            ->where('latitude', '>', $results['latitude'] - $distance / 2)
+            ->where('longitude', '<', $result->getLongitude() + $distance / 2)
+            ->where('longitude', '>', $result->getLongitude() - $distance / 2)
+            ->where('latitude', '<', $result->getLatitude() + $distance / 2)
+            ->where('latitude', '>', $result->getLatitude() - $distance / 2)
             ->get();
 
 
