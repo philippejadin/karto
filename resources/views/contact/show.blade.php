@@ -30,9 +30,7 @@
 
 
             <div>
-                @foreach ($contact->tags as $tag)
-                    <span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span>
-                @endforeach
+              @each('tag.list', $contact->tags, 'tag')
             </div>
 
 
