@@ -153,6 +153,7 @@ class monAdresseController extends Controller
             return view('adresse.monAdresse')
             ->with('keyword', null)
             ->with('km', 0)
+            ->with('home', true)
             ->with('searched', false);
         }
     }

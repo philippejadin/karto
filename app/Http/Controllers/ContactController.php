@@ -108,7 +108,7 @@ class ContactController extends Controller
 
     $grid->add('{{ implode(", ", $tags->lists("name")->all()) }}','Categories');
 
-    //$grid->edit('admin/contact/edit', 'Edit','modify|delete'); //shortcut to link DataEdit actions
+
 
 
     $grid->add('id','Edit')->cell( function( $value, $row) {

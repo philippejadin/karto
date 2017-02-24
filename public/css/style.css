@@ -38,6 +38,11 @@ h1, h2, h3
     font-weight: 300;
 }
 
+.home
+{
+  background-image:url(../images/mapb.jpg);
+  background-size: cover;
+}
 
 /************************ affichage homepage **********************/
 .contacts h3

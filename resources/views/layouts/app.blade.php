@@ -46,7 +46,7 @@
 
 
 </head>
-<body id="app-layout">
+<body id="app-layout" @if (isset($home)) class="home" @endif>
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">

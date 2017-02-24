@@ -33,12 +33,6 @@ Ici on va mettre les routes pour els personnes connectées qui fot de suggestion
 /********************** ADMIN *****************************/
 Route::group(['middleware' => ['admin']], function () {
 
-    // test datatables
-    Route::any('admin/contact/datatable', 'ContactController@datatable');
-    Route::any('admin/contact/datatabledata', 'ContactController@datatableData');
-
-    Route::any('admin/contact/edit', 'ContactController@anyEdit');
-
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
 
