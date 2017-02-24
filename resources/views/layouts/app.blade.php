@@ -40,7 +40,7 @@
     <!-- leaflet - Vector markers -->
     {!! Html::script('js/leaflet-vector-markers/Leaflet.vector-markers.min.js') !!}
 
-    @stack('scripts')
+
 
 
 
@@ -167,7 +167,7 @@
 
 
 
-
+    @stack('scripts')
 
 
 </body>

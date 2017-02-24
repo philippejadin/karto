@@ -175,7 +175,7 @@ class Contact extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag')->withTimestamps();
+        return $this->belongsToMany('App\Tag', 'contact_tag', 'contact_id', 'tag_id')->withTimestamps();
     }
 
     public function masterTags()
@@ -184,7 +184,22 @@ class Contact extends Model
     }
 
 
-
+    /**
+    * Free search scope, search in all relevant fields
+    * cfr. http://www.rapyd.com/rapyd-demo/customfilter?src=jhon+doe&search=1
+    */
+    public function scopeFreesearch($query, $value)
+    {
+        return $query->where('name','like','%'.$value.'%')
+        ->orWhere('description','like','%'.$value.'%')
+        ->orWhere('address','like','%'.$value.'%')
+        ->orWhere('postal_code','like','%'.$value.'%')
+        ->orWhere('locality','like','%'.$value.'%')
+        ->orWhereHas('tags', function ($q) use ($value) {
+            $q->where('name','like','%'.$value.'%');
+        });
+        
+    }
 
 
 
