@@ -46,8 +46,12 @@ class ContactController extends Controller
     //$grid->edit('admin/contact/edit', 'Edit','modify|delete'); //shortcut to link DataEdit actions
 
 
-    $grid->add('id','Edit')->cell( function( $value, $row) {
+    $grid->add('edit','Edit')->cell( function( $value, $row) {
       return '<a href="/admin/contact/'. $row->id. '/edit">Edit</a>';
+    });
+
+    $grid->add('view','Voir')->cell( function( $value, $row) {
+      return '<a href="/contact/'. $row->id. '">Voir</a>';
     });
 
     $grid->link('admin/contact/edit',"Add New", "TR");  //add button

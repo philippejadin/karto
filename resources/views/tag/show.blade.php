@@ -18,9 +18,14 @@
         @forelse ($contacts as $contact)
 
           <tr>
-            <td><a href="{{action('publicContactController@show', $contact)}}">{{$contact->name}}</a></td>
+            <td>
+              <a href="{{action('publicContactController@show', $contact)}}">{{$contact->name}}</a>
+            </td>
             <td>{{$contact->address}}</td>
             <td>{{$contact->locality}}</td>
+            @if(Auth::check() && Auth::user()->isAdmin())
+              <td><a href="{{ action('ContactController@edit', $contact) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> Modifier</a></td>
+            @endif
           </tr>
 
         @empty

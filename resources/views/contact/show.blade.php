@@ -6,7 +6,12 @@
 
         <div class="row">
 
-            <h1>{{$contact->name}}</h1>
+            <h1>
+              {{$contact->name}}
+              @if(Auth::check() && Auth::user()->isAdmin())
+                  <a href="{{action('ContactController@edit', $contact)}}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i>Modifier ce contact</a>
+              @endif
+            </h1>
 
             <div>
                 <strong>{{$contact->address}}, {{$contact->postal_code}} {{$contact->locality}}</strong>
@@ -68,9 +73,7 @@
 
         </div>
 
-        @if(Auth::check() && Auth::user()->isAdmin())
-            <a href="{{action('ContactController@edit', $contact)}}">Modifier ce contact</a>
-        @endif
+
 
     </div>
 
