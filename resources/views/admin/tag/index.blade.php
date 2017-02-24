@@ -36,7 +36,7 @@
                         </td>
 
 
-                        <td><a href="{{ route('admin.tag.show',  [$tag->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                        <td><a href="{{ action('publicTagController@show',  [$tag->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
                         <td><a href="{{ route('admin.tag.edit', [$tag->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a></td>
 
 

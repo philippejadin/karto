@@ -13,6 +13,7 @@ class publicContactController extends Controller
     public function show(Contact $contact)
     {
         return view('contact.show')
+        ->with('title', $contact->name)
         ->with('contact', $contact);
     }
 

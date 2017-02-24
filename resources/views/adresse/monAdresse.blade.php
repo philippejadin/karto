@@ -2,9 +2,10 @@
 
 @section('content')
 
+
     <div class="container">
 
-        <div class="row" style="padding: 2em">
+        <div class="row" style="padding: 2em;">
 
             @unless ($searched)
                 <div class="alert alert-info">
@@ -15,7 +16,7 @@
 
 
 
-            <!-- ouverture du formulaire avec blade -->
+
             {{Form::open(['action' => 'monAdresseController@monAdresse', 'method'=>'GET', 'class'=> 'form-inline', 'role'=>'search'] )}}
             <div class="form-group">
                 {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size' => '80'])}}
@@ -24,7 +25,6 @@
                     <i class="glyphicon glyphicon-search"></i> Chercher
                 </button>
             </div>
-            <!-- fermeture du formulaire avec blade -->
             {{Form::close()}}
 
         </div>
@@ -33,63 +33,61 @@
 
     @if ($searched)
 
-        <!-- affichage de la map -->
         <div id="map"></div>
 
 
         @push('scripts')
-            <!-- script javascipt pour l'affichage de la map -->
             <script>
-            //ici, on crée la vue de base (coordonnées du get de l'adresse)
-            var map = L.map('map').setView([{{$results['latitude']}}, {{$results['longitude']}}],14);
+                //ici, on crée la vue de base (coordonnées du get de l'adresse)
+                var map = L.map('map').setView([{{$results['latitude']}}, {{$results['longitude']}}],14);
 
-            // On set le "provider" et on set les attributions
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-
-            // Creates a red marker with the coffee icon
-            var youarehereMarker = L.VectorMarkers.icon({
-                icon: 'circle-o',
-                markerColor: '#aaa'
-            });
-
-            L.marker([{{$results['latitude']}},{{$results['longitude']}}], {icon: youarehereMarker}).addTo(map).bindPopup("Vous êtes ici");
-
-            layerControl = L.control.layers().addTo(map);
-
-            // affichage des contacts qui ont un master tag
-            @foreach ($tags as $tag)
-
-            var marker = L.VectorMarkers.icon({
-                icon: 'circle',
-                markerColor: '{{$tag['tag']->color}}'
-            });
+                // On set le "provider" et on set les attributions
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
 
 
-            tagLayerGroup{{$tag['tag']->id}} = L.layerGroup()
-            @foreach($tag['contacts'] as $contact)
-            .addLayer(L.marker([ {{$contact->latitude}}, {{$contact->longitude}} ], {icon: marker})
-            .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
-            @endforeach
-            .addTo(map);
-            layerControl.addOverlay(tagLayerGroup{{$tag['tag']->id}}, "{{$tag['tag']->name}}");
-            @endforeach;
+                // Creates a red marker with the coffee icon
+                var youarehereMarker = L.VectorMarkers.icon({
+                    icon: 'circle-o',
+                    markerColor: '#aaa'
+                });
+
+                L.marker([{{$results['latitude']}},{{$results['longitude']}}], {icon: youarehereMarker}).addTo(map).bindPopup("Vous êtes ici");
+
+                layerControl = L.control.layers().addTo(map);
+
+                // affichage des contacts qui ont un master tag
+                @foreach ($tags as $tag)
+
+                    var marker = L.VectorMarkers.icon({
+                        icon: 'circle',
+                        markerColor: '{{$tag['tag']->color}}'
+                    });
+
+
+                    tagLayerGroup{{$tag['tag']->id}} = L.layerGroup()
+                    @foreach($tag['contacts'] as $contact)
+                        .addLayer(L.marker([ {{$contact->latitude}}, {{$contact->longitude}} ], {icon: marker})
+                        .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
+                    @endforeach
+                    .addTo(map);
+                    layerControl.addOverlay(tagLayerGroup{{$tag['tag']->id}}, "{{$tag['tag']->name}}");
+                @endforeach;
 
 
 
-            // affichage des autres contacts
-            @if (count($other_contacts) > 0)
-            var othersLayerGroup = L.layerGroup()
-            @foreach($other_contacts as $contact)
-            .addLayer(L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: youarehereMarker})
-            .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
-            @endforeach
-            .addTo(map);
-            layerControl.addOverlay(othersLayerGroup, "Autres organismes");
+                // affichage des autres contacts
+                @if (count($other_contacts) > 0)
+                    var othersLayerGroup = L.layerGroup()
+                    @foreach($other_contacts as $contact)
+                        .addLayer(L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: youarehereMarker})
+                        .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
+                    @endforeach
+                    .addTo(map);
+                    layerControl.addOverlay(othersLayerGroup, "Autres organismes");
 
-            @endif
+                @endif
 
             </script>
 
@@ -165,7 +163,7 @@
 
     @endif
 
-</div>
 @endif
+
 
 @endsection
