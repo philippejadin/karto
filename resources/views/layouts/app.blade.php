@@ -167,6 +167,12 @@
 
 
 
+    <div class="container footer">
+     <!-- Catégories d'organismes présentes sur ce serveur :-->
+
+    </div>
+
+
     @stack('scripts')
 
 

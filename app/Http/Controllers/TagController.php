@@ -116,8 +116,9 @@ class TagController extends Controller
             ->withInput();
         }
 
-        return redirect()->route('admin.tag.index')
-        ->withSuccess("Your post was saved successfully.");
+        flash()->success('Le tag a bien été enregistré');
+
+        return redirect()->action('TagController@index');
 
     }
 

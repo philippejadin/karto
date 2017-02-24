@@ -67,22 +67,6 @@ class ContactController extends Controller
   }
 
 
-  public function anyEdit()
-  {
-    $edit = \DataEdit::source(new Contact());
-    $edit->label('Modifier un contact');
-    $edit->link("admin/contact","Articles", "TR")->back();
-
-    $edit->add('name','Nom', 'text')->rule('required|min:5');
-    $edit->add('description','Description', 'redactor');
-
-
-    $edit->add('tags.name','Categories','tags');
-
-    return $edit->view('admin.contact.anyedit', compact('edit'));
-  }
-
-
   /**
   * Affiche les contacts non géocodés
   */
