@@ -16,7 +16,7 @@
 
 
         <div class="form-group">
-            Choisissez un ou plusieurs tags à exporter :
+            Choisissez un ou plusieurs tags à exporter (ne choisissez aucun tag pour tout exporter) :
             {!! Form::select('tags[]', App\Tag::pluck('name','id'),null ,['class' =>'form-control input-lg','multiple'=>true,'id' => 'prettify']) !!}
         </div>
 

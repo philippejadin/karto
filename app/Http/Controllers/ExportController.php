@@ -29,11 +29,27 @@ class ExportController extends Controller
             // une requête par tag et donc un onglet par tag dans le fichier excell, c'est soit disant plus lent, mais plus simple :
             $tags = \App\Tag::find($request->get('tags'));
 
+
+
             Excel::create('Filename', function($excel) use($tags) {
                 foreach ($tags as $tag)
                 {
                     $excel->sheet($tag->name, function($sheet) use($tag) {
-                        $sheet->fromModel($tag->contacts);
+                        $contacts = $tag->contacts()->with('tags')->get();
+
+                        $contacts_array = array();
+                        foreach ($contacts as $contact)
+                        {
+                            $contact_array = $contact->toArray();
+                            $contact_array['tags'] = implode(',', $contact->tags->lists('name')->all());
+                            $contact_arrays[] = $contact_array;
+                        }
+
+                        $sheet->fromArray($contact_arrays,null,'A1',true,true);
+
+
+
+
                     });
                 }
             })->export('xls');
@@ -41,8 +57,29 @@ class ExportController extends Controller
         }
         else
         {
-            flash()->error('Il faut sélectionner au moins un tag');
-            return redirect()->back();
+
+            // le code suivant exporte tout si aucun tag n'est sélectionné :
+
+            Excel::create('export.xls', function($excel) {
+
+                $excel->sheet('Export', function($sheet)  {
+                    $contacts = \App\Contact::with('tags')->get();
+
+
+                    $contacts_array = array();
+                    foreach ($contacts as $contact)
+                    {
+                        $contact_array = $contact->toArray();
+                        $contact_array['tags'] = implode(',', $contact->tags->lists('name')->all());
+                        $contact_arrays[] = $contact_array;
+                    }
+
+                    $sheet->fromArray($contact_arrays,null,'A1');
+
+                });
+
+            })->export('xls');
+
         }
     }
 

@@ -25,7 +25,7 @@ class Tag extends Model
 
     protected $rules = [
         'name'  => 'required|unique',
-        'color' => 'required|unique'
+        'color' => 'unique'
     ];
 
 
@@ -48,5 +48,13 @@ class Tag extends Model
         }
 
     }
+
+    // Trim name
+    /*
+    public function getNameAttribute($value)
+    {
+        return trim($value);
+    }
+    */
 
 }

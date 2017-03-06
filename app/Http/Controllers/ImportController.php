@@ -43,11 +43,9 @@ class ImportController extends Controller
                             if (isset($line['tags']))
                             {
                                 $tags = explode(',', $line['tags']);
-
                                 foreach ($tags as $tag)
                                 {
-                                    $tag = trim($tag);
-                                    $the_tag = \App\Tag::firstOrCreate(['name'=> $tag]);
+                                    $the_tag = \App\Tag::firstOrCreate(['name'=> trim($tag)]);
 
                                     if (!$contact->tags->contains($the_tag->id))
                                     {
