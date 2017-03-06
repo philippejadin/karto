@@ -9,7 +9,8 @@
 
             @unless ($searched)
                 <div class="alert alert-info">
-                    Bienvenue dans le système de cartographie de Yapaka. Entrez ci-dessous une adresse afin de trouver les organismes susceptibles de vous aider à proximité de chez vous. Le système est en construction, n'hésitez pas à nous faire part de vos commentaires.
+                    Bienvenue dans le système de cartographie de <a href="http://yapaka.be">Yapaka</a>.
+                    Entrez ci-dessous une adresse afin de trouver les organismes susceptibles de vous aider à proximité de chez vous.
                 </div>
             @endunless
 
@@ -17,7 +18,7 @@
 
 
 
-            {{Form::open(['action' => 'monAdresseController@monAdresse', 'method'=>'GET', 'class'=> 'form-inline', 'role'=>'search'] )}}
+            {{Form::open(['action' => 'DashboardController@index', 'method'=>'GET', 'class'=> 'form-inline', 'role'=>'search'] )}}
             <div class="form-group">
                 {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size' => '80'])}}
                 {!! Form::select('km',array('1'=>'1 km', '2'=>'2 km','5'=>'5 km','10'=>'10 km', '15'=>'15 km','20'=> '20 km','100'=>'100 km'), $km, ['class' => 'form-control'])!!}

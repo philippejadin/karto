@@ -16,9 +16,8 @@ Route::auth();
 
 /********************** PUBLIC *****************************/
 
-
-Route::get('/', 'monAdresseController@monAdresse');
-Route::get('home', 'monAdresseController@monAdresse');
+Route::get('home', 'DashboardController@index');
+Route::get('/', 'DashboardController@index');
 Route::get('tag/{tag}', 'publicTagController@show');
 Route::get('tags', 'publicTagController@overview');
 Route::get('contact/{contact}', 'publicContactController@show');
