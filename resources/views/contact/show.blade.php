@@ -62,16 +62,22 @@
 
 
 
-      var youarehereMarker = L.VectorMarkers.icon({
+      var main_marker = L.VectorMarkers.icon({
         icon: 'circle-o',
         markerColor: '#a00'
       });
 
-      L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: youarehereMarker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+      L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: main_marker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+
+
+      var others_marker = L.VectorMarkers.icon({
+        icon: 'circle-o',
+        markerColor: '#0a0'
+      });
 
       @if ($contacts)
       @foreach ($contacts as $contact)
-      L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: youarehereMarker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+      L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: others_marker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
       @endforeach
       @endif
       </script>
