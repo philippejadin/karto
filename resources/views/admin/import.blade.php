@@ -19,6 +19,17 @@
         <li>name</li>
         <li>postal_code</li>
       </ul>
+      Vous pouvez également mentionner les champs suivants qui seront importés :
+      <ul>
+        <li>locality</li>
+        <li>country</li>
+        <li>description</li>
+        <li>phone</li>
+        <li>phone2</li>
+        <li>website</li>
+        <li>email</li>
+        <li>tags (catégories séparées par virgule, sans espace)</li>
+      </ul>
     </div>
 
     <div class="form-group">

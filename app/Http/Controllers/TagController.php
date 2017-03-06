@@ -109,14 +109,14 @@ class TagController extends Controller
             $tag->master_tag = 0;
         }
 
-        if ( ! $tag->save())
+        if (! $tag->save())
         {
             return redirect()->back()
             ->withErrors($tag->getErrors())
             ->withInput();
         }
 
-        flash()->success('Le tag a bien été enregistré');
+        //flash()->success('Le tag a bien été enregistré');
 
         return redirect()->action('TagController@index');
 

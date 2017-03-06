@@ -52,20 +52,16 @@ Route::group(['middleware' => ['admin']], function () {
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
 
-    // gestion des tags CRUD
+    // changement en masse des tags
     Route::get('admin/tag/change','TagController@changeForm');
     Route::post('admin/tag/change','TagController@change');
+
     Route::resource('admin/tag', 'TagController');
 
     // gestionnaire d'utilisateurs
     Route::resource('admin/user', 'UserController');
 
 
-    // import depuis un fichier excel TODO
-    /*
-    Route::get('admin/import', 'ExcelController@getImport');
-    Route::post('admin/import', 'ExcelController@postImport');
-    */
 
 
 

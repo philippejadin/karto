@@ -175,7 +175,7 @@ class Contact extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'contact_tag', 'contact_id', 'tag_id')->withTimestamps();
+        return $this->belongsToMany('App\Tag', 'contact_tag', 'contact_id', 'tag_id')->orderBy('master_tag', 'desc')->withTimestamps();
     }
 
     public function masterTags()
@@ -198,7 +198,7 @@ class Contact extends Model
         ->orWhereHas('tags', function ($q) use ($value) {
             $q->where('name','like','%'.$value.'%');
         });
-        
+
     }
 
 

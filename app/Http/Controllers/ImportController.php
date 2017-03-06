@@ -46,7 +46,7 @@ class ImportController extends Controller
 
                                 foreach ($tags as $tag)
                                 {
-                                    trim($tag);
+                                    $tag = trim($tag);
                                     $the_tag = \App\Tag::firstOrCreate(['name'=> $tag]);
 
                                     if (!$contact->tags->contains($the_tag->id))
@@ -66,7 +66,7 @@ class ImportController extends Controller
                     }
                     else
                     {
-                        flash()->error('Ligne vide');
+                        flash()->error('Ligne vide ou ne contenant pas au minimum les colonnes address, name et postal_code');
                     }
                 } // endforeach lines
 
@@ -74,7 +74,7 @@ class ImportController extends Controller
         }
         else // pas de fichier
         {
-            die('Choisissez un fichier');
+            die('Veuillez choisir un fichier à importer depuis votre ordinateur');
         }
 
         return view('admin.import');
