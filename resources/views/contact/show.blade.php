@@ -60,16 +60,6 @@
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
-
-
-      var main_marker = L.VectorMarkers.icon({
-        icon: 'circle-o',
-        markerColor: '#a00'
-      });
-
-      L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: main_marker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
-
-
       var others_marker = L.VectorMarkers.icon({
         icon: 'circle-o',
         markerColor: '#0a0'
@@ -80,6 +70,17 @@
       L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: others_marker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
       @endforeach
       @endif
+      
+
+      var main_marker = L.VectorMarkers.icon({
+        icon: 'circle-o',
+        markerColor: '#a00'
+      });
+
+      L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: main_marker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+
+
+
       </script>
 
 
