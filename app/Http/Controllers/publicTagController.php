@@ -18,5 +18,12 @@ class publicTagController extends Controller
         ->with('tag', $tag);
     }
 
+    public function overview()
+    {
+      $tags = \App\Tag::orderBy('master_tag', 'desc')->orderBy('name')->get();
+
+      return view('tag.index')
+      ->with('tags', $tags);
+    }
 
 }

@@ -7,174 +7,176 @@
 
     <title>@if (isset($title)) {{$title}} @else Cartographie @endif</title>
 
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
-    <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+        <!-- Fonts -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
-    <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <!-- CSS -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-    {!! Html::style('js/leaflet-vector-markers/Leaflet.vector-markers.css') !!}
+        <!-- Bootstrap -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+        {!! Html::style('js/leaflet-vector-markers/Leaflet.vector-markers.css') !!}
 
-    <!-- DataTables -->
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-
-
-
-    <!-- Custom, final styling -->
-    {!! Html::style('css/style.css') !!}
+        <!-- DataTables -->
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
 
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
-    <!-- DataTables -->
-    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+        <!-- Custom, final styling -->
+        {!! Html::style('css/style.css') !!}
 
-    <!-- leaflet - Vector markers -->
-    {!! Html::script('js/leaflet-vector-markers/Leaflet.vector-markers.min.js') !!}
+
+        <!-- JavaScripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+
+        <!-- leaflet - Vector markers -->
+        {!! Html::script('js/leaflet-vector-markers/Leaflet.vector-markers.min.js') !!}
 
 
 
 
 
 
-</head>
-<body id="app-layout" @if (isset($home)) class="home" @endif>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+    </head>
+    <body id="app-layout" @if (isset($home)) class="home" @endif>
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                    <!-- Collapsed Hamburger -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Cartographie de Yapaka
-                </a>
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        Cartographie de Yapaka
+                    </a>
 
-            </div>
+                </div>
 
-            @if(Auth::check() && Auth::user()->isAdmin())
+
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Contacts <span class="caret"></span>
-                            </a>
+                        <li><a href="{{ action('publicTagController@overview') }}">Liste</a></li>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{action('ContactController@index')}}">Liste</a></li>
-                                <li><a href="{{action('ContactController@create')}}">Ajouter</a></li>
-                                <li><a href="{{action('ImportController@importForm')}}">Importer</a></li>
-                                <li><a href="{{action('ExportController@form')}}">Exporter</a></li>
-                                <li><a href="{{action('ContactController@indexGeocoded')}}">Liste des contacts en erreur de géocodage</a></li>
-                            </ul>
-                        </li>
+                        @if(Auth::check() && Auth::user()->isAdmin())
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Contacts <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{action('ContactController@index')}}">Liste</a></li>
+                                    <li><a href="{{action('ContactController@create')}}">Ajouter</a></li>
+                                    <li><a href="{{action('ImportController@importForm')}}">Importer</a></li>
+                                    <li><a href="{{action('ExportController@form')}}">Exporter</a></li>
+                                    <li><a href="{{action('ContactController@indexGeocoded')}}">Liste des contacts en erreur de géocodage</a></li>
+                                </ul>
+                            </li>
 
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Tags <span class="caret"></span>
-                            </a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Tags <span class="caret"></span>
+                                </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{action('TagController@index')}}">Liste</a></li>
-                                <li><a href="{{action('TagController@create')}}">Ajouter</a></li>
-                                <li><a href="{{action('TagController@change')}}">Changement en masse</a></li>
-                            </ul>
-                        </li>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{action('TagController@index')}}">Liste</a></li>
+                                    <li><a href="{{action('TagController@create')}}">Ajouter</a></li>
+                                    <li><a href="{{action('TagController@change')}}">Changement en masse</a></li>
+                                </ul>
+                            </li>
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Utilisateurs <span class="caret"></span>
-                            </a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Utilisateurs <span class="caret"></span>
+                                </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{action('UserController@index')}}">Liste</a></li>
-                            </ul>
-                        </li>
-
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{action('UserController@index')}}">Liste</a></li>
+                                </ul>
+                            </li>
+                        @endif
 
 
 
 
                     </ul>
-                @endif
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
 
 
-                @if(Auth::check() && Auth::user()->isAdmin())
-                    <div class="col-sm-3 col-md-3 pull-right">
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <!-- Authentication Links -->
+                        @if (Auth::guest())
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                </ul>
+                            </li>
+                        @endif
+                    </ul>
 
 
-                        {{ Form::open(['action'=>'SearchController@search', 'method'=>'GET', 'class'=>'navbar-form',  'role'=>'search'] ) }}
-                        <div class="input-group">
+                    @if(Auth::check() && Auth::user()->isAdmin())
+                        <div class="col-sm-3 col-md-3 pull-right">
 
-                            {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+
+                            {{ Form::open(['action'=>'SearchController@search', 'method'=>'GET', 'class'=>'navbar-form',  'role'=>'search'] ) }}
+                            <div class="input-group">
+
+                                {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
                             </div>
+                            {!! Form::close() !!}
+
+
+
                         </div>
-                        {!! Form::close() !!}
+                    @endif
 
-
-
-                    </div>
-                @endif
-
+                </div>
             </div>
+        </nav>
+
+
+
+        @include('flash::messages')
+
+
+        @yield('content')
+
+
+
+        <div class="container footer">
+            <!-- Catégories d'organismes présentes sur ce serveur :-->
+
         </div>
-    </nav>
 
 
-
-    @include('flash::messages')
-
-
-    @yield('content')
+        @stack('scripts')
 
 
-
-    <div class="container footer">
-     <!-- Catégories d'organismes présentes sur ce serveur :-->
-
-    </div>
-
-
-    @stack('scripts')
-
-
-</body>
-</html>
+    </body>
+    </html>
