@@ -78,19 +78,22 @@ class Contact extends Model
         return str_replace(array("\n", "\t", "\r"), '',  substr(strip_tags($this->description), 0, $length));
     }
 
-    /*
+
+
+
+    /**
     * Geocode le contact
     * On stocke dans geocode status où on en est  :
 
-    0 = pas géocodé
-    1 = géocodé ok
-    -10 = erreur http (erreur provisoire)
-    -20 = quota exceeded (erreur provisoire)
+    * 0 = pas géocodé
+    * 1 = géocodé ok
+    * -10 = erreur http (erreur provisoire)
+    * -20 = quota exceeded (erreur provisoire)
 
-    -30 = pas de résultat
-    -40 = trop de résultats
-    -50 = adresse ambigue ou de faible qualité
-    -100 = autre erreur
+    * -30 = pas de résultat
+    * -40 = trop de résultats
+    * -50 = adresse ambigue ou de faible qualité
+    * -100 = autre erreur
 
     */
     public function geocode($force = false)

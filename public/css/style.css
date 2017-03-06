@@ -50,6 +50,12 @@ h1, h2, h3
     background-color: rgba(255, 255, 255, 0.8);
 }
 
+.see_also
+{
+  -webkit-column-count: 3; /* Chrome, Safari, Opera */
+   -moz-column-count: 3; /* Firefox */
+   column-count: 3;
+ }
 
 /************************ affichage homepage **********************/
 .contacts h3

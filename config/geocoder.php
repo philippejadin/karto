@@ -15,6 +15,7 @@ use Geocoder\Provider\Chain;
 use Geocoder\Provider\BingMaps;
 use Geocoder\Provider\FreeGeoIp;
 use Geocoder\Provider\GoogleMaps;
+use Geocoder\Provider\OpenStreetMap;
 use Geocoder\Provider\MaxMindBinary;
 
 return [
@@ -26,6 +27,7 @@ return [
                 true,
                 env('GOOGLE_MAPS_API_KEY'),
             ],
+            OpenStreetMap::class => [],
             FreeGeoIp::class  => [],
         ],
         BingMaps::class => [
