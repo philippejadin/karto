@@ -10,6 +10,7 @@
         {{$contact->name}}
         @if(Auth::check() && Auth::user()->isAdmin())
           <a href="{{action('ContactController@edit', $contact)}}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i>Modifier ce contact</a>
+          <a href="{{action('ContactController@destroy', $contact)}}" class="btn btn-warning"  onclick="return confirm('Vraiment supprimer ce contact?')"><i class="fa fa-trash"></i>Effacer ce contact</a>
         @endif
       </h1>
 

@@ -243,7 +243,7 @@ class ContactController extends Controller
     //$contact->tags()->detach();
     $contact->delete();
     flash()->success('Le contact a bien été effacé');
-    return redirect()->back();
+    return redirect()->route('admin.contact.index');
   }
 
 
