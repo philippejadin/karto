@@ -65,7 +65,7 @@
         markerColor: '#0a0'
       });
 
-      @if ($contacts)
+      @if (isset($contacts))
       @foreach ($contacts as $other_contact)
       L.marker([{{$other_contact->latitude}},{{$other_contact->longitude}}], {icon: others_marker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $other_contact)}}\">{{$other_contact->name}}</a><br/>{{ $other_contact->summary(300) }}");
       @endforeach
@@ -85,7 +85,7 @@
 
 
 
-      @if ($contacts)
+      @if (isset($contacts))
 
         <strong>Contacts à proximité (à moins d'un kilomètre)</strong>
         <div class="see_also">

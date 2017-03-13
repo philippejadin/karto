@@ -1,0 +1,60 @@
+SELECT c.name, c.id, c.longitude, c.latitude
+FROM contacts c
+INNER JOIN (
+SELECT name, longitude, latitude, COUNT(*)
+FROM contacts
+GROUP BY longitude, latitude
+HAVING COUNT(*) > 1) temp
+ON temp.latitude = c.latitude
+AND temp.longitude = c.longitude
+and c.latitude > 0
+and temp.name sounds like c.name
+ORDER BY c.longitude, c.latitude
+
+
+SELECT id, name, contacts.longitude
+FROM contacts
+INNER JOIN (
+SELECT longitude
+FROM contacts
+GROUP BY longitude
+HAVING COUNT( longitude ) >1
+)temp ON contacts.longitude = temp.longitude
+ORDER BY contacts.longitude
+
+
+// purs doublons :
+SELECT group_concat(id), group_concat(name)
+FROM contacts
+GROUP BY longitude, latitude, name
+HAVING count('longitude, latitude, name') > 1
+
+
+// doublons uniquement lon/lat
+SELECT group_concat(id), group_concat(name)
+FROM contacts
+GROUP BY longitude, latitude
+HAVING count('longitude, latitude') > 1
+
+
+// doublons purs
+SELECT group_concat(id), COUNT(*) c FROM contacts GROUP BY longitude, latitude, name HAVING c > 1
+
+SELECT  *
+FROM    mytable mto
+WHERE   EXISTS
+        (
+        SELECT  1
+        FROM    mytable mti
+        WHERE   mti.varchar_column = mto.varchar_column
+        LIMIT 1, 1
+        )
+
+
+
+
+// essayons ceci : 
+        SELECT group_concat( id ) , group_concat( name )
+        FROM contacts
+        GROUP BY longitude, latitude, soundex( name )
+        HAVING count( 'longitude, latitude, soundex(name)' ) >1

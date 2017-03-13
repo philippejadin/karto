@@ -83,6 +83,7 @@
                                     <li><a href="{{action('ImportController@importForm')}}">Importer</a></li>
                                     <li><a href="{{action('ExportController@form')}}">Exporter</a></li>
                                     <li><a href="{{action('ContactController@indexGeocoded')}}">Liste des contacts en erreur de géocodage</a></li>
+                                    <li><a href="{{action('DuplicateController@index')}}">Liste des doublons</a></li>
                                     <li><a href="{{action('MassDeleteController@massDeleteForm')}}">Effacement en masse de contacts par tag</a></li>
                                 </ul>
                             </li>

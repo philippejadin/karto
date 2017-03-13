@@ -40,12 +40,14 @@ Route::group(['middleware' => ['admin']], function () {
 
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
-
-
-
+    // delete avec un simple get
     Route::get('admin/contact/{contact}/delete' ,['as'=>'contact.delete','uses'=>'ContactController@destroy']);
+
+    // list des contcts pas géocodés
     Route::get('admin/geocoded', 'ContactController@indexGeocoded');
 
+    // liste des doublons
+    Route::get('admin/duplicates', 'DuplicateController@index');
 
     // importation
 

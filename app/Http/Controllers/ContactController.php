@@ -179,7 +179,7 @@ class ContactController extends Controller
   */
   public function show(Contact $contact)
   {
-    return view('admin.contact.show',  compact('contact'));
+    return view('contact.show',  compact('contact'));
   }
 
   /**
@@ -209,7 +209,7 @@ class ContactController extends Controller
     {
       $contact->tags()->sync($request->get('tags'));
     }
-    else // we remove all tags if nonde is present in the request
+    else // we remove all tags if none is present in the request
     {
       $contact->tags()->detach();
     }
