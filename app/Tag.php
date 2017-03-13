@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Contact;
 use Mexitek\PHPColors\Color;
 use Watson\Validating\ValidatingTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tag extends Model
 {
 
     use ValidatingTrait;
     use \Venturecraft\Revisionable\RevisionableTrait;
+    use SoftDeletes;
 
     protected $table    = 'tags';
 
@@ -27,6 +29,13 @@ class Tag extends Model
         'name'  => 'required|unique',
         'color' => 'unique'
     ];
+
+    /**
+    * The attributes that should be mutated to dates.
+    *
+    * @var array
+    */
+    protected $dates = ['deleted_at'];
 
 
     public function contacts(){
@@ -53,8 +62,8 @@ class Tag extends Model
     /*
     public function getNameAttribute($value)
     {
-        return trim($value);
-    }
-    */
+    return trim($value);
+}
+*/
 
 }

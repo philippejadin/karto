@@ -25,8 +25,8 @@ class CreateTagsTable extends Migration
             $table->increments('id');
             $table->integer('contact_id')->unsigned()->index();
             $table->integer('tag_id')->unsigned()->index();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->foreign('contact_id')->references('id')->on('contacts');
+            $table->foreign('tag_id')->references('id')->on('tags');
             $table->timestamps();
             $table->softDeletes();
         });

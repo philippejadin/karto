@@ -204,9 +204,16 @@ class ContactController extends Controller
   {
     $contact->fill($request->all());
 
-    if ($request->has('tags') ) {
+
+    if ($request->has('tags') )
+    {
       $contact->tags()->sync($request->get('tags'));
     }
+    else // we remove all tags if nonde is present in the request
+    {
+      $contact->tags()->detach();
+    }
+
 
     if (! $contact->geocode($force = true))
     {
@@ -233,7 +240,7 @@ class ContactController extends Controller
   */
   public function destroy(Contact $contact)
   {
-    $contact->tags()->detach();
+    //$contact->tags()->detach();
     $contact->delete();
     flash()->success('Le contact a bien été effacé');
     return redirect()->back();
