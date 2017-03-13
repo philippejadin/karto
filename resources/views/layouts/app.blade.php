@@ -69,7 +69,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
 
-                        <li><a href="{{ action('publicTagController@overview') }}">Liste</a></li>
+                        <li><a href="{{ action('publicTagController@overview') }}">Catégories</a></li>
 
                         @if(Auth::check() && Auth::user()->isAdmin())
                             <li class="dropdown">
@@ -83,6 +83,7 @@
                                     <li><a href="{{action('ImportController@importForm')}}">Importer</a></li>
                                     <li><a href="{{action('ExportController@form')}}">Exporter</a></li>
                                     <li><a href="{{action('ContactController@indexGeocoded')}}">Liste des contacts en erreur de géocodage</a></li>
+                                    <li><a href="{{action('MassDeleteController@massDeleteForm')}}">Effacement de contacts par tag</a></li>
                                 </ul>
                             </li>
 

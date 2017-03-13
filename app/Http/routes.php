@@ -33,8 +33,15 @@ Ici on va mettre les routes pour els personnes connectées qui fot de suggestion
 /********************** ADMIN *****************************/
 Route::group(['middleware' => ['admin']], function () {
 
+
+    // Effacement en masse des contacts (par tag)
+    Route::get('admin/contact/massdelete','MassDeleteController@massDeleteForm');
+    Route::post('admin/contact/massdelete','MassDeleteController@massDelete');
+
     // gestion des contacts CRUD
     Route::resource('admin/contact', 'ContactController');
+
+
 
     Route::get('admin/contact/{contact}/delete' ,['as'=>'contact.delete','uses'=>'ContactController@destroy']);
     Route::get('admin/geocoded', 'ContactController@indexGeocoded');
@@ -48,7 +55,6 @@ Route::group(['middleware' => ['admin']], function () {
 
 
 
-
     // recherche dans les contacts
     Route::get('admin/search', 'SearchController@search');
 
@@ -56,12 +62,14 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin/tag/change','TagController@changeForm');
     Route::post('admin/tag/change','TagController@change');
 
+
+    // gestion des tags
     Route::resource('admin/tag', 'TagController');
+
+
 
     // gestionnaire d'utilisateurs
     Route::resource('admin/user', 'UserController');
-
-
 
 
 
