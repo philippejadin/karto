@@ -42,7 +42,7 @@
 
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['admin.tag.destroy', $tag->id]]) !!}
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Vraiment supprimer ce tag?')"><i class="fa fa-trash"></i></button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Vraiment supprimer ce tag? (les contacts liés à ce tag ne seront pas effacés)')"><i class="fa fa-trash"></i></button>
                             {!! Form::close() !!}
 
                         </td>
