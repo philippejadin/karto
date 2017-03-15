@@ -24,10 +24,9 @@ class Contact extends Model
 
   protected $rules = [
     'name'  => 'required',
-    'address' => 'required',
-    'postal_code' => 'required'
+    'address' => 'required'
   ];
-  
+
 
 
 

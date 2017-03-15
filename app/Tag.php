@@ -26,8 +26,7 @@ class Tag extends Model
 
 
     protected $rules = [
-        'name'  => 'required|unique',
-        'color' => 'unique'
+        'name'  => 'required'
     ];
 
     /**
