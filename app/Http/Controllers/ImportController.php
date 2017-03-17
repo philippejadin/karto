@@ -22,6 +22,7 @@ class ImportController extends Controller
     if($request->hasFile('import_file'))
     {
       $path = $request->file('import_file')->getRealPath();
+      $filename = $request->file('import_file')->getClientOriginalName();
 
       $data = Excel::load($path, function($reader) {
       })->get();
@@ -36,7 +37,7 @@ class ImportController extends Controller
 
         // create a tag for the import
         $time = Carbon::now();
-        $timetag = \App\Tag::firstOrCreate(['name'=> 'Import ' . $time->format('Y-m-d H:i:s')]);
+        $timetag = \App\Tag::firstOrCreate(['name'=> 'Import ' . $time->format('Y-m-d H:i:s') . ' (' . $filename . ')']);
 
         foreach ($lines as $line)
         {
