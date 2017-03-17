@@ -10,6 +10,9 @@ use DB;
 
 class DuplicateController extends Controller
 {
+  /**
+   * List contacts who are clearly duplicates
+   */
   public function index()
   {
     /*
@@ -44,8 +47,20 @@ class DuplicateController extends Controller
     //dd($duplicates);
 
     return view('admin.contact.duplicates')->with('duplicates', $duplicates);
+  }
 
 
+  /**
+   * List contacts that are not well tagged (those who have only one master tag, or even worse, no tag at all
+   */
+  public function untagged()
+  {
+
+    // requête des contacts sans tags qui fonctionne:
+    // SELECT * from contacts where (select count(*) from contact_tag where contact_tag.contact_id = contacts.id) <1
 
   }
+
+
+
 }

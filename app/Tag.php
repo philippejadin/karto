@@ -21,7 +21,8 @@ class Tag extends Model
         'name',
         'description',
         'color',
-        'master_tag'
+        'master_tag',
+        'public'
     ];
 
 
@@ -43,9 +44,18 @@ class Tag extends Model
     }
 
 
+
+    public function getColorAttribute($value)
+    {
+        if (empty($value))
+        {
+            return '#aaa';
+        }
+        return $value;
+    }
+
     public function getColor()
     {
-
         if (empty($this->color))
         {
             return new Color("#aaa");
@@ -54,15 +64,7 @@ class Tag extends Model
         {
             return new Color($this->color);
         }
-
     }
 
-    // Trim name
-    /*
-    public function getNameAttribute($value)
-    {
-    return trim($value);
-}
-*/
 
 }

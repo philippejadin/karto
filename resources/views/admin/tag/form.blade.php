@@ -18,9 +18,14 @@
     {!! Form::checkbox('master_tag', null, null) !!}
 </div>
 
+<div class="form-group">
+    {!! Form::label('public', 'Tag public (visible par les visiteurs) ?') !!}
+    {!! Form::checkbox('public', null, null) !!}
+</div>
+
 
 @push('scripts')
-  
+
 <script src='https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.js'></script>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.css' />
 

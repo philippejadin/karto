@@ -26,7 +26,7 @@ Route::get('contact/{contact}', 'publicContactController@show');
 /********************** USERS *****************************/
 
 /*
-Ici on va mettre les routes pour els personnes connectées qui fot de suggestions de modifs
+Ici on va mettre les routes pour les personnes connectées qui font de suggestions de modifs
 */
 
 
@@ -48,6 +48,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     // liste des doublons
     Route::get('admin/duplicates', 'DuplicateController@index');
+
+    // non taggés mal taggés
+    Route::get('admin/untagged', 'DuplicateController@untagged');
 
     // importation
 

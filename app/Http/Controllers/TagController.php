@@ -52,6 +52,15 @@ class TagController extends Controller
             $tag->master_tag = 0;
         }
 
+        if ($request->has('public'))
+        {
+            $tag->public = 1;
+        }
+        else
+        {
+            $tag->public = 0;
+        }
+
         if ( ! $tag->save())
         {
             return redirect()->back()
@@ -107,6 +116,15 @@ class TagController extends Controller
         else
         {
             $tag->master_tag = 0;
+        }
+
+        if ($request->has('public'))
+        {
+            $tag->public = 1;
+        }
+        else
+        {
+            $tag->public = 0;
         }
 
         if (! $tag->save())
