@@ -151,9 +151,29 @@ class ContactController extends Controller
       ->withInput();
     }
 
-    if ($request->has('tags') ) {
-      $contact->tags()->sync($request->get('tags'));
+    if ($request->has('tags') )
+    {
+      $non_master_tags = \App\Tag::find($request->get('tags'))->where('master_tag' , 0);
+      if ($non_master_tags->count() > 0)
+      {
+        $contact->tags()->sync($request->get('tags'));
+      }
+      else
+      {
+        flash()->error('Contact non valide : il faut au minimum un tag secondaire (non principal) pour ce contact');
+        return redirect()->back()
+        ->withErrors($contact->getErrors())
+        ->withInput();
+      }
     }
+    else
+    {
+      flash()->error('Contact non valide : il faut au minimum un tag pour ce contact');
+      return redirect()->back()
+      ->withErrors($contact->getErrors())
+      ->withInput();
+    }
+    
 
     if (! $contact->geocode())
     {
@@ -207,50 +227,75 @@ class ContactController extends Controller
 
     if ($request->has('tags') )
     {
-      $contact->tags()->sync($request->get('tags'));
+      $non_master_tags = \App\Tag::find($request->get('tags'))->where('master_tag' , 0);
+      if ($non_master_tags->count() > 0)
+      {
+        $contact->tags()->sync($request->get('tags'));
+      }
+      else
+      {
+        flash()->error('Contact non valide : il faut au minimum un tag secondaire (non principal) pour ce contact');
+        return redirect()->back()
+        ->withErrors($contact->getErrors())
+        ->withInput();
+      }
     }
-    else // we remove all tags if none is present in the request
+    else
     {
-      $contact->tags()->detach();
-    }
-
-
-    if (! $contact->geocode($force = true))
-    {
-      flash()->info('Adresse pas géocodée');
-    }
-
-
-    if ( ! $contact->save()) {
-      flash()->error('Contact non valide');
+      flash()->error('Contact non valide : il faut au minimum un tag pour ce contact');
       return redirect()->back()
       ->withErrors($contact->getErrors())
       ->withInput();
     }
 
-    flash()->success('Le contact a bien été enregistré');
-    return redirect()->route('admin.contact.index');
-  }
 
-  /**
-  * Remove the specified resource from storage.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
+    /*
+
+    // this piece of code is not good for data integrity
+
+    else // we remove all tags if none is present in the request
+    {
+    $contact->tags()->detach();
+  }
   */
-  public function destroy(Contact $contact)
+
+
+  if (! $contact->geocode($force = true))
   {
-    //$contact->tags()->detach();
-    $contact->delete();
-    flash()->success('Le contact a bien été effacé');
-    return redirect()->route('admin.contact.index');
+    flash()->info('Adresse pas géocodée');
   }
 
 
-  public function history(Contact $contact)
-  {
-    return view('admin.contact.history')->with('contact', $contact);
+  if ( ! $contact->save()) {
+    flash()->error('Contact non valide');
+    return redirect()->back()
+    ->withErrors($contact->getErrors())
+    ->withInput();
   }
+
+  flash()->success('Le contact a bien été enregistré');
+  return redirect()->route('admin.contact.index');
+}
+
+/**
+* Remove the specified resource from storage.
+*
+* @param  int  $id
+* @return \Illuminate\Http\Response
+*/
+public function destroy(Contact $contact)
+{
+  //$contact->tags()->detach();
+  $contact->delete();
+  flash()->success('Le contact a bien été effacé');
+  return redirect()->route('admin.contact.index');
+}
+
+
+public function history(Contact $contact)
+{
+  return view('admin.contact.history')->with('contact', $contact);
+}
 
 
 
