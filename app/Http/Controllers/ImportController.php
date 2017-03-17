@@ -38,6 +38,7 @@ class ImportController extends Controller
         // create a tag for the import
         $time = Carbon::now();
         $timetag = \App\Tag::firstOrCreate(['name'=> 'Import ' . $time->format('Y-m-d H:i:s') . ' (' . $filename . ')']);
+        $timetag->public = 0;
 
         foreach ($lines as $line)
         {
@@ -65,7 +66,7 @@ class ImportController extends Controller
 
               }
 
-              // append the time tag to theimported contact
+              // append the time tag to the imported contact
               $contact->tags()->save($timetag);
 
               // flash()->success('Contact ' . $contact->name . ' correctement importe');

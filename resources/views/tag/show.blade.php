@@ -24,7 +24,11 @@
             <td>{{$contact->address}}</td>
             <td>{{$contact->locality}}</td>
             @if(Auth::check() && Auth::user()->isAdmin())
-              <td><a href="{{ action('ContactController@edit', $contact) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> Modifier</a></td>
+              <td>
+                <a href="{{ action('ContactController@edit', $contact) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+                <a href="{{action('ContactController@destroy', $contact)}}" class="btn btn-warning"  onclick="return confirm('Vraiment supprimer ce contact?')"><i class="fa fa-trash"></i>Effacer ce contact</a>
+              </td>
+
             @endif
           </tr>
 
