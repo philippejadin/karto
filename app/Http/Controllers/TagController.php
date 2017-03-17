@@ -175,6 +175,13 @@ class TagController extends Controller
         {
             $tag_to_remove = \App\Tag::findOrFail($request->get('tag_to_remove'));
 
+            // we only allow master tags to be removed to avoid trouble later. Trust me
+            if ($tag_to_remove->master_tag <>1)
+            {
+                flash()->error('Vous ne pouvez enlever que un tag principal d\'un organisme, ceci afin d\'éviter une désorganisation du fichier');
+                return redirect()->action('TagController@index');
+            }
+
             foreach ($tags as $tag)
             {
                 foreach ($tag->contacts as $contact)
