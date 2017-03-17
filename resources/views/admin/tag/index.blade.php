@@ -18,6 +18,7 @@
                     <th>Description</th>
                     <th>Couleur</th>
                     <th>Tag principal ?</th>
+                    <th>Tag public ?</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,14 @@
                         <td>
                             @if ($tag->master_tag == 1)
                                 Oui
+                            @endif
+                        </td>
+
+                        <td>
+                            @if ($tag->public == 1)
+                                <i class="fa fa-eye" aria-hidden="true"></i> Public
+                            @else
+                                <i class="fa fa-eye-slash" aria-hidden="true"></i> Caché
                             @endif
                         </td>
 

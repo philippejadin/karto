@@ -119,7 +119,7 @@
                                     <p class="address">{{$contact->address}}, {{$contact->locality}}</p>
 
                                     <div class="tags">
-                                        @each('tag.list', $contact->tags, 'tag')
+                                        @each('tag.list', $contact->publicTags, 'tag')
                                     </div>
                                 </div>
                             @endforeach
@@ -151,7 +151,7 @@
                                 <p class="address">{{$contact->address}}, {{$contact->locality}}</p>
 
                                 <div class="tags">
-                                    @foreach ($contact->tags as $tag)
+                                    @foreach ($contact->publicTags as $tag)
                                         <a href="{{action('publicTagController@show', $tag)}}"><span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span></a>
                                     @endforeach
                                 </div>

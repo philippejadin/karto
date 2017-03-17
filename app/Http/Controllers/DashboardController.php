@@ -88,7 +88,7 @@ class DashboardController extends Controller
 
       $distance = 0.01506 * $km;
 
-      $contacts = \App\Contact::with('tags')
+      $contacts = \App\Contact::with('publicTags')
       ->where('longitude', '<', $result->getLongitude() + $distance / 2)
       ->where('longitude', '>', $result->getLongitude() - $distance / 2)
       ->where('latitude', '<', $result->getLatitude() + $distance / 2)
@@ -111,9 +111,9 @@ class DashboardController extends Controller
       foreach ($contacts as $contact)
       {
         $has_master_tag = false;
-        foreach ($contact->tags as $tag)
+        foreach ($contact->publicTags as $tag)
         {
-          if ($tag->master_tag == 1)
+          if ($tag->master_tag == 1 && $tag->public == 1)
           {
             $tags[$tag->id]['tag'] = $tag;
             $tags[$tag->id]['contacts'][] = $contact;

@@ -188,6 +188,10 @@ class Contact extends Model
     return $this->belongsToMany('App\Tag')->where('master_tag', 1)->withTimestamps();
   }
 
+  public function publicTags()
+  {
+    return $this->belongsToMany('App\Tag')->where('public', 1)->withTimestamps();
+  }
 
   /**
   * Free search scope, search in all relevant fields

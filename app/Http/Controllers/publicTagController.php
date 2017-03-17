@@ -20,7 +20,7 @@ class publicTagController extends Controller
 
     public function overview()
     {
-      $tags = \App\Tag::orderBy('master_tag', 'desc')->orderBy('name')->get();
+      $tags = \App\Tag::orderBy('master_tag', 'desc')->orderBy('name')->where('public', 1)->get();
 
       return view('tag.index')
       ->with('tags', $tags);
