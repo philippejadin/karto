@@ -28,6 +28,13 @@ class MassDeleteController extends Controller
 
     foreach ($tags as $tag)
     {
+      // we only allow contact deletion from non master tag to avoid trouble later. Trust me
+      if ($tag->master_tag <> 0)
+      {
+        flash()->error('Vous ne pouvez pas supprimer des contacts liés à un tag principal, ceci afin d\'éviter une désorganisation du fichier');
+        return redirect()->action('TagController@index');
+      }
+
       foreach ($tag->contacts as $contact)
       {
         $contact->delete();
