@@ -20,7 +20,7 @@
 
             {{Form::open(['action' => 'DashboardController@index', 'method'=>'GET', 'class'=> 'form-inline', 'role'=>'search'] )}}
             <div class="form-group">
-                {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper votre adresse','class' => 'form-control', 'size' => '80'])}}
+                {{Form::text('keyword', $keyword, ['placeholder'=>'Veuillez taper une adresse','class' => 'form-control', 'size' => '50'])}}
                 {!! Form::select('km',array('1'=>'1 km', '2'=>'2 km','5'=>'5 km','10'=>'10 km', '15'=>'15 km','20'=> '20 km','100'=>'100 km'), $km, ['class' => 'form-control'])!!}
                 {!! Form::select('tag', $master_tags, $tag, ['class' => 'form-control', 'placeholder' => 'Limiter la recherche à : '])!!}
                 <button id="button" class="btn btn-primary" type="submit">
