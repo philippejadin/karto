@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
     // liste des tags pour recherche
 
-    $master_tags = \App\Tag::where('master_tag', 1)->lists('name', 'id');
+    $master_tags = \App\Tag::where('master_tag', 1)->orderBy('name')->lists('name', 'id');
 
     /*Si la requête a un keyword afficher la recherche*/
     if ($request->has('keyword'))
