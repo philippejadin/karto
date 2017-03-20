@@ -173,8 +173,10 @@ class DashboardController extends Controller
 
 
 
-
-      //flash()->info(count($contacts) . " résultats trouvés");
+      if (count($contacts) == 0)
+      {
+        flash()->info('Aucun résultats trouvés, veuillez élargir votre recherche');
+      }
 
       return view('dashboard.index')
       ->with('tags', $tags)
