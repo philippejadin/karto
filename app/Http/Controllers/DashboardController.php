@@ -22,6 +22,11 @@ class DashboardController extends Controller
 
   public function index(Request $request)
   {
+
+    // liste des tags pour recherche
+
+    $master_tags = \App\Tag::where('master_tag', 1)->lists('name', 'id');
+
     /*Si la requête a un keyword afficher la recherche*/
     if ($request->has('keyword'))
     {
@@ -41,6 +46,17 @@ class DashboardController extends Controller
       $keyword = $request->get('keyword');
 
 
+      // gestion du tag limitant la recherche
+      if ($request->get('tag'))
+      {
+        $limit_by_tag = \App\Tag::findOrFail($request->get('tag'));
+      }
+      else
+      {
+        $limit_by_tag = false;
+      }
+
+
       //la géocoder
 
       try
@@ -55,6 +71,7 @@ class DashboardController extends Controller
         return view('dashboard.index')
         ->with('keyword', $request->keyword)
         ->with('searched', false)
+        ->with('master_tags', $master_tags)
         ->with('km', $km);
       }
 
@@ -64,17 +81,30 @@ class DashboardController extends Controller
 
 
 
+
       $distance = 0.01506 * $km;
 
-      // compter le nombre d'organismes trouvés
-      $contact_count = \App\Contact::where('longitude', '<', $result->getLongitude() + $distance / 2)
-      ->where('longitude', '>', $result->getLongitude() - $distance / 2)
-      ->where('latitude', '<', $result->getLatitude() + $distance / 2)
-      ->where('latitude', '>', $result->getLatitude() - $distance / 2)
-      ->count();
 
+      if ($limit_by_tag)
+      {
+        // compter le nombre d'organismes trouvés
+        $contact_count = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $distance / 2)
+        ->where('longitude', '>', $result->getLongitude() - $distance / 2)
+        ->where('latitude', '<', $result->getLatitude() + $distance / 2)
+        ->where('latitude', '>', $result->getLatitude() - $distance / 2)
+        ->count();
+      }
+      else
+      {
+        // compter le nombre d'organismes trouvés
+        $contact_count = \App\Contact::where('longitude', '<', $result->getLongitude() + $distance / 2)
+        ->where('longitude', '>', $result->getLongitude() - $distance / 2)
+        ->where('latitude', '<', $result->getLatitude() + $distance / 2)
+        ->where('latitude', '>', $result->getLatitude() - $distance / 2)
+        ->count();
+      }
 
-      $max_results = 300; // TODO configurable
+      $max_results = 500; // TODO configurable
 
 
       if ($contact_count > ($max_results))
@@ -88,12 +118,24 @@ class DashboardController extends Controller
 
       $distance = 0.01506 * $km;
 
-      $contacts = \App\Contact::with('publicTags')
-      ->where('longitude', '<', $result->getLongitude() + $distance / 2)
-      ->where('longitude', '>', $result->getLongitude() - $distance / 2)
-      ->where('latitude', '<', $result->getLatitude() + $distance / 2)
-      ->where('latitude', '>', $result->getLatitude() - $distance / 2)
-      ->get();
+      if ($limit_by_tag)
+      {
+        $contacts = $limit_by_tag->contacts()->with('publicTags')
+        ->where('longitude', '<', $result->getLongitude() + $distance / 2)
+        ->where('longitude', '>', $result->getLongitude() - $distance / 2)
+        ->where('latitude', '<', $result->getLatitude() + $distance / 2)
+        ->where('latitude', '>', $result->getLatitude() - $distance / 2)
+        ->get();
+      }
+      else
+      {
+        $contacts = \App\Contact::with('publicTags')
+        ->where('longitude', '<', $result->getLongitude() + $distance / 2)
+        ->where('longitude', '>', $result->getLongitude() - $distance / 2)
+        ->where('latitude', '<', $result->getLatitude() + $distance / 2)
+        ->where('latitude', '>', $result->getLatitude() - $distance / 2)
+        ->get();
+      }
 
 
       $tags = [];
@@ -139,6 +181,8 @@ class DashboardController extends Controller
       ->with('results', $results)
       ->with('keyword', $keyword)
       ->with('km', $km)
+      ->with('master_tags', $master_tags)
+      ->with('tag', $request->get('tag'))
       ->with('searched', true);
 
 
@@ -151,6 +195,7 @@ class DashboardController extends Controller
       ->with('keyword', null)
       ->with('km', 0)
       ->with('home', true)
+      ->with('master_tags', $master_tags)
       ->with('searched', false);
     }
   }
