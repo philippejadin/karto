@@ -72,6 +72,7 @@ class DashboardController extends Controller
         ->with('keyword', $request->keyword)
         ->with('searched', false)
         ->with('master_tags', $master_tags)
+        ->with('tag', $request->get('tag'))
         ->with('km', $km);
       }
 
@@ -196,6 +197,7 @@ class DashboardController extends Controller
       ->with('km', 0)
       ->with('home', true)
       ->with('master_tags', $master_tags)
+      ->with('tag', $request->get('tag'))
       ->with('searched', false);
     }
   }
