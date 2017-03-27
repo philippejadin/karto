@@ -21,6 +21,7 @@
       </ul>
       Vous pouvez également mentionner les champs suivants qui seront importés :
       <ul>
+        <li>prefix</li>
         <li>locality</li>
         <li>country</li>
         <li>description</li>

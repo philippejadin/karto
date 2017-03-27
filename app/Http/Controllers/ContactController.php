@@ -72,7 +72,7 @@ class ContactController extends Controller
   */
   public function indexGeocoded(Request $request)
   {
-    $filter = \DataFilter::source(Contact::where('geocode_status', '<=' , 0)->with('tags'));
+    $filter = \DataFilter::source(Contact::where('geocode_status', '<' , 0)->with('tags'));
 
     //simple like
     $filter->add('name','Nom', 'text');
