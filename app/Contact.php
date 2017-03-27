@@ -65,6 +65,13 @@ class Contact extends Model
   }
 
 
+
+  public function getNameAttribute($value)
+  {
+    return trim(preg_replace('/[\x0D]/', '', $value));
+  }
+
+
   // Filtrage du html de description
   public function getDescriptionAttribute($value)
   {

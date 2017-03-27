@@ -61,7 +61,7 @@ class DashboardController extends Controller
 
       try
       {
-        $result = Geocoder::geocode($keyword)->get()->first();
+        $result = Geocoder::geocode($keyword . ' ,' . env('DEFAULT_COUNTRY', 'Belgique'))->get()->first();
         $results['latitude'] = $result->getLatitude();
         $results['longitude'] = $result->getLongitude();
       }
