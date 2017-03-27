@@ -83,25 +83,26 @@ class DashboardController extends Controller
 
 
 
-      $distance = 0.01506 * $km;
+      $latitude = 0.01506 * $km;
+      $longitude = 0.01506 * $km * 2; // experimentally determined
 
 
       if ($limit_by_tag)
       {
         // compter le nombre d'organismes trouvés
-        $contact_count = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $distance / 2)
-        ->where('longitude', '>', $result->getLongitude() - $distance / 2)
-        ->where('latitude', '<', $result->getLatitude() + $distance / 2)
-        ->where('latitude', '>', $result->getLatitude() - $distance / 2)
+        $contact_count = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
+        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
+        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
         ->count();
       }
       else
       {
         // compter le nombre d'organismes trouvés
-        $contact_count = \App\Contact::where('longitude', '<', $result->getLongitude() + $distance / 2)
-        ->where('longitude', '>', $result->getLongitude() - $distance / 2)
-        ->where('latitude', '<', $result->getLatitude() + $distance / 2)
-        ->where('latitude', '>', $result->getLatitude() - $distance / 2)
+        $contact_count = \App\Contact::where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
+        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
+        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
         ->count();
       }
 
@@ -117,24 +118,25 @@ class DashboardController extends Controller
 
 
 
-      $distance = 0.01506 * $km;
+      $latitude = 0.01506 * $km;
+      $longitude = 0.01506 * $km * 2; // experimentally determined
 
       if ($limit_by_tag)
       {
         $contacts = $limit_by_tag->contacts()->with('publicTags')
-        ->where('longitude', '<', $result->getLongitude() + $distance / 2)
-        ->where('longitude', '>', $result->getLongitude() - $distance / 2)
-        ->where('latitude', '<', $result->getLatitude() + $distance / 2)
-        ->where('latitude', '>', $result->getLatitude() - $distance / 2)
+        ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
+        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
+        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
         ->get();
       }
       else
       {
         $contacts = \App\Contact::with('publicTags')
-        ->where('longitude', '<', $result->getLongitude() + $distance / 2)
-        ->where('longitude', '>', $result->getLongitude() - $distance / 2)
-        ->where('latitude', '<', $result->getLatitude() + $distance / 2)
-        ->where('latitude', '>', $result->getLatitude() - $distance / 2)
+        ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
+        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
+        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
         ->get();
       }
 
