@@ -142,6 +142,15 @@ class ContactController extends Controller
   {
     $contact->fill($request->all());
 
+    if (!$request->has('tags') )
+    {
+      flash()->error('Contact non valide : il faut au minimum un tag secondaire (non principal) pour ce contact');
+      return redirect()->back()
+      ->withErrors($contact->getErrors())
+      ->withInput();
+    }
+
+
     // on tente de sauver une première fois le contact pour avoir son id (pour si jamais, lui attacher des tags)
     if (!$contact->save())
     {
@@ -173,11 +182,15 @@ class ContactController extends Controller
       ->withErrors($contact->getErrors())
       ->withInput();
     }
-    
+
 
     if (! $contact->geocode())
     {
-      flash()->info('Adresse pas géocodée');
+      flash()->warning('Adresse pas géocodée');
+    }
+    else
+    {
+      flash()->info('Adresse géocodée');
     }
 
     if ( ! $contact->save()) {
@@ -249,53 +262,48 @@ class ContactController extends Controller
     }
 
 
-    /*
-
-    // this piece of code is not good for data integrity
-
-    else // we remove all tags if none is present in the request
+    if ($contact->geocode($force = true))
     {
-    $contact->tags()->detach();
+      flash()->info('Adresse géocodée');
+    }
+    else
+    {
+      flash()->warning('Adresse pas géocodée');
+    }
+
+
+
+
+    if ( ! $contact->save()) {
+      flash()->error('Contact non valide');
+      return redirect()->back()
+      ->withErrors($contact->getErrors())
+      ->withInput();
+    }
+
+    flash()->success('Le contact a bien été enregistré');
+    return redirect()->route('admin.contact.index');
   }
+
+  /**
+  * Remove the specified resource from storage.
+  *
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
   */
-
-
-  if (! $contact->geocode($force = true))
+  public function destroy(Contact $contact)
   {
-    flash()->info('Adresse pas géocodée');
+    //$contact->tags()->detach();
+    $contact->delete();
+    flash()->success('Le contact a bien été effacé');
+    return redirect()->route('admin.contact.index');
   }
 
 
-  if ( ! $contact->save()) {
-    flash()->error('Contact non valide');
-    return redirect()->back()
-    ->withErrors($contact->getErrors())
-    ->withInput();
+  public function history(Contact $contact)
+  {
+    return view('admin.contact.history')->with('contact', $contact);
   }
-
-  flash()->success('Le contact a bien été enregistré');
-  return redirect()->route('admin.contact.index');
-}
-
-/**
-* Remove the specified resource from storage.
-*
-* @param  int  $id
-* @return \Illuminate\Http\Response
-*/
-public function destroy(Contact $contact)
-{
-  //$contact->tags()->detach();
-  $contact->delete();
-  flash()->success('Le contact a bien été effacé');
-  return redirect()->route('admin.contact.index');
-}
-
-
-public function history(Contact $contact)
-{
-  return view('admin.contact.history')->with('contact', $contact);
-}
 
 
 

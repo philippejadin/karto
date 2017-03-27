@@ -77,7 +77,7 @@ class Contact extends Model
 
   public function summary($length = 200)
   {
-    return str_replace(array("\n", "\t", "\r"), '',  substr(strip_tags($this->description), 0, $length));
+    return filter_var (str_replace(array("\n", "\t", "\r"), '',  substr(strip_tags($this->description), 0, $length)), FILTER_SANITIZE_STRING);
   }
 
 
@@ -107,10 +107,27 @@ class Contact extends Model
       return false;
     }
 
+
+    // generate correct country and city vars for geocode
+
+    // toujours avoir un pays par défaut
+    $country = $this->getcountryAttribute($this->country);
+
+    // si pas de code postal on met le nom de la ville, mais sinon juste le code postal ça fonctionne mieux
+    if (empty($this->postal_code))
+    {
+      $city = $this->locality;
+    }
+    else
+    {
+      $city = $this->postal_code;
+    }
+
+
     try
     {
       // on ne met pas la commune si on a le code postal, ça géocode quasi tout de cette manière !
-      $geocode = Geocoder::geocode($this->address . ', ' . $this->postal_code . ' ' . (empty($this->postal_code)) ? $this->locality : '' . ', ' . $this->country)
+      $geocode = Geocoder::geocode($this->address . ', ' . $city  . ', ' . $country)
       ->get()->first();
     }
     catch (\Exception $e)
