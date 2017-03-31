@@ -9,11 +9,7 @@
 
 
     <h1>
-      @if ($title)
-        {{$title}}
-      @else
-        Liste des contacts
-      @endif
+      {{$title or 'Liste des contacts'}}
     </h1>
 
 
