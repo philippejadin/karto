@@ -58,10 +58,10 @@
 
 <div class="form-group">
     {!! Form::label('tags[]', 'Tag(s)') !!}
-    {!! Form::select('tags[]', App\Tag::pluck('name','id'),$contact->tags->pluck('id')->all(),['class' =>'form-control input-lg','multiple'=>true,'id' => 'prettify']) !!}
+    {!! Form::select('tags[]', App\Tag::orderBy('master_tag', 'desc')->orderBy('name')->pluck('name','id'),$contact->tags->pluck('id')->all(),['class' =>'form-control input-lg','multiple'=>true,'id' => 'tags']) !!}
 </div>
 
 
 <script type="text/javascript">
-$('#prettify').select2();
+$('#tags').select2();
 </script>

@@ -8,7 +8,7 @@
 
     <div class="container">
 
-        <h1>Modification d'un contact</h1>
+        <h1>Modification d'un contact <a href="{{action('ContactController@destroy', $contact)}}" class="btn btn-warning"  onclick="return confirm('Vraiment supprimer ce contact?')"><i class="fa fa-trash"></i>Effacer ce contact</a></h1>
 
         {!! Form::model($contact, ['route' => ['admin.contact.update', $contact->id], 'method' => 'put', 'class' => 'form-horizontal panel']) !!}
 

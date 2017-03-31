@@ -204,17 +204,17 @@ class Contact extends Model
 
   public function tags()
   {
-    return $this->belongsToMany('App\Tag', 'contact_tag', 'contact_id', 'tag_id')->orderBy('master_tag', 'desc')->withTimestamps();
+    return $this->belongsToMany('App\Tag', 'contact_tag', 'contact_id', 'tag_id')->orderBy('master_tag', 'desc')->orderBy('name')->withTimestamps();
   }
 
   public function masterTags()
   {
-    return $this->belongsToMany('App\Tag')->where('master_tag', 1)->withTimestamps();
+    return $this->belongsToMany('App\Tag')->orderBy('name')->where('master_tag', 1)->withTimestamps();
   }
 
   public function publicTags()
   {
-    return $this->belongsToMany('App\Tag')->where('public', 1)->withTimestamps();
+    return $this->belongsToMany('App\Tag')->orderBy('master_tag', 'asc')->where('public', 1)->withTimestamps();
   }
 
   /**
