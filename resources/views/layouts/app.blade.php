@@ -44,7 +44,7 @@
 
 
   </head>
-  <body id="app-layout" @if (isset($home)) class="home" @endif>
+  <body @if (isset($home)) class="home" @endif>
 
 
     @include('layouts.nav')
@@ -56,10 +56,16 @@
 
 
 
-    <div class="container footer">
-      <!-- Catégories d'organismes présentes sur ce serveur :-->
 
-    </div>
+      <div class="footer">
+        Cet outil de cartographie vous est proposé par <a href="http://www.yapaka.be">yapaka.be</a>
+        |
+        Découvrez l'ensemble des <a href="{{ action('publicTagController@overview') }}">catégories</a> disponibles sur ce serveur
+        |
+        Propulsé par <a href="https://github.com/philippejadin/karto">Karto</a>
+        |
+        <a href="{{ url('/register') }}">Se créer un compte</a>
+</div>
 
 
     @stack('scripts')

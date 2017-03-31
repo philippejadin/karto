@@ -22,7 +22,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
 
-                <li><a href="{{ action('publicTagController@overview') }}">Catégories</a></li>
+
 
                 @if(Auth::check() && Auth::user()->isAdmin())
                     <li class="dropdown">
@@ -84,7 +84,6 @@
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Connexion</a></li>
-                    <li><a href="{{ url('/register') }}">Créer un compte</a></li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
