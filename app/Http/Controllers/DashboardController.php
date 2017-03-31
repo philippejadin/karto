@@ -47,9 +47,9 @@ class DashboardController extends Controller
 
 
       // gestion du tag limitant la recherche
-      if ($request->get('tag'))
+      if ($request->get('tags'))
       {
-        $limit_by_tag = \App\Tag::findOrFail($request->get('tag'));
+        $limit_by_tag = \App\Tag::findOrFail($request->get('tags'));
       }
       else
       {
@@ -121,57 +121,74 @@ class DashboardController extends Controller
       $latitude = 0.01506 * $km;
       $longitude = 0.01506 * $km * 2; // experimentally determined
 
+
+/*
       if ($limit_by_tag)
       {
+        // si on limite par tag, le principe c'est de nne créer qu'un seul tableau avec un seul tag (l e tage recherché)
+        // qui contient le tag et les contacts associés
         $contacts = $limit_by_tag->contacts()->with('publicTags')
         ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
         ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
         ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
         ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
         ->get();
+
+        $tags_array['tag'] = $limit_by_tag->get();
+        $tags_array['contacts'] = $contacts->toArray();
+
+        $tags[] = $tags_array;
+
+        $other_contacts = [];
+
       }
       else
       {
+*/
+
+
+        // sinon on va trier par tags
         $contacts = \App\Contact::with('publicTags')
         ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
         ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
         ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
         ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
         ->get();
-      }
+
+        $tags = [];
+        $other_contacts = [];
 
 
-      $tags = [];
-      $other_contacts = [];
+        /*
+        Trier par tags
+        Avec cette routine, la vue reçoit un beau tableau à deux dimmensions $tags
 
-      /*
-      Trier par tags
-      Avec cette routine, la vue reçoit un beau tableau à deux dimmensions $tags
+        qui contient chaque master tag
 
-      qui contient chaque master tag
-
-      $tags[1]['tag'] -> objet master tag
-      $tags[1]['contacts'] -> liste des contacts associés
-      */
-      foreach ($contacts as $contact)
-      {
-        $has_master_tag = false;
-        foreach ($contact->publicTags as $tag)
+        $tags[1]['tag'] -> objet master tag
+        $tags[1]['contacts'] -> liste des contacts associés
+        */
+        foreach ($contacts as $contact)
         {
-          if ($tag->master_tag == 1 && $tag->public == 1)
+          $has_master_tag = false;
+          foreach ($contact->publicTags as $tag)
           {
-            $tags[$tag->id]['tag'] = $tag;
-            $tags[$tag->id]['contacts'][] = $contact;
-            $has_master_tag = true;
+            if ($tag->master_tag == 1 && $tag->public == 1)
+            {
+              $tags[$tag->id]['tag'] = $tag;
+              $tags[$tag->id]['contacts'][] = $contact;
+              $has_master_tag = true;
+            }
           }
-        }
-        // si le contact n'a pas de master tag, on le met dans un autre tableau appellé $other_contacts pour le mettre en fin de liste, rubrique "autres"
-        if (!$has_master_tag)
-        {
-          $other_contacts[] = $contact;
+          // si le contact n'a pas de master tag, on le met dans un autre tableau appellé $other_contacts pour le mettre en fin de liste, rubrique "autres"
+          if (!$has_master_tag)
+          {
+            $other_contacts[] = $contact;
+          }
+
         }
 
-      }
+    /*  }*/
 
 
 
