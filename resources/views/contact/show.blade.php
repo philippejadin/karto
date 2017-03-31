@@ -44,7 +44,7 @@
 
 
       <div>
-        @each('tag.list', $contact->publicTags, 'tag')
+        @each('tag.list_detailed', $contact->publicTags, 'tag')
       </div>
 
 

@@ -7,12 +7,15 @@
     <div class="row">
 
       <h1>
-        Contacts liés au tag <span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span>
+        Contacts appartenant à la catégorie <span class="label label-default" style="background-color: {{$tag->color}}">{{$tag->name}}</span>
         @if(Auth::check() && Auth::user()->isAdmin())
           <a href="{{ route('admin.tag.edit', [$tag->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> Modifier</a>
         @endif
       </h1>
 
+      <p>
+        {{$tag->description}}
+      </p>
 
       <table class="table">
         @forelse ($contacts as $contact)

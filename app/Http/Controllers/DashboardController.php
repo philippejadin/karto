@@ -23,15 +23,27 @@ class DashboardController extends Controller
   public function index(Request $request)
   {
 
+    // keyword présent ?
+    // km présent ?
+    // tags présents ?
+    // compter
+    // requête
+    // affichage
+
+
+
     // liste des tags pour recherche
 
     $master_tags = \App\Tag::where('master_tag', 1)->orderBy('name')->lists('name', 'id');
 
-    /*Si la requête a un keyword afficher la recherche*/
+
+
+    // keyword présent ?
+
     if ($request->has('keyword'))
     {
 
-      // Définir les valeurs par défaut
+      // km présent ?
       if ($request->has('km'))
       {
         $km = $request->get('km');
@@ -41,12 +53,8 @@ class DashboardController extends Controller
         $km = 1;
       }
 
+      // tags présents ?
 
-      //récupérer l'adresse rentrée par l'utilisateur
-      $keyword = $request->get('keyword');
-
-
-      // gestion du tag limitant la recherche
       if ($request->get('tags'))
       {
         $limit_by_tag = \App\Tag::findOrFail($request->get('tags'));
@@ -56,6 +64,8 @@ class DashboardController extends Controller
         $limit_by_tag = false;
       }
 
+      //récupérer l'adresse rentrée par l'utilisateur
+      $keyword = $request->get('keyword');
 
       //la géocoder
 
@@ -80,9 +90,6 @@ class DashboardController extends Controller
 
 
 
-
-
-
       $latitude = 0.01506 * $km;
       $longitude = 0.01506 * $km * 2; // experimentally determined
 
@@ -90,7 +97,7 @@ class DashboardController extends Controller
       if ($limit_by_tag)
       {
         // compter le nombre d'organismes trouvés
-        $contact_count = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        $count = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $longitude / 2)
         ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
         ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
         ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
@@ -99,17 +106,17 @@ class DashboardController extends Controller
       else
       {
         // compter le nombre d'organismes trouvés
-        $contact_count = \App\Contact::where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        $count = \App\Contact::where('longitude', '<', $result->getLongitude() + $longitude / 2)
         ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
         ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
         ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
-        ->count();
+        ->count();;
       }
 
-      $max_results = 500; // TODO configurable
+      $max_results = 500; // Nombre max de contacts affichés
+      
 
-
-      if ($contact_count > ($max_results))
+      if ($count > ($max_results))
       {
         $ratio = $contact_count / $max_results;
         $km = $km / $ratio;
@@ -118,77 +125,49 @@ class DashboardController extends Controller
 
 
 
-      $latitude = 0.01506 * $km;
-      $longitude = 0.01506 * $km * 2; // experimentally determined
+
+      // sinon on va trier par tags
+      $contacts = \App\Contact::with('publicTags')
+      ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
+      ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
+      ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
+      ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
+      ->get();
+
+      $tags = [];
+      $other_contacts = [];
 
 
-/*
-      if ($limit_by_tag)
+      /*
+      Trier par tags
+      Avec cette routine, la vue reçoit un beau tableau à deux dimmensions $tags
+
+      qui contient chaque master tag
+
+      $tags[1]['tag'] -> objet master tag
+      $tags[1]['contacts'] -> liste des contacts associés
+      */
+      foreach ($contacts as $contact)
       {
-        // si on limite par tag, le principe c'est de nne créer qu'un seul tableau avec un seul tag (l e tage recherché)
-        // qui contient le tag et les contacts associés
-        $contacts = $limit_by_tag->contacts()->with('publicTags')
-        ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
-        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
-        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
-        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
-        ->get();
-
-        $tags_array['tag'] = $limit_by_tag->get();
-        $tags_array['contacts'] = $contacts->toArray();
-
-        $tags[] = $tags_array;
-
-        $other_contacts = [];
-
-      }
-      else
-      {
-*/
-
-
-        // sinon on va trier par tags
-        $contacts = \App\Contact::with('publicTags')
-        ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
-        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
-        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
-        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
-        ->get();
-
-        $tags = [];
-        $other_contacts = [];
-
-
-        /*
-        Trier par tags
-        Avec cette routine, la vue reçoit un beau tableau à deux dimmensions $tags
-
-        qui contient chaque master tag
-
-        $tags[1]['tag'] -> objet master tag
-        $tags[1]['contacts'] -> liste des contacts associés
-        */
-        foreach ($contacts as $contact)
+        $has_master_tag = false;
+        foreach ($contact->publicTags as $tag)
         {
-          $has_master_tag = false;
-          foreach ($contact->publicTags as $tag)
+          if ($tag->master_tag == 1 && $tag->public == 1)
           {
-            if ($tag->master_tag == 1 && $tag->public == 1)
-            {
-              $tags[$tag->id]['tag'] = $tag;
-              $tags[$tag->id]['contacts'][] = $contact;
-              $has_master_tag = true;
-            }
+            $tags[$tag->id]['tag'] = $tag;
+            $tags[$tag->id]['contacts'][] = $contact;
+            $has_master_tag = true;
           }
-          // si le contact n'a pas de master tag, on le met dans un autre tableau appellé $other_contacts pour le mettre en fin de liste, rubrique "autres"
-          if (!$has_master_tag)
-          {
-            $other_contacts[] = $contact;
-          }
-
+        }
+        // si le contact n'a pas de master tag, on le met dans un autre tableau appellé $other_contacts pour le mettre en fin de liste, rubrique "autres"
+        if (!$has_master_tag)
+        {
+          $other_contacts[] = $contact;
         }
 
-    /*  }*/
+      }
+
+      /*  }*/
 
 
 

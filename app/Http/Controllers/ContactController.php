@@ -68,58 +68,6 @@ class ContactController extends Controller
 
 
   /**
-  * Affiche les contacts non géocodés
-  */
-  public function indexGeocoded(Request $request)
-  {
-    $filter = \DataFilter::source(Contact::where('geocode_status', '<' , 0)->with('tags'));
-
-    //simple like
-    $filter->add('name','Nom', 'text');
-    $filter->add('postal_code','Code postal', 'text');
-    $filter->add('address','Adresse', 'text');
-    //$filter->add('tags.name','Tags', 'tags'); // marche pas pour l'instant
-    //$filter->text('src','Search')->scope('freesearch'); // marche pas pour l'instant
-
-
-    $filter->submit('Recherche');
-    $filter->reset('Reset');
-
-    $grid = \DataGrid::source($filter);
-
-    $grid->add('name','Nom', true); //field name, label, sortable
-    $grid->add('postal_code','Code postal', true); //field name, label, sortable
-    $grid->add('address','Adresse', true); //field name, label, sortable
-    $grid->add('geocode_status','Status de geocodage', true); //field name, label, sortable
-
-
-
-    $grid->add('{{ implode(", ", $tags->lists("name")->all()) }}','Categories');
-
-
-
-
-    $grid->add('id','Edit')->cell( function( $value, $row) {
-      return '<a href="/admin/contact/'. $row->id. '/edit">Edit</a>';
-    });
-
-    $grid->link('admin/contact/edit',"Add New", "TR");  //add button
-
-    $grid->orderBy('name','asc'); //default orderby
-    $grid->paginate(20); //pagination
-
-
-    return view('admin.contact.grid')
-    ->with('filter', $filter)
-    ->with('grid', $grid);
-
-    $contacts=Contact::where('geocode_status', '<' , 0)->paginate(40);
-
-    return view('admin.contact.index')
-    ->with('contacts', $contacts);
-  }
-
-  /**
   * Show the form for creating a new resource.
   *
   * @return \Illuminate\Http\Response

@@ -8,12 +8,12 @@ use App\Http\Requests;
 
 use DB;
 
-class DuplicateController extends Controller
+class ReportController extends Controller
 {
   /**
-   * List contacts who are clearly duplicates
-   */
-  public function index()
+  * List contacts who are clearly duplicates
+  */
+  public function duplicates()
   {
     /*
     SELECT group_concat( id ) , group_concat( name )
@@ -51,14 +51,50 @@ class DuplicateController extends Controller
 
 
   /**
-   * List contacts that are not well tagged (those who have only one master tag, or even worse, no tag at all
-   */
+  * Contacts sans tag
+  */
   public function untagged()
   {
 
     // requête des contacts sans tags qui fonctionne:
     // SELECT * from contacts where (select count(*) from contact_tag where contact_tag.contact_id = contacts.id) <1
 
+    // pas de tags attachés :
+    $contacts = \App\Contact::has('tags', '<', 1)->paginate(40);
+
+    return view('admin.contact.index')->with('contacts', $contacts)->with('title', 'Liste des contacts sans tags');
+  }
+
+  /**
+  * Contacts avec uniquement un master tag
+  */
+  public function withOnlyMasterTag()
+  {
+
+    // contacts avec uniquement un master tag
+    $contacts = \App\Contact::whereHas('tags', function ($q)
+    {
+      $q->where('master_tag', '=', 1);
+    })
+    ->whereDoesntHave('tags', function ($q)
+    {
+      $q->where('master_tag', '=', 0);
+    })
+    ->paginate(40);
+
+
+    return view('admin.contact.index')->with('contacts', $contacts)->with('title', 'Liste des contacts avec uniquement un tag principal');
+  }
+
+
+
+  /**
+  * Affiche les contacts non géocodés
+  */
+  public function geocoded(Request $request)
+  {
+    $contacts = \App\Contact::where('geocode_status', '<' , 0)->with('tags')->paginate(40);
+    return view('admin.contact.index')->with('contacts', $contacts)->with('title', 'Liste des contacts en erreur de géocodage');
   }
 
 

@@ -43,14 +43,22 @@ Route::group(['middleware' => ['admin']], function () {
     // delete avec un simple get
     Route::get('admin/contact/{contact}/delete' ,['as'=>'contact.delete','uses'=>'ContactController@destroy']);
 
-    // list des contcts pas géocodés
-    Route::get('admin/geocoded', 'ContactController@indexGeocoded');
+
+    ///******************************* différents listes pour aider les administrateurs *************/
+
+    // list des contacts pas géocodés
+    Route::get('admin/geocoded', 'ReportController@geocoded');
 
     // liste des doublons
-    Route::get('admin/duplicates', 'DuplicateController@index');
+    Route::get('admin/duplicates', 'ReportController@duplicates');
 
-    // non taggés mal taggés
-    Route::get('admin/untagged', 'DuplicateController@untagged');
+    // non taggés
+    Route::get('admin/untagged', 'ReportController@untagged');
+
+    // avec uniquement un master tag
+    Route::get('admin/withonlymastertag', 'ReportController@withOnlyMasterTag');
+
+
 
     // importation
 
