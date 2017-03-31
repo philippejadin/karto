@@ -55,9 +55,9 @@ class DashboardController extends Controller
 
       // tags présents ?
 
-      if ($request->get('tags'))
+      if ($request->get('tag'))
       {
-        $limit_by_tag = \App\Tag::findOrFail($request->get('tags'));
+        $limit_by_tag = \App\Tag::findOrFail($request->get('tag'));
       }
       else
       {
@@ -114,7 +114,7 @@ class DashboardController extends Controller
       }
 
       $max_results = 500; // Nombre max de contacts affichés
-      
+
 
       if ($count > ($max_results))
       {
@@ -123,16 +123,27 @@ class DashboardController extends Controller
         flash()->info("Il y a trop de résultats (" . $contact_count . " résultats trouvés) dans le périmètre choisi, nous avons automatiquement réduit le périmètre de recherche (" . $km . "km)");
       }
 
+      $latitude = 0.01506 * $km;
+      $longitude = 0.01506 * $km * 2; // experimentally determined
 
 
-
-      // sinon on va trier par tags
-      $contacts = \App\Contact::with('publicTags')
-      ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
-      ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
-      ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
-      ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
-      ->get();
+      if ($limit_by_tag)
+      {
+        $contacts = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
+        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
+        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
+        ->get();
+      }
+      else
+      {
+        $contacts = \App\Contact::with('publicTags')
+        ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
+        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
+        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
+        ->get();
+      }
 
       $tags = [];
       $other_contacts = [];
@@ -150,9 +161,21 @@ class DashboardController extends Controller
       foreach ($contacts as $contact)
       {
         $has_master_tag = false;
+
         foreach ($contact->publicTags as $tag)
         {
-          if ($tag->master_tag == 1 && $tag->public == 1)
+
+          // si on limite par tag, nous n'ajoutons ce tag à a liste des tags que si c'est celui que l'on veut
+          if ($limit_by_tag && $tag->id <> $limit_by_tag->id)
+          {
+            $add_tag = false;
+          }
+          else
+          {
+              $add_tag = true;
+          }
+
+          if ($tag->master_tag == 1 && $tag->public == 1 && $add_tag)
           {
             $tags[$tag->id]['tag'] = $tag;
             $tags[$tag->id]['contacts'][] = $contact;
@@ -167,7 +190,7 @@ class DashboardController extends Controller
 
       }
 
-      /*  }*/
+
 
 
 
