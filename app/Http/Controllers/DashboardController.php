@@ -97,7 +97,7 @@ class DashboardController extends Controller
       if ($limit_by_tag)
       {
         // compter le nombre d'organismes trouvés
-        $count = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        $contact_count = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $longitude / 2)
         ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
         ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
         ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
@@ -106,7 +106,7 @@ class DashboardController extends Controller
       else
       {
         // compter le nombre d'organismes trouvés
-        $count = \App\Contact::where('longitude', '<', $result->getLongitude() + $longitude / 2)
+        $contact_count = \App\Contact::where('longitude', '<', $result->getLongitude() + $longitude / 2)
         ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
         ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
         ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
@@ -116,7 +116,7 @@ class DashboardController extends Controller
       $max_results = 500; // Nombre max de contacts affichés
 
 
-      if ($count > ($max_results))
+      if ($contact_count > ($max_results))
       {
         $ratio = $contact_count / $max_results;
         $km = $km / $ratio;
