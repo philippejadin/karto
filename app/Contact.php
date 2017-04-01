@@ -76,7 +76,7 @@ class Contact extends Model
   public function getDescriptionAttribute($value)
   {
 
-    return strip_tags($value, '<p><h1><h2><h3><h4><br><strong><em><img><ul><li><span><div>');
+    return preg_replace('/[\x0D]/', '', strip_tags($value, '<p><h1><h2><h3><h4><br><strong><em><img><ul><li><span><div>'));
 
   }
 
@@ -84,7 +84,7 @@ class Contact extends Model
 
   public function summary($length = 200)
   {
-    return filter_var (str_replace(array("\n", "\t", "\r"), '',  substr(strip_tags($this->description), 0, $length)), FILTER_SANITIZE_STRING);
+    return preg_replace('/[\x0D]/', '', filter_var (str_replace(array("\n", "\t", "\r"), '',  substr(strip_tags($this->description), 0, $length)), FILTER_SANITIZE_STRING));
   }
 
 
