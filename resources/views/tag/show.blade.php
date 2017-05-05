@@ -25,6 +25,7 @@
               <a href="{{action('publicContactController@show', $contact)}}">{{$contact->name}}</a>
             </td>
             <td>{{$contact->address}}</td>
+            <td>{{$contact->postal_code}}</td>
             <td>{{$contact->locality}}</td>
             @if(Auth::check() && Auth::user()->isAdmin())
               <td>
