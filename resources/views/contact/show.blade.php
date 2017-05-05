@@ -68,7 +68,7 @@
 
       @if (isset($contacts) && $contacts)
       @foreach ($contacts as $other_contact)
-      L.marker([{{$other_contact->latitude}},{{$other_contact->longitude}}], {icon: others_marker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $other_contact)}}\">{{$other_contact->name}}</a><br/>{{ $other_contact->summary(300) }}");
+      L.marker([{{$other_contact->latitude}},{{$other_contact->longitude}}], {icon: others_marker}).addTo(map).bindPopup(`<a href=\"{{action('publicContactController@show', $other_contact)}}\">{{$other_contact->name}}</a><br/>{{ $other_contact->summary(300) }}`);
       @endforeach
       @endif
 
@@ -78,7 +78,7 @@
         markerColor: '#a00'
       });
 
-      L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: main_marker}).addTo(map).bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}");
+      L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: main_marker}).addTo(map).bindPopup(`<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}`);
 
 
 

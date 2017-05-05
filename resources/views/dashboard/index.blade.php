@@ -82,7 +82,7 @@
       tagLayerGroup{{$tag['tag']->id}} = L.layerGroup()
       @foreach($tag['contacts'] as $contact)
       .addLayer(L.marker([ {{$contact->latitude}}, {{$contact->longitude}} ], {icon: marker})
-      .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
+      .bindPopup(`<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{$contact->summary(300)}}`))
       @endforeach
       .addTo(map);
       layerControl.addOverlay(tagLayerGroup{{$tag['tag']->id}}, "{{$tag['tag']->name}}");
@@ -95,7 +95,7 @@
       var othersLayerGroup = L.layerGroup()
       @foreach($other_contacts as $contact)
       .addLayer(L.marker([{{$contact->latitude}},{{$contact->longitude}}], {icon: youarehereMarker})
-      .bindPopup("<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{ $contact->summary(300) }}"))
+      .bindPopup(`<a href=\"{{action('publicContactController@show', $contact)}}\">{{$contact->name}}</a><br/>{{$contact->summary(300)}}`))
       @endforeach
       .addTo(map);
       layerControl.addOverlay(othersLayerGroup, "Autres organismes");
