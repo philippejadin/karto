@@ -105,7 +105,12 @@
                     {{ Form::open(['action'=>'SearchController@search', 'method'=>'GET', 'class'=>'navbar-form',  'role'=>'search'] ) }}
                     <div class="input-group">
 
-                        {{ Form::text('keyword',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
+                      @if (isset($keywords))
+                        {{ Form::text('keywords',$keywords, ['class' => 'form-control'] ) }}
+                      @else
+                        {{ Form::text('keywords',null, ['placeholder'=>'Rechercher...', 'class' => 'form-control'] ) }}
+                      @endif
+
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </div>
