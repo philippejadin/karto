@@ -1,45 +1,32 @@
 <?php
 
-/**
- * This file is part of the GeocoderLaravel library.
- *
- * (c) Antoine Corcy <contact@sbin.dk>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-use Ivory\HttpAdapter\CurlHttpAdapter;
-use Ivory\HttpAdapter\Guzzle6HttpAdapter;
-use Geocoder\Provider\Chain;
-use Geocoder\Provider\BingMaps;
-use Geocoder\Provider\FreeGeoIp;
-use Geocoder\Provider\GoogleMaps;
-use Geocoder\Provider\OpenStreetMap;
-use Geocoder\Provider\MaxMindBinary;
-
 return [
-    'providers' => [
-        Chain::class => [
-            GoogleMaps::class => [
-                'fr-FR',
-                'Belgique',
-                true,
-                env('GOOGLE_MAPS_API_KEY'),
-            ],
-            OpenStreetMap::class => [],
-            FreeGeoIp::class  => [],
-        ],
-        BingMaps::class => [
-            'fr-FR',
-            env('BING_MAPS_API_KEY'),
-        ],
-        GoogleMaps::class => [
-            'fr',
-            'fr-FR',
-            true,
-            env('GOOGLE_MAPS_API_KEY'),
-        ],
-    ],
-    'adapter'  => CurlHttpAdapter::class,
+
+    /*
+     * The api key used when sending Geocoding requests to Google.
+     */
+    'key' => env('GOOGLE_MAPS_GEOCODING_API_KEY', ''),
+
+    /*
+     * The language param used to set response translations for textual data.
+     *
+     * More info: https://developers.google.com/maps/faq#languagesupport
+     */
+
+    'language' => '',
+
+    /*
+     * The region param used to finetune the geocoding process.
+     *
+     * More info: https://developers.google.com/maps/documentation/geocoding/intro#RegionCodes
+     */
+    'region' => 'be',
+
+    /*
+     * The bounds param used to finetune the geocoding process.
+     *
+     * More info: https://developers.google.com/maps/documentation/geocoding/intro#Viewports
+     */
+    'bounds' => '',
+
 ];

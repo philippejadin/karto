@@ -5,21 +5,18 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "^5.2",
         "intervention/image": "^2.3",
         "barryvdh/laravel-debugbar": "^2.2",
         "watson/validating": "^2.2",
-        "toin0u/geocoder-laravel": "^1.0",
+        "toin0u/geocoder-laravel": "^4",
         "maatwebsite/excel": "~2.1.0",
         "venturecraft/revisionable": "1.*",
         "mexitek/phpcolors": "dev-master",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "zofe/rapyd": "2.2.*"
-
-
-
+        "zofe/rapyd": "2.2.*",
+        "spatie/geocoder": "^3.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

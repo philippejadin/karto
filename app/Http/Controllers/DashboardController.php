@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB;
 use App\Http\Controllers\Controller;
-use Geocoder\Laravel\Facades\Geocoder;
 use App\Contact;
+use Geocoder;
+
 
 
 /**
@@ -67,17 +68,21 @@ class DashboardController extends Controller
       //récupérer l'adresse rentrée par l'utilisateur
       $keyword = $request->get('keyword');
 
-      //la géocoder
 
-      try
+
+      //la géocoder
+      $result = Geocoder::getCoordinatesForAddress($keyword);
+
+      //dd($result);
+
+      if ($result['lat'] <> 0)
       {
-        $result = Geocoder::geocode($keyword . ' ,' . env('DEFAULT_COUNTRY', 'Belgique'))->get()->first();
-        $results['latitude'] = $result->getLatitude();
-        $results['longitude'] = $result->getLongitude();
+        $results['latitude'] = $result['lat'];
+        $results['longitude'] =  $result['lng'];
       }
-      catch (\Exception $e)
-      {
-        flash()->warning("Merci de réessayer avec une adresse standard comprenant une rue, un numéro, et un code postal. ("  . $e->getMessage() . ")", "Votre adresse n'a pas été localisée ");
+      else {
+
+        flash()->warning("Merci de réessayer avec une adresse standard comprenant une rue, un numéro, et un code postal.", "Votre adresse n'a pas été localisée ");
         return view('dashboard.index')
         ->with('keyword', $request->keyword)
         ->with('searched', false)
@@ -97,20 +102,21 @@ class DashboardController extends Controller
       if ($limit_by_tag)
       {
         // compter le nombre d'organismes trouvés
-        $contact_count = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $longitude / 2)
-        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
-        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
-        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
+        $contact_count = $limit_by_tag->contacts()
+        ->where('longitude', '<', $results['longitude'] + $longitude / 2)
+        ->where('longitude', '>',  $results['longitude'] - $longitude / 2)
+        ->where('latitude', '<', $results['latitude'] + $latitude / 2)
+        ->where('latitude', '>', $results['latitude'] - $latitude / 2)
         ->count();
       }
       else
       {
         // compter le nombre d'organismes trouvés
-        $contact_count = \App\Contact::where('longitude', '<', $result->getLongitude() + $longitude / 2)
-        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
-        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
-        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
-        ->count();;
+        $contact_count = \App\Contact::where('longitude', '<',  $results['longitude'] + $longitude / 2)
+        ->where('longitude', '>',  $results['longitude'] - $longitude / 2)
+        ->where('latitude', '<', $results['latitude'] + $latitude / 2)
+        ->where('latitude', '>', $results['latitude'] - $latitude / 2)
+        ->count();
       }
 
       $max_results = 500; // Nombre max de contacts affichés
@@ -129,19 +135,19 @@ class DashboardController extends Controller
 
       if ($limit_by_tag)
       {
-        $contacts = $limit_by_tag->contacts()->where('longitude', '<', $result->getLongitude() + $longitude / 2)
-        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
-        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
-        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
+        $contacts = $limit_by_tag->contacts()->where('longitude', '<',  $results['longitude'] + $longitude / 2)
+        ->where('longitude', '>',  $results['longitude'] - $longitude / 2)
+        ->where('latitude', '<', $results['latitude'] + $latitude / 2)
+        ->where('latitude', '>', $results['latitude'] - $latitude / 2)
         ->get();
       }
       else
       {
         $contacts = \App\Contact::with('publicTags')
-        ->where('longitude', '<', $result->getLongitude() + $longitude / 2)
-        ->where('longitude', '>', $result->getLongitude() - $longitude / 2)
-        ->where('latitude', '<', $result->getLatitude() + $latitude / 2)
-        ->where('latitude', '>', $result->getLatitude() - $latitude / 2)
+        ->where('longitude', '<', $results['longitude'] + $longitude / 2)
+        ->where('longitude', '>',  $results['longitude'] - $longitude / 2)
+        ->where('latitude', '<', $results['latitude'] + $latitude / 2)
+        ->where('latitude', '>', $results['latitude'] - $latitude / 2)
         ->get();
       }
 
@@ -172,7 +178,7 @@ class DashboardController extends Controller
           }
           else
           {
-              $add_tag = true;
+            $add_tag = true;
           }
 
           if ($tag->master_tag == 1 && $tag->public == 1 && $add_tag)
