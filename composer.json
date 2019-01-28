@@ -15,7 +15,6 @@
         "venturecraft/revisionable": "1.*",
         "mexitek/phpcolors": "dev-master",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "zofe/rapyd": "2.2.*",
         "spatie/geocoder": "^3.4"
     },
     "require-dev": {
