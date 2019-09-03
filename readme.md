@@ -57,6 +57,49 @@ La branche master est toujours stable (principe des rolling releases)
 - php artisan migrate (répondez yes)
 - php artisan up
 
+
+# Explication de la base de donnée
+
+L'ensemble des données utiles sont stockées sous forme de contacts et de tags attribués aux contacts.
+
+## Table 'contacts'
+Une table "contacts" reprend l'ensemble des données avec :
+
+- prefix
+- name
+- description
+- address
+- postal_code
+- locality
+- country
+- phone
+- phone2
+- website
+- email
+- public (1 = le contact est public, 0 il ne l'est pas)
+- latitude (champ de type double)
+- longitude (double)
+- geocode_status (si négatif erreur de géocodage, sinon 1)
+- user_id : auteur du contact
+
+## Table "tags"
+- name
+- description
+- color
+- master_tag (1 = oui / 0 = non)
+- public
+
+## Autres tables :
+
+- users : table par défault laravel
+- contact_tag : lien entre contacts et tags
+- revisions : utilisé par le package laravel revisionable
+
+Les master_tags ("Tags principal" dans l'admin) sont des tags qui permettent d'organiser les résultats (les contacts). C'est selon ces tags là que les résultats sont affichés.
+
+Les tags publics (public = 1) sont affichés à l'utilisateur final, les autres ne le sont pas et sont résevés à un usage interne. Les contact recoivent d'aillleur systémtiquement un tag privé lors d'une importation afin de les repérer plus facilement par après.
+
+
 # Auteurs
 Philippe Jadin ainsi que Lilian Bolly Barajas et Soungui Issaka dans le cadre de leur stage web developper (merci à eux 2!).
 Ainsi que les personnes mentionnées ici : https://github.com/philippejadin/karto/graphs/contributors
