@@ -1,5 +1,5 @@
 # Karto
-Outil de cartographie pour Yapaka.be visible sur http://cartographie.yapaka.be
+Outil de cartographie.
 
 Cet outil est librement utilisable par d'autres structures et services qui souhaitent mettre en place un outil de cartographie performant.
 
