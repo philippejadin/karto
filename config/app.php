@@ -152,13 +152,12 @@ return [
 
     Collective\Html\HtmlServiceProvider::class,
     Barryvdh\Debugbar\ServiceProvider::class,
-    //Geocoder\Laravel\Providers\GeocoderService::class,
+    Geocoder\Laravel\Providers\GeocoderService::class,
     Maatwebsite\Excel\ExcelServiceProvider::class,
     DraperStudio\Flash\ServiceProvider::class,
     Yajra\Datatables\DatatablesServiceProvider::class,
-    Zofe\Rapyd\RapydServiceProvider::class,
 
-    Spatie\Geocoder\GeocoderServiceProvider::class,
+    //Spatie\Geocoder\GeocoderServiceProvider::class,
 
 
 

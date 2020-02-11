@@ -71,7 +71,18 @@ class DashboardController extends Controller
 
 
       //la géocoder
-      $result = Geocoder::getCoordinatesForAddress($keyword);
+      $geocode = app('geocoder')->geocode($keyword)->get()->first();
+
+        if ($geocode) {
+            $result['lat'] = $geocode->getCoordinates()->getLatitude();
+            $result['lng'] = $geocode->getCoordinates()->getLongitude();
+        }
+        else
+        {
+            $result['lat'] = 0;
+            $result['lng'] = 0;
+        }
+
 
       //dd($result);
 

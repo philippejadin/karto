@@ -131,76 +131,22 @@ class Contact extends Model
     }
 
 
+    $address = $this->address . ', ' . $city  . ', ' . $country;
 
+    $geocode = app('geocoder')->geocode($address)->get()->first();
 
-    try
-    {
-      // on ne met pas la commune si on a le code postal, ça géocode quasi tout de cette manière !
-        $result = Geocoder::getCoordinatesForAddress($this->address . ', ' . $city  . ', ' . $country);
+    if ($geocode) {
 
-    }
-    catch (\Exception $e)
-    {
-
-      $this->geocode_message = get_class($e) . ' / ' . $e->getMessage();
-
-      if (get_class($e) == 'Geocoder\Exception\ChainNoResultException')
-      {
-        $this->geocode_status = -30; //  erreur dans l'adresse
-        return false;
-      }
-
-
-      if (get_class($e) == 'Geocoder\Exception\HttpError')
-      {
-        $this->geocode_status = -10; //  erreur dans l'adresse
-        return false;
-      }
-
-      if (get_class($e) == 'Geocoder\Exception\QuotaExceeded')
-      {
-        $this->geocode_status = -20; //  erreur dans l'adresse
-        return false;
-      }
-
-
-      if ($e instanceof Geocoder\Exception\HttpError)
-      {
-        $this->geocode_status = -10; // erreur HTTP
-        return false;
-      }
-
-      if ($e instanceof Geocoder\Exception\QuotaExceeded )
-      {
-        $this->geocode_status = -20; // erreur quota
-        return false;
-      }
-
-      if ($e instanceof Geocoder\Exception\NoResult)
-      {
-        $this->geocode_status = -30; // erreur dans l'adresse
-        return false;
-      }
-
-      if ($e instanceof Geocoder\Exception\ChainNoResultException)
-      {
-        $this->geocode_status = -30; //  erreur dans l'adresse
-        return false;
-      }
-      else
-      {
-        $this->geocode_status = -100; // erreur HTTP
-        return false;
-      }
+      $this->geocode_status = 1;
+      $this->latitude = $geocode->getCoordinates()->getLatitude();
+      $this->longitude = $geocode->getCoordinates()->getLongitude();
+      return true;
 
 
     }
 
-
-    $this->geocode_status = 1;
-    $this->latitude = $result['lat'];
-    $this->longitude = $result['lng'];
-    return true;
+    $this->geocode_status = -10;
+    return false;
   }
 
 
